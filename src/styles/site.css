@@ -1,131 +1,466 @@
-/* in-the-loop.studio. Hand written, no framework, no Tailwind.
-   Tokens follow ../../shared/design-system.md: JetBrains Mono throughout, one
-   amber accent, cream field. On cream the accent splits in two, because the
-   brand amber clears the 3:1 graphical floor but not the 4.5:1 text floor:
-   --accent is the caret block, --accent-text is the link ink. */
+/*
+  in-the-loop.studio. Hand written, no framework, no Tailwind.
+
+  This stylesheet is a port of ../../ryanhennebry.xyz/assets/site.css. The
+  earlier studio design (cream paper, a ruled frame around the page, JetBrains
+  Mono throughout, an amber caret and amber accents) was rejected. The two
+  surfaces now share one visual language: white paper, no hue, Inter at one
+  size, and hierarchy carried by colour, position and one long silence.
+
+  Every token value below is copied from the personal site, not approximated.
+  The reasoning behind each one lives in ../../ryanhennebry.xyz/DESIGN.md and
+  is not restated here, but the two rules most likely to be broken by accident
+  are repeated at the point where they bite: the measure is frozen and
+  --space-group is one token doing two jobs.
+*/
+
+/*
+  Inter, variable, latin subset, served locally. Zero network requests. The
+  declaration is the personal site's, byte for byte, except the url: Astro
+  bundles this file into /_astro/, so a relative "fonts/..." would resolve
+  against that directory. The file is served from public/ at a root absolute
+  path instead. Same file, same hash, no CDN and no Google Fonts.
+*/
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-latin-var.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+  Two weights only: 400 and 500. Inter's default instance is also 400, so every
+  rule that sets type below states its font-weight rather than letting the
+  default stand in for a decision. The opsz axis (14 to 32) is never pinned to a
+  fixed value: `font-optical-sizing: auto` states explicitly that the browser is
+  to resolve it from the rendered size.
+
+  500 is spent on exactly two elements across this site, and they are the same
+  element on two routes: the h1. Do not raise a third thing to 500.
+*/
 
 :root {
-  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --bg: #f4efe7;
-  --text: #1a1714; --text-muted: #4a4038; --text-faint: #5e544a;
-  --accent: #e7a33e; --accent-text: #9a6310;
-  --rule: #d9d0c0; --rule-strong: #c8bca8;
-  --selection: rgba(231, 163, 62, 0.18);
-  --frame-max: 1080px;
-  --frame-pad-x: clamp(1.1rem, 3.2vw, 2rem);
-  --frame-pad-y: clamp(1.5rem, 4vw, 2.4rem);
-  --frame-margin: clamp(0.6rem, 2.2vw, 1.4rem);
-  --measure: 66ch;
-  --rhythm: 1.45rem;
-  --fs-body: clamp(1.0625rem, 0.35vw + 0.98rem, 1.125rem);
-  --fs-small: 0.82rem;
-  --fs-eyebrow: 0.72rem;
-  --leading: 1.5; --leading-tight: 1.34;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-fast: 180ms;
+  --paper: #ffffff;         /* 1.00:1  pure white, the background */
+  --ink: #16181A;           /* 17.80:1 near-black, narrative text */
+  --muted: #5F656B;         /* 5.90:1  muted grey, the discipline label and the section labels */
+  --rule: #777777;          /* 4.48:1  resting link underline and field border; clears 3:1 as a non-text identifier */
+  --rule-strong: #646464;   /* 5.92:1  hover underline and focus ring */
+  --selection: #E6E6E6;
+
+  /*
+    FROZEN at 600px, the same number as the personal site and for the same
+    reason: it is ibelick.com's measure, about 80 characters per line at 15px.
+    The prohibition on tuning it to fit copy stands here too, in both
+    directions. If a future line does not fit, the line changes, not the
+    measure. A new number needs a named reference behind it.
+  */
+  --measure: 600px;
+  --gutter: 24px;
+
+  --leading: 1.5;             /* everything. No letter-spacing is set anywhere on this site: at 15px Inter's own
+                                 tracking stands unaltered, including on the two strings that are stored shouted. */
+
+  --size-name: 15px;
+  --size-body: 15px;
+  --weight-regular: 400;
+  --weight-strong: 500;
+
+  --radius-focus: 2px;      /* the only radius on the site. See the capture form below. */
+
+  /*
+    Void, then dense. One long silence above the wordmark, then a block whose
+    internal steps are small enough that the page reads as a single object.
+    The values are the personal site's and the derivations are recorded there:
+    8 and 12 come from nolanperk/rad-spacing, and 24 against 12 is exactly the
+    2.0x between-groups ratio jakubkrehel/better-layout requires.
+  */
+  --space-void: 117px;         /* above the wordmark, desktop */
+  --space-void-narrow: 56px;   /* above the wordmark, below 481px */
+  --space-tight: 8px;          /* a label to its first item, and the gap inside the capture row */
+  --space-para: 12px;          /* adjacent paragraphs */
+  --space-group: 24px;         /* block to block, AND the wordmark to the headline. One token, one value, both
+                                  uses: do not split it. The personal site considered the split, three reference
+                                  designers recommended it, and Ryan chose to keep the two identical. The
+                                  flattening is the intent, not a side effect. */
+  --space-bottom: 48px;        /* below the last line */
 }
 
-*, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  background-color: var(--paper);
+}
+
 body {
-  margin: 0; background: var(--bg); color: var(--text);
-  font-family: var(--font-mono); font-size: var(--fs-body); line-height: var(--leading);
+  margin: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: var(--size-body);
+  font-weight: var(--weight-regular);
+  font-optical-sizing: auto;
+  line-height: var(--leading);
 }
-::selection { background: var(--selection); }
 
-/* The frame holds the chrome, the rail holds the prose. */
+/*
+  Background only. Setting `color` here also resets text-decoration-color, which
+  flattens the muted tier: selected muted text jumps to ink and the link
+  underline jumps from --rule to ink. Selection recolours the ground only.
+*/
+::selection {
+  background-color: var(--selection);
+}
+
+/*
+  The frame. The class name is inherited from the rejected design, where it was
+  a bordered card. There is no border, no radius and no card now: it is the
+  page container, and it follows The Padded Measure Rule. The container is
+  always wider than the text and the reading measure comes from padding-inline,
+  never from a narrower content box.
+*/
 .frame {
-  max-width: var(--frame-max);
-  min-height: calc(100vh - (var(--frame-margin) * 2));
-  margin: var(--frame-margin) auto;
-  border: 1px solid var(--rule); border-radius: 14px; overflow: clip;
-  display: flex; flex-direction: column;
+  max-width: calc(var(--measure) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  padding-block: var(--space-void) var(--space-bottom);
 }
-.head, .foot {
-  display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; align-items: baseline;
-  justify-content: space-between;
-  padding: 0.9rem var(--frame-pad-x);
-}
-.head { border-bottom: 1px solid var(--rule); }
-.foot { border-top: 1px solid var(--rule); color: var(--text-faint); font-size: var(--fs-small); }
-.main { flex: 1; padding: var(--frame-pad-y) var(--frame-pad-x); display: flex; flex-direction: column; justify-content: center; }
-.rail { max-width: var(--measure); width: 100%; }
 
-.brand { font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.01em; }
+h1,
+h2,
+p,
+ul {
+  margin: 0;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/*
+  The head: the wordmark, with the discipline label sitting directly under it at
+  one line-height, baseline to baseline, so the two read as one unit. This is
+  the personal site's name-and-role-line pairing with different words in it.
+  It was a flex row with a bottom rule; the rule and the row are both gone.
+*/
+.head {
+  display: block;
+}
+
+/*
+  The wordmark. Ink, 500, and the only 500 in the head. It carries no underline
+  because it is the mark rather than a link into the page, exactly as the
+  personal site's h1 carries none.
+*/
+.brand {
+  display: inline-block;
+  color: var(--ink);
+  font-size: var(--size-name);
+  font-weight: var(--weight-strong);
+  text-decoration: none;
+}
+
+.brand:focus-visible {
+  outline: 2px solid var(--rule-strong);
+  outline-offset: 2px;
+  border-radius: var(--radius-focus);
+}
+
+/*
+  The caret. The blinking amber block was the rejected design's one moving
+  part, and this site has no motion and no hue. The span is empty and
+  aria-hidden in the markup, so removing it from the render costs nothing and
+  the markup is left untouched.
+*/
 .caret {
-  display: inline-block; width: 0.6em; height: 1.32em; background: var(--accent);
-  transform: translateY(0.22em); margin-left: 0.05ch;
-  animation: blink 1.06s steps(1, end) infinite;
+  display: none;
 }
-@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
-/* The discipline label beside the wordmark. Size and tracking carry it, not colour. */
+/*
+  The discipline label, and the capture heading, which are the same thing: an
+  annotation on the element above, separated from it by colour alone. Body
+  size, body weight, muted tier. No letter-spacing and no text-transform: the
+  string is stored shouted in src/config.ts, so the capitals are copy rather
+  than styling, and The Untracked Type Rule forbids adding tracking to rescue
+  them.
+*/
 .label {
-  font-size: var(--fs-eyebrow); letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--text-faint);
+  font-size: var(--size-body);
+  font-weight: var(--weight-regular);
+  color: var(--muted);
 }
 
-a { color: var(--accent-text); text-underline-offset: 0.2em; }
-a:hover { text-decoration-thickness: 2px; }
+/*
+  Link technique: text inherits its context colour, the underline carries the
+  signal. --rule is the sole non-colour identifier of a link, so it is raised
+  well past the 1.7 to 2.5:1 the references use and clears 3:1. It is a neutral
+  grey, so the page carries no hue at all.
+*/
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.15em;
+  text-decoration-skip-ink: auto;
+}
 
-/* The headline is the page. One sentence, two lines, the break set in config. */
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    text-decoration-color: var(--rule-strong);
+    text-decoration-thickness: 0.11em;
+  }
+}
+
+a:focus-visible {
+  outline: 2px solid var(--rule-strong);
+  outline-offset: 2px;
+  border-radius: var(--radius-focus);
+}
+
+.main {
+  margin-top: var(--space-group);
+}
+
+/*
+  The headline. One sentence over two lines, and the break is set in
+  src/config.ts because the line ends where the sense turns.
+
+  There is deliberately NO max-width here. The rejected design set 22ch, which
+  was shorter than line one ("I build the systems startups", 28 characters), so
+  the browser wrapped inside the first span and the sentence set as three
+  lines with "startups" stranded alone. The page measure of 600px already
+  governs, and at 15px Inter that first line is roughly 190px of ink, so a
+  max-width could only ever introduce a wrap the sentence does not ask for.
+  If a max-width is ever needed here, derive it from the rendered width of the
+  longest line and say so in a comment.
+
+  It is set at --size-name, not at a display size, because this site has no
+  size hierarchy: every piece of text is 15px and the h1 is separated from the
+  body by weight and position. Adding a second type size here reopens a
+  decision that was measured and settled on the personal site.
+*/
 .headline {
-  font-size: clamp(1.5rem, 2.6vw + 1rem, 2.6rem);
-  line-height: var(--leading-tight);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin: 0 0 calc(var(--rhythm) * 2.4);
-  max-width: 22ch;
+  font-size: var(--size-name);
+  font-weight: var(--weight-strong);
+  max-width: none;
 }
-.headline span { display: block; }
 
-/* Links out. A row of names, nothing else. */
-.links { display: flex; flex-wrap: wrap; gap: 0.6rem 1.6rem; margin: 0 0 calc(var(--rhythm) * 2.4); padding: 0; list-style: none; }
-.links a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--rule-strong); }
-.links a:hover { color: var(--text); border-bottom-color: var(--accent); }
-
-/* The one call to action. The brackets are markup, the label is one config string. */
-.cta {
-  display: inline-block; color: var(--text); text-decoration: none;
-  letter-spacing: 0.1em; text-transform: uppercase; font-size: var(--fs-small);
-  transition: color var(--dur-fast) var(--ease-out);
+/* The two lines are explicit spans, so each takes its own line box. */
+.headline span {
+  display: block;
 }
-.cta:hover { color: var(--accent-text); }
-.cta .bracket { color: var(--text-faint); }
-.cta:hover .bracket { color: var(--accent); }
 
-/* Newsletter capture. One row, sitting in the frame foot area. */
-.capture { padding: 0 var(--frame-pad-x) var(--frame-pad-y); max-width: var(--measure); }
-.capture__row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.capture input {
-  font: inherit; font-size: var(--fs-small); color: var(--text); background: transparent;
-  border: 1px solid var(--rule-strong); border-radius: 7px; padding: 0.45rem 0.6rem; min-width: 15rem;
+/*
+  The links out. One column, no markers, one line each. Columns were measured
+  and rejected on the personal site at five items across two sections, and this
+  is three items in one, so the threshold is not close.
+*/
+.links {
+  margin-top: var(--space-group);
+  padding: 0;
+  list-style: none;
 }
-.capture input:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 1px; }
+
+/*
+  The one call to action. It sits in a bare <p> after the list, and is selected
+  as such rather than by adding a class, because this is a restyle and the
+  markup is not to change. The brackets are markup and are muted, so the label
+  reads first. The link itself takes the site-wide underline treatment.
+*/
+.links + p {
+  margin-top: var(--space-group);
+}
+
+.bracket {
+  color: var(--muted);
+}
+
+/*
+  Newsletter capture. The personal site has no form language at all, because it
+  has no forms: nothing on it is a box. This surface has to carry one, so the
+  field and the button are built from the tokens that already exist rather than
+  from new ones. The border is --rule, the same grey and the same 3:1 job as
+  the link underline. The radius is --radius-focus, the only radius on the
+  site. The padding is --space-tight by --space-para, both already on the
+  scale. No fill, no shadow, no second size, no 500 weight.
+*/
+.capture {
+  margin-top: var(--space-group);
+}
+
+.capture .label {
+  margin-bottom: var(--space-tight);
+}
+
+.capture__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-tight);
+}
+
+.capture input,
 .capture button {
-  font: inherit; font-size: var(--fs-small); letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--text); background: transparent; border: 1px solid var(--rule-strong);
-  border-radius: 7px; padding: 0.45rem 0.8rem; cursor: pointer;
-  transition: filter var(--dur-fast) var(--ease-out);
+  font-family: inherit;
+  font-size: var(--size-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading);
+  color: var(--ink);
+  background-color: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-focus);
+  padding: var(--space-tight) var(--space-para);
 }
-.capture button:active { filter: brightness(0.92); }
-.note { font-size: var(--fs-small); color: var(--text-faint); margin: 0.5rem 0 0; }
+
+/*
+  The field is a fixed 15rem and deliberately does not grow to fill the row. On
+  a page whose whole discipline is that nothing is a box, a 600px box would be
+  the largest object on the surface and would outweigh the headline. It caps at
+  the container so it still fits a narrow phone, where the row wraps and the
+  button drops to its own line.
+*/
+.capture input {
+  flex: 0 1 auto;
+  width: 15rem;
+  max-width: 100%;
+}
+
+.capture input::placeholder {
+  color: var(--muted);
+}
+
+.capture button {
+  cursor: pointer;
+}
+
+/*
+  Held closed until CAPTURE_ENDPOINT is set. The disabled state is stated in
+  the muted tier rather than by a fill, and .note beneath says so in words, so
+  colour is never the only carrier.
+*/
+.capture input:disabled,
+.capture button:disabled {
+  color: var(--muted);
+  cursor: default;
+}
+
+.capture input:focus-visible,
+.capture button:focus-visible {
+  outline: 2px solid var(--rule-strong);
+  outline-offset: 2px;
+  border-radius: var(--radius-focus);
+}
+
+.note {
+  margin-top: var(--space-tight);
+  color: var(--muted);
+}
+
+/* The foot. Two muted lines, one per span. No rule above it: the space is the separation. */
+.foot {
+  margin-top: var(--space-group);
+  color: var(--muted);
+}
+
+.foot span {
+  display: block;
+}
+
+/* The archive. Same h1 treatment as the headline, since it is the same rank. */
+.page-title {
+  font-size: var(--size-name);
+  font-weight: var(--weight-strong);
+}
+
+.empty {
+  margin-top: var(--space-group);
+}
 
 .visually-hidden {
-  position: absolute; width: 1px; height: 1px; overflow: hidden;
-  clip-path: inset(50%); white-space: nowrap;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-/* The archive, empty until the first issue is written. */
-.page-title { font-size: clamp(1.4rem, 0.7vw + 1.22rem, 1.7rem); line-height: var(--leading-tight); margin: 0 0 var(--rhythm); }
-.empty { color: var(--text-muted); margin: 0 0 var(--rhythm); }
+@media (forced-colors: active) {
+  a {
+    text-decoration-color: LinkText;
+  }
 
-@media (max-width: 620px) {
-  :root { --frame-margin: 0; }
-  .frame { border-radius: 0; border-left: 0; border-right: 0; min-height: 100vh; }
+  /* .label is --muted on screen; in forced colours it resolves to CanvasText, the
+     same value as body text, so its rank is carried by weight instead. */
+  .label {
+    font-weight: var(--weight-strong);
+  }
+
+  a:focus-visible,
+  .brand:focus-visible,
+  .capture input:focus-visible,
+  .capture button:focus-visible {
+    outline-color: Highlight;
+  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  .caret { opacity: 1; animation: none; }
+/* Same page, same sizes, same gutter. Only the silence above the wordmark shrinks. */
+@media (max-width: 480px) {
+  .frame {
+    padding-block: var(--space-void-narrow) var(--space-bottom);
+  }
 }
+
+/* This may well be printed. Ink on paper, no tints, no focus ring, no form chrome. */
+@media print {
+  html,
+  body {
+    background: #FFFFFF;
+  }
+
+  body,
+  h1 {
+    color: #000000;
+  }
+
+  .label,
+  .note,
+  .foot,
+  .bracket {
+    color: #4A4A4A;
+  }
+
+  a {
+    text-decoration-color: #000000;
+  }
+
+  /* Printed links are otherwise inert words. mailto: is left alone: the address
+     is already the link text on the pages that print it. */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-weight: var(--weight-regular);
+  }
+
+  a:focus-visible {
+    outline: none;
+  }
+
+  /* A form is not a thing on paper. The heading and the note still print. */
+  .capture__row {
+    display: none;
+  }
+}
+
+/*
+  Motion: none, anywhere. A decision, not an omission, and the same one the
+  personal site made. Because nothing on this site moves, there is deliberately
+  no prefers-reduced-motion block: there is nothing to reduce. Adding a single
+  transition makes that omission a defect and obliges the block.
+*/

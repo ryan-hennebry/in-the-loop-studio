@@ -19,6 +19,18 @@ const year = new Date().getFullYear();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      No imagery of any kind on this surface, so there is no favicon file to
+      serve. An empty data URI silences the browser's automatic /favicon.ico
+      request without inventing an image. Same technique as ryanhennebry.xyz.
+    -->
+    <link rel="icon" href="data:," />
+    <!--
+      The page is white paper with one text colour. Declaring the scheme stops a
+      dark-mode browser inverting the capture field and its button, which are
+      the only native controls here.
+    -->
+    <meta name="color-scheme" content="light" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
