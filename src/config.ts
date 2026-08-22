@@ -58,8 +58,8 @@ export const CTA_HREF = `mailto:${CTA_EMAIL}`;
  * page follows; nothing links out except through this object.
  */
 export const LINKS = {
-  /** startupskills.ai when it is registered. Placeholder until then. */
-  skills: "https://startup-skills.workers.dev",
+  /** The name is chosen, registration is pending, so this does not resolve yet. */
+  skills: "https://startupskills.dev",
   /** The Feed. Closed and email gated until it is built, so this is a placeholder. */
   feed: "https://in-the-loop-feed.workers.dev",
   /** The archive. A route on this site, so it is live the moment this ships. */
