@@ -1,0 +1,19 @@
+---
+// The archive, and the only subpage. The issues live in the
+// in-the-loop-newsletter repo and are not copied here: this repo owns the
+// route and the styling, not the content. Nothing has been written yet, so the
+// page says so plainly instead of showing a placeholder issue.
+import Base from "../layouts/Base.astro";
+import { SITE_NAME } from "../config.ts";
+---
+<Base
+  title={`The newsletter, ${SITE_NAME}`}
+  description="The In The Loop newsletter archive. Monthly at launch, and every issue lands here."
+  path="/newsletter"
+>
+  <h1 class="page-title">The newsletter</h1>
+  <p class="empty">
+    Monthly at launch. No issue has gone out yet, so there is nothing to read
+    here: the first one lands on this page the day I send it.
+  </p>
+</Base>

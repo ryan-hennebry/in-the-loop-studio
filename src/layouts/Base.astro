@@ -1,0 +1,48 @@
+---
+import { NAV_LABEL, SITE_NAME, WORDMARK, LINKS, absolute } from "../config.ts";
+import Capture from "../components/Capture.astro";
+import "../styles/site.css";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Site relative path, no trailing slash. The canonical is built from SITE_URL. */
+  path: string;
+}
+
+const { title, description, path } = Astro.props;
+const canonical = absolute(path);
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <div class="frame">
+      <header class="head">
+        <a class="brand" href="/">{WORDMARK}<span class="caret" aria-hidden="true"></span></a>
+        <p class="label">{NAV_LABEL}</p>
+      </header>
+      <main class="main">
+        <div class="rail">
+          <slot />
+        </div>
+      </main>
+      <Capture />
+      <footer class="foot">
+        <span>{SITE_NAME}, {year}.</span>
+        <span><a href={LINKS.identity}>Ryan Hennebry</a></span>
+      </footer>
+    </div>
+  </body>
+</html>

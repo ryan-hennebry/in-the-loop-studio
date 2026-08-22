@@ -1,0 +1,32 @@
+---
+// Newsletter capture. It ships on day one and does not wait for a first issue,
+// so the form is real markup pointed at one swappable endpoint. The list
+// provider is not chosen yet: no vendor SDK is installed and no provider name
+// is hardcoded. Wiring it up is CAPTURE_ENDPOINT in src/config.ts and nothing
+// else. Until that string is set the form says it is not wired rather than
+// posting into the dark.
+import { CAPTURE_ENDPOINT, CAPTURE_FIELD } from "../config.ts";
+const wired = CAPTURE_ENDPOINT !== "";
+---
+<section class="capture" aria-labelledby="capture-heading">
+  <p class="label" id="capture-heading">The newsletter</p>
+  <form
+    class="capture__row"
+    method="post"
+    action={wired ? CAPTURE_ENDPOINT : undefined}
+    data-capture={wired ? "live" : "pending"}
+  >
+    <label class="visually-hidden" for="capture-email">Email address</label>
+    <input
+      id="capture-email"
+      type="email"
+      name={CAPTURE_FIELD}
+      placeholder="you@company.com"
+      autocomplete="email"
+      required
+      disabled={!wired}
+    />
+    <button type="submit" disabled={!wired}>Subscribe</button>
+  </form>
+  {!wired && <p class="note">Not wired to a list provider yet, so the form is held closed until it is.</p>}
+</section>

@@ -1,0 +1,21 @@
+{
+  "name": "in-the-loop-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "in-the-loop.studio: the hub for In The Loop. One page, one subpage.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "wrangler dev",
+    "deploy": "astro build && wrangler deploy",
+    "verify": "./verify.sh"
+  },
+  "dependencies": {
+    "astro": "^7.2.4"
+  },
+  "devDependencies": {
+    "wrangler": "^4.125.0"
+  }
+}
