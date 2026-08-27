@@ -1,19 +1,8 @@
 {
-  // Cloudflare Worker for in-the-loop.studio. Assets only: dist/ is uploaded
-  // and served directly, with no server-side code.
-  //
-  // No custom domain is bound on purpose. in-the-loop.studio still serves the
-  // superseded site, and replacing it is Ryan's call, so the deploy target is
-  // the workers.dev subdomain until he says otherwise. When he does, add a
-  // "routes" block here and change SITE_URL in src/config.ts to match.
+  // Source of truth for the existing Cloudflare Pages production project,
+  // which owns in-the-loop.studio and www.in-the-loop.studio.
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "in-the-loop-studio",
+  "name": "in-the-loop",
   "compatibility_date": "2026-08-22",
-  "workers_dev": true,
-  "assets": {
-    "directory": "./dist",
-    "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
-  },
-  "observability": { "enabled": true }
+  "pages_build_output_dir": "./dist"
 }
