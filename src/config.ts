@@ -76,8 +76,8 @@ export const PROPERTIES = [
 
 export const PLAN_INTRO = [
   "Agents can now do real startup work.",
-  "We’re still figuring out what that changes.",
-  "In The Loop exists to find out.",
+  "But we’re still figuring out this new world.",
+  "In The Loop exists to explore it and build what’s missing.",
 ] as const;
 
 /** Build an absolute URL from a site relative path. Use this, never string concatenation. */

@@ -335,7 +335,6 @@ ul {
 
 .plan__intro p:last-child {
   margin-top: var(--lede-turn);
-  font-weight: 500;
 }
 
 .plan__section {
@@ -377,6 +376,9 @@ ul {
   text-wrap: pretty;
 }
 
+/* One emphasis weight for the whole essay: the introduction's closing line and the
+   product names in the body are the same voice, so they carry the same weight. */
+.plan__intro strong,
 .plan__copy strong {
   font-weight: 600;
 }

@@ -76,8 +76,8 @@ for phrase in \
   'Share what we learn as we go.' \
   'Read the plan' \
   'Agents can now do real startup work.' \
-  'We’re still figuring out what that changes.' \
-  'In The Loop exists to find out.'
+  'But we’re still figuring out this new world.' \
+  'In The Loop exists to explore it and build what’s missing.'
 do
   if ! grep -Fq "$phrase" src/config.ts; then
     echo "FAIL settled homepage copy is missing: $phrase"
@@ -103,13 +103,13 @@ for phrase in \
   'Discover what matters' \
   '<strong>Signal</strong> curates the articles, podcasts, research and tools worth following on the frontier.' \
   '<strong>Skills</strong> indexes agent skills for startup work: research, growth, hiring, fundraising and operations.' \
-  'Together, they keep us close to what is emerging and what already works. We mostly curate, and build our own where useful.' \
-  'But agents still need to understand the startup they are working with.' \
+  'Together, they keep us close to what is emerging and what already works. We mostly curate. Where something important is missing, we build it.' \
+  'But capability is only part of what an agent needs to work well inside a startup.' \
   'What an agent should do depends on the startup.' \
-  'The <strong>Harness</strong> installs the context agents need to understand it: strategy, customers, product, decisions, feedback and metrics, plus the tools, memory and permissions they need to act.' \
+  'The <strong>Harness</strong> installs the context agents need to understand it: strategy, customers, product, decisions, feedback and metrics. It also connects them to the tools, memory and permissions they need to act.' \
   'We put the Skills and Harness to work with founders and early operators instead of guessing what to build next.' \
-  'What they keep coming back to tells us where to go deeper. When a workflow repeatedly creates value, we build an <strong>Agent</strong> around it, put it back into use and learn again.' \
-  '<strong>Signal</strong> and <strong>Skills</strong> give founders and early operators a reason to find In The Loop. The <strong>Newsletter</strong> keeps us in touch.' \
+  'Use tells us where to go deeper. When a workflow keeps creating value, we build an <strong>Agent</strong> around it, put it back into use and learn again.' \
+  '<strong>Signal</strong> and <strong>Skills</strong> are useful on their own. The <strong>Newsletter</strong> keeps us in touch with the founders and early operators who find them.' \
   'Some readers become customers. Their use and feedback shape what we build next.'
 do
   if ! grep -Fq "$phrase" src/pages/plan.astro; then
@@ -187,7 +187,7 @@ done
 if grep -Fq '<title>In The Loop, agent-native startup operations</title>' dist/index.html \
   && grep -Fq '<meta name="description" content="Building the systems startups need now that agents work.">' dist/index.html \
   && grep -Fq '<title>The plan, In The Loop</title>' dist/plan/index.html \
-  && grep -Fq '<meta name="description" content="Agents can now do real startup work. We’re still figuring out what that changes. In The Loop exists to find out.">' dist/plan/index.html; then
+  && grep -Fq '<meta name="description" content="Agents can now do real startup work. But we’re still figuring out this new world. In The Loop exists to explore it and build what’s missing.">' dist/plan/index.html; then
   echo "ok: page titles and descriptions are explicit and page-specific"
 else
   echo "FAIL a page title or description has drifted."

@@ -26,12 +26,14 @@ typography:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "19px"
     fontWeight: 400
+    fontWeightEmphasis: 600
     lineHeight: 1.55
     letterSpacing: "-0.011em"
   plan-body:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "16px"
     fontWeight: 400
+    fontWeightEmphasis: 600
     lineHeight: 1.625
   body:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
@@ -151,8 +153,13 @@ The homepage uses the Headline, Body, Identity and Action roles. The Plan adds S
 Intro and Plan Body. On screens up to 600px, the headline becomes 24px, the section title 22px and
 the Plan introduction 18px. Other roles remain stable. The Plan introduction balances its line
 breaks so its three sentences break at clause boundaries rather than at the last word that fits, and
-carries -0.011em tracking so the second sentence holds one line down to 384px. Balanced wrapping is
+carries -0.011em tracking so the second sentence holds one line down to 381px. Balanced wrapping is
 for the introduction and the headings only; the Plan body does not use it.
+
+Emphasis on the Plan is one weight, 600, carried by `strong` and by nothing else. It marks the
+product names in the body and the whole of the introduction's closing line, which is the essay's one
+emphasised sentence and the turn from premise to purpose. That line takes no weight of its own in
+CSS: the markup says which words are emphasised and one shared rule says how much.
 
 **The Exact Language Rule.** Homepage copy and the Plan introduction live in `src/config.ts`; the
 rest of the Plan copy lives in `src/pages/plan.astro`. Do not

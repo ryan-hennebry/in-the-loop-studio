@@ -1,7 +1,7 @@
 - [Two-page studio constraints](project-two-page-studio-constraints.md) - two routes, zero-JS budget; verify.sh gates structure, not just copy.
-- [Verification commands](builder-verification-commands.md) - ./verify.sh is the single completion gate; it builds and asserts against dist/.
+- [Verification commands](builder-verification-commands.md) - ./verify.sh is the gate; each run wipes dist/viewport.html, restore it after.
 - [Visual measurement](builder-visual-measurement.md) - measure dist over a spare port with cached Playwright; rebuild first, scroll before hover.
-- [Verify copy gate](feedback-verify-copy-gate.md) - copy changes must be mirrored in verify.sh phrase gates; one curly apostrophe in src/config.ts is intentional.
+- [Verify copy gate](feedback-verify-copy-gate.md) - mirror copy changes in all three verify.sh gate sites; keep src/config.ts curly apostrophes.
 - [Root doc editing](feedback_root-doc-editing.md) - root *.md is ASCII-gated and hand-wrapped near 100 cols; re-wrap paragraphs, verify with grep.
 - [Email routing](project_email-routing.md) - mail to ryan@in-the-loop.studio is live and delivering; only the _dmarc record is still missing.
 - [Height measurement](builder-height-measurement.md) - scrollHeight clamps to the viewport; use body's bounding rect for the real document height.

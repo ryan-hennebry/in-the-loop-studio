@@ -13,7 +13,11 @@ import {
     <header class="plan__header">
       <h1 class="sr-only">In The Loop</h1>
       <div class="plan__intro">
-        {PLAN_INTRO.map((paragraph) => <p>{paragraph}</p>)}
+        {PLAN_INTRO.map((paragraph, index) => (
+          <p>
+            {index === PLAN_INTRO.length - 1 ? <strong>{paragraph}</strong> : paragraph}
+          </p>
+        ))}
       </div>
     </header>
 
@@ -22,8 +26,8 @@ import {
       <div class="plan__copy">
         <p><strong>Signal</strong> curates the articles, podcasts, research and tools worth following on the frontier.</p>
         <p><strong>Skills</strong> indexes agent skills for startup work: research, growth, hiring, fundraising and operations.</p>
-        <p>Together, they keep us close to what is emerging and what already works. We mostly curate, and build our own where useful.</p>
-        <p>But agents still need to understand the startup they are working with.</p>
+        <p>Together, they keep us close to what is emerging and what already works. We mostly curate. Where something important is missing, we build it.</p>
+        <p>But capability is only part of what an agent needs to work well inside a startup.</p>
       </div>
     </section>
 
@@ -31,7 +35,7 @@ import {
       <h2 class="plan__heading" id="context-heading">Install the context</h2>
       <div class="plan__copy">
         <p>What an agent should do depends on the startup.</p>
-        <p>The <strong>Harness</strong> installs the context agents need to understand it: strategy, customers, product, decisions, feedback and metrics, plus the tools, memory and permissions they need to act.</p>
+        <p>The <strong>Harness</strong> installs the context agents need to understand it: strategy, customers, product, decisions, feedback and metrics. It also connects them to the tools, memory and permissions they need to act.</p>
       </div>
     </section>
 
@@ -39,14 +43,14 @@ import {
       <h2 class="plan__heading" id="use-heading">Let use decide</h2>
       <div class="plan__copy">
         <p>We put the Skills and Harness to work with founders and early operators instead of guessing what to build next.</p>
-        <p>What they keep coming back to tells us where to go deeper. When a workflow repeatedly creates value, we build an <strong>Agent</strong> around it, put it back into use and learn again.</p>
+        <p>Use tells us where to go deeper. When a workflow keeps creating value, we build an <strong>Agent</strong> around it, put it back into use and learn again.</p>
       </div>
     </section>
 
     <section class="plan__section" aria-labelledby="newsletter-heading">
       <h2 class="plan__heading" id="newsletter-heading">Share what we learn</h2>
       <div class="plan__copy">
-        <p><strong>Signal</strong> and <strong>Skills</strong> give founders and early operators a reason to find In The Loop. The <strong>Newsletter</strong> keeps us in touch.</p>
+        <p><strong>Signal</strong> and <strong>Skills</strong> are useful on their own. The <strong>Newsletter</strong> keeps us in touch with the founders and early operators who find them.</p>
         <p>Some readers become customers. Their use and feedback shape what we build next.</p>
       </div>
     </section>

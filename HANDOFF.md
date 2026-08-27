@@ -35,9 +35,10 @@ homepage email action and no client JavaScript.
 
 The homepage's final register says `Curate what matters on the frontier.` and `Index agent skills
 for startup work.` The Plan uses Ryan's final supplied copy as a prose-only causal essay: discover
-what matters, install the context, let use decide and share what we learn. Its visible title,
-system register and diagrams are removed. The opening uses tight premise spacing followed by a
-larger gap before `In The Loop exists to find out.`
+what matters, install the context, let use decide and share what we learn. Its visible title, system
+register and diagrams are removed. The opening uses tight premise spacing followed by a larger gap
+before `In The Loop exists to explore it and build what's missing.`, which is set in the Plan's 600
+emphasis weight as the essay's one emphasised line.
 
 Plan spacing was rebuilt on a 4px scale. The opening lines sit 12px apart and the conclusion follows
 after 32px at both widths. A heading sits 14px above its body, paragraphs inside a section sit 26px
@@ -84,8 +85,9 @@ only through a direct `wrangler pages deploy ./dist` upload of a fresh build.
 
 Local `main` is ahead of production. That deployment predates the Plan spacing rebuild, the
 `Discover what matters` rename, the contact link, the colophon, the elastic homepage rhythm, the
-shortened page endings, the drawn arrow and the `Share what we learn as we go.` register line, so
-none of those are live yet.
+shortened page endings, the drawn arrow, the `Share what we learn as we go.` register line and the
+replaced Plan introduction and body copy, so none of those are live yet. The live Plan description
+still reads `In The Loop exists to find out.`
 
 ## Test
 
