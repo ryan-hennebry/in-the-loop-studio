@@ -1,6 +1,6 @@
 #!/bin/sh
 # Checks for in-the-loop.studio. House style on the Markdown, then the copy gate on the
-# shipped pages: the three ways this surface has drifted before are "we", prices and a /work page.
+# shipped pages: the recurring drift risks are prices, stale routes and paraphrased copy.
 set -eu
 cd "$(dirname "$0")"
 fail=0
@@ -25,9 +25,13 @@ if [ -d src/pages ]; then
     echo "ok: no /work route"
   fi
   if [ -e src/pages/newsletter.astro ] || [ -d src/pages/newsletter ]; then
-    echo "ok: /newsletter archive present"
+    echo "FAIL /newsletter exists. Only the homepage and Plan have a current job."
+    fail=1
+  elif [ ! -e src/pages/plan.astro ]; then
+    echo "FAIL /plan is missing."
+    fail=1
   else
-    echo "note: /newsletter not built yet. It is the one permitted subpage."
+    echo "ok: homepage and Plan are the only routes"
   fi
 else
   echo "not built: no src/pages. The site has not been scaffolded."
@@ -37,14 +41,6 @@ echo "== copy =="
 if [ ! -d src ]; then
   echo "not built: no copy to check yet. See HANDOFF.md."
   exit "$fail"
-fi
-
-# The voice is "I". One person, and the copy must not imply a team.
-if grep -rnEi '\b(we|our|us)\b' src --include='*.astro' --include='*.md' --include='*.mdx'; then
-  echo "FAIL first person plural in shipped copy. The voice is 'I', never 'we'."
-  fail=1
-else
-  echo "ok: no first person plural"
 fi
 
 # No prices on this surface, and no service ladder.
@@ -63,11 +59,138 @@ else
   echo "ok: no unearned proof"
 fi
 
+# The homepage and Plan rest on settled language. Catch silent copy drift.
+for phrase in \
+  'Agent-native startup operations' \
+  'Building the systems startups need now that agents work.' \
+  "Curate what's changing in startup operations." \
+  'Index the best agent skills for startup work.' \
+  'Install the startup context agents need.' \
+  'Solve valuable workflows end-to-end.' \
+  'Share what we learn along the way.' \
+  'Read the plan →' \
+  'Agents are changing how startups work.' \
+  'We do not yet know what the best agent-native startup looks like.' \
+  'In The Loop exists to find out.'
+do
+  if ! grep -Fq "$phrase" src/config.ts; then
+    echo "FAIL settled homepage copy is missing: $phrase"
+    fail=1
+  fi
+done
+
+if grep -Rni 'end to end' src --include='*.astro' --include='*.ts' --include='*.css'; then
+  echo "FAIL end-to-end must be hyphenated."
+  fail=1
+else
+  echo "ok: settled homepage and Plan copy, including end-to-end"
+fi
+
+if grep -RqiE '<(svg|figure)|Diagram' src/pages/plan.astro src/components --include='*.astro'; then
+  echo "FAIL Plan diagrams returned. The register and prose carry the explanation."
+  fail=1
+else
+  echo "ok: Plan stays diagram-free"
+fi
+
+for phrase in \
+  'Signal and Skills keep us close to what is changing and what already works.' \
+  '<strong>Signal</strong> curates the articles, podcasts, research and tools worth following.' \
+  'Most of this is curation. We build our own where useful.' \
+  'The <strong>Harness</strong> installs that context: strategy, customers, product, decisions, feedback and metrics.' \
+  'When one does, build an <strong>Agent</strong> around it.' \
+  'The <strong>Newsletter</strong> is our direct channel to founders and early operators.' \
+  'Some become users. Their use and feedback shape what we build next.'
+do
+  if ! grep -Fq "$phrase" src/pages/plan.astro; then
+    echo "FAIL settled Plan copy is missing: $phrase"
+    fail=1
+  fi
+done
+
+echo "== brand assets =="
+node scripts/verify-brand-assets.mjs || fail=1
+
 echo "== build =="
 if [ ! -f package.json ]; then
   echo "not built: no package.json."
   exit "$fail"
 fi
 npm run build || fail=1
+
+if [ ! -f dist/plan/index.html ]; then
+  echo "FAIL the Plan route was not built."
+  fail=1
+fi
+
+echo "== search and sharing =="
+for output in dist/robots.txt dist/sitemap.xml; do
+  if [ ! -f "$output" ]; then
+    echo "FAIL $output was not built."
+    fail=1
+  fi
+done
+
+if [ -f dist/robots.txt ] && grep -Fq 'Sitemap: https://in-the-loop.studio/sitemap.xml' dist/robots.txt; then
+  echo "ok: robots.txt allows crawling and names the sitemap"
+else
+  echo "FAIL robots.txt does not name the production sitemap."
+  fail=1
+fi
+
+if [ -f dist/sitemap.xml ]; then
+  sitemap_urls=$(grep -c '<loc>' dist/sitemap.xml || true)
+  if [ "$sitemap_urls" -eq 2 ] \
+    && grep -Fq '<loc>https://in-the-loop.studio/</loc>' dist/sitemap.xml \
+    && grep -Fq '<loc>https://in-the-loop.studio/plan/</loc>' dist/sitemap.xml; then
+    echo "ok: sitemap contains the two canonical pages"
+  else
+    echo "FAIL sitemap must contain exactly the homepage and Plan canonical URLs."
+    fail=1
+  fi
+fi
+
+if grep -Fq '<link rel="canonical" href="https://in-the-loop.studio/">' dist/index.html \
+  && grep -Fq '<link rel="canonical" href="https://in-the-loop.studio/plan/">' dist/plan/index.html; then
+  echo "ok: both pages use their final production URL as canonical"
+else
+  echo "FAIL a page canonical does not match its final production URL."
+  fail=1
+fi
+
+for page in dist/index.html dist/plan/index.html; do
+  for metadata in \
+    '<meta name="robots" content="index, follow">' \
+    '<meta property="og:image:type" content="image/png">' \
+    '<meta property="og:image:alt" content="In The Loop mark">' \
+    '<meta name="twitter:image:alt" content="In The Loop mark">' \
+    '"@type":"WebSite"' \
+    '"@type":"Organization"'
+  do
+    if ! grep -Fq "$metadata" "$page"; then
+      echo "FAIL $page is missing: $metadata"
+      fail=1
+    fi
+  done
+done
+
+if grep -Fq '<title>In The Loop, agent-native startup operations</title>' dist/index.html \
+  && grep -Fq '<meta name="description" content="Building the systems startups need now that agents work.">' dist/index.html \
+  && grep -Fq '<title>The plan, In The Loop</title>' dist/plan/index.html \
+  && grep -Fq '<meta name="description" content="Agents are changing how startups work. We do not yet know what the best agent-native startup looks like. In The Loop exists to find out.">' dist/plan/index.html; then
+  echo "ok: page titles and descriptions are explicit and page-specific"
+else
+  echo "FAIL a page title or description has drifted."
+  fail=1
+fi
+
+scripts=$(grep -Rh '<script' dist --include='*.html' 2>/dev/null | wc -l | tr -d ' ')
+identity_graphs=$(grep -Rh 'application/ld+json' dist --include='*.html' 2>/dev/null | wc -l | tr -d ' ')
+if [ "$scripts" -ne 2 ] || [ "$identity_graphs" -ne 2 ] || [ "$scripts" -ne "$identity_graphs" ]; then
+  echo "FAIL the pages must ship one JSON-LD identity graph and no client JavaScript."
+  fail=1
+else
+  echo "ok: production pages ship no JavaScript beyond their JSON-LD identity graph"
+fi
 
 exit "$fail"
