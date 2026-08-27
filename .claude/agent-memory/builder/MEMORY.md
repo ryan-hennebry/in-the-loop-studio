@@ -5,4 +5,5 @@
 - [Root doc editing](feedback_root-doc-editing.md) - root *.md is ASCII-gated and hand-wrapped near 100 cols; re-wrap paragraphs, verify with grep.
 - [Email routing](project_email-routing.md) - mail to ryan@in-the-loop.studio is live and delivering; only the _dmarc record is still missing.
 - [Height measurement](builder-height-measurement.md) - scrollHeight clamps to the viewport; use body's bounding rect for the real document height.
+- [Paint vs box](builder-paint-vs-box.md) - measure underlines from painted pixels; the label box is not the rule, and decoration colour does not inherit.
 - [Spacing token rule](project-spacing-token-rule.md) - every layout interval is a named token; DESIGN.md states each number twice.
