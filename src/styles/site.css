@@ -116,6 +116,12 @@ a:focus-visible {
     --link-decoration-thickness: 0.105em;
     --link-muted: var(--ink);
   }
+
+  /* The one exception to "layout never moves": the arrow travels into space the
+     label already reserved, so the link's own box is unchanged. */
+  .primary-link:hover .primary-link__label::after {
+    transform: translateX(3px);
+  }
 }
 
 .shell {
@@ -228,9 +234,20 @@ ul {
   font-weight: 500;
 }
 
-/* The label holds the action and its arrow on one line at every width. */
+/* The label holds the action and its arrow on one line at every width. The trailing
+   space is the arrow's travel, reserved at rest so the hover moves nothing. */
 .primary-link__label {
+  padding-inline-end: 3px;
   white-space: nowrap;
+}
+
+/* The arrow is drawing, not copy: it carries empty alternative text so the link
+   still reads as its label, and it is the one thing on the page that moves. */
+.primary-link__label::after {
+  content: "\2192" / "";
+  display: inline-block;
+  padding-inline-start: 0.34em;
+  transition: transform var(--link-motion) var(--ease-out);
 }
 
 .plan__header {

@@ -103,6 +103,18 @@ funnel.
 The homepage is the concise studio argument. The Plan page is the slower causal explanation of how
 that argument is carried out. They share one visual world but have different reading rhythms.
 
+**Direction.** Each page answers an agreed direction rather than an assembly of parts. The homepage
+is a studio index, composed rather than decorated: identity, proposition, the five-part system and a
+direct path to the plan, with the whole studio argument inside the first viewport and no sales
+funnel anywhere in it. The Plan is the company plan read as one learning system, not a roadmap or a
+manifesto: a prose-only causal essay that opens on the compact identity, the founding question and
+the start of the sequence. The approved comps were the Studio Register for the homepage, seed
+34a1afad, and prose structure 5 for the Plan, seed 13e54a9e. Neither page is finished until its copy
+is exact, its states are truthful, its next step is direct and the build is reviewed and written
+down here; unreviewed and undocumented is unfinished. These directions used to ship as HTML comments
+inside the pages themselves, where any visitor could read them. They are design intent, not markup,
+and they live here now.
+
 **Key Characteristics:**
 
 - One 600px reading measure
@@ -134,8 +146,9 @@ for the introduction and the headings only; the Plan body does not use it.
 
 **The Exact Language Rule.** Homepage copy and the Plan introduction live in `src/config.ts`; the
 rest of the Plan copy lives in `src/pages/plan.astro`. Do not
-paraphrase it. This ASCII document writes the interface action as `Read the plan ->`; the interface
-renders the right-arrow glyph. `end-to-end` is always hyphenated.
+paraphrase it. The homepage action is the three words `Read the plan`; its arrow is drawn in CSS and
+is not part of the copy, so the label alone is the accessible name. This ASCII document writes the
+rendered action as `Read the plan ->`. `end-to-end` is always hyphenated.
 
 ## Layout
 
@@ -226,7 +239,11 @@ visible focus outline and a subtle 140ms press scale. Reduced motion removes the
 Signal, Skills, Harness, Agents and Newsletter are plain, non-interactive rows because their
 products do not have live destinations. `Read the plan ->` is the sole homepage link. It has a 48px
 target and a resting underline that clears 3:1; hover strengthens the underline without moving the
-layout.
+layout. The arrow is an `::after` pseudo-element on the label carrying `content: "\2192" / ""`, so
+the glyph is drawing rather than copy and the empty alternative text keeps it out of the accessible
+name. It is the one thing on either page that moves: hover translates it 3px, into 3px of trailing
+padding the label reserves at rest, so the announced movement happens and the link's own box does
+not change size.
 
 ### Plan essay
 

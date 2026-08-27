@@ -30,7 +30,8 @@ export const SOCIAL_IMAGE_ALT = "In The Loop mark";
 export const HEADLINE =
   "Building the systems startups need now that agents work.";
 
-export const HOME_CTA_LABEL = "Read the plan →";
+/** The arrow is drawn in CSS, so the label stays the accessible name. */
+export const HOME_CTA_LABEL = "Read the plan";
 
 export const HOME_CTA_HREF = PLAN_PATH;
 

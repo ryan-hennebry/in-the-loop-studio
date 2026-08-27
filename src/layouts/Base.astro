@@ -3,7 +3,6 @@ import {
   DISCIPLINE,
   HOME_PATH,
   HEADLINE,
-  PLAN_PATH,
   SCHEMA_CONTEXT_URL,
   SITE_NAME,
   SITE_URL,
@@ -45,23 +44,6 @@ const structuredData = JSON.stringify({
     },
   ],
 });
-const directionContract = path === PLAN_PATH
-  ? `<!--
-      THESIS: The company plan as one learning system, not a roadmap or manifesto.
-      OWN-WORLD: A6 grey, white bond, Inter, quiet rules and exact spacing.
-      STORY: Discover what matters, install context, let use decide and share the learning.
-      FIRST VIEWPORT: Compact identity, the founding question and the start of the causal sequence.
-      FORM: A prose-only causal essay; assigned structure 5; seed 13e54a9e.
-      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
-    -->`
-  : `<!--
-      THESIS: A studio index, composed rather than decorated.
-      OWN-WORLD: A6 grey, white paper, precise type, quiet rules.
-      STORY: Identity, proposition, five-part system, direct path to the plan.
-      FIRST VIEWPORT: The complete studio argument, without a sales funnel.
-      FORM: A compact register; approved Studio Register comp; seed 34a1afad.
-      FINISH: Exact copy, truthful states and a direct next step.
-    -->`;
 ---
 <!doctype html>
 <html lang="en-GB">
@@ -107,7 +89,6 @@ const directionContract = path === PLAN_PATH
     <script type="application/ld+json" set:html={structuredData}></script>
   </head>
   <body data-page={isHome ? "home" : "plan"}>
-    <Fragment set:html={directionContract} />
     <div class="shell">
       <header class="identity">
         {isHome ? (

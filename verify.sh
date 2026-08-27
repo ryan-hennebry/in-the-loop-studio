@@ -74,7 +74,7 @@ for phrase in \
   'Install the startup context agents need.' \
   'Solve valuable workflows end-to-end.' \
   'Share what we learn along the way.' \
-  'Read the plan →' \
+  'Read the plan' \
   'Agents can now do real startup work.' \
   'We’re still figuring out what that changes.' \
   'In The Loop exists to find out.'
