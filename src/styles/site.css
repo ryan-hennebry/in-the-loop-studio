@@ -17,17 +17,24 @@
   --measure: 600px;
   --gutter: 24px;
   /* Micro: bound to the line box. */
+  --mark-gap:    12px;   /* the mark to the lockup copy */
   --lede-line:   12px;   /* line to line inside the opening stanza */
-  --lede-turn:   32px;   /* lede body to its conclusion */
   --heading-gap: 14px;   /* heading to the copy it owns */
+  --register-pair: 24px; /* a register name to its description */
   --para:        26px;   /* paragraph to paragraph */
+  --lede-turn:   32px;   /* lede body to its conclusion */
+  --register-row: 19px 20px;  /* a register row, set optically between its rules */
   /* Macro. */
-  --lockup-gap:  88px;   /* identity to the essay */
+  --action-gap:  43px;   /* the register to the one action */
+  --register-top: 52px;  /* headline to the register */
   --section:     72px;   /* section to section */
+  --lockup-gap:  88px;   /* identity to the essay */
   --section-close: 144px;  /* the essay's last words to its closing line */
   --close-rule: 60px;      /* the closing hairline, a fraction of the measure */
   /* Terminal. */
-  --plan-end:   160px;   /* last words to page end */
+  --page-top: clamp(96px, 14vh, 144px);  /* page top to the identity */
+  --page-end:    80px;   /* last words to page end */
+  --plan-end:   160px;   /* the Plan ends further down: it has further to fall */
   /* Interaction. One timing and one resting underline for every link on the site. */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --link-motion: 140ms;
@@ -114,7 +121,7 @@ a:focus-visible {
 .shell {
   width: min(var(--measure), calc(100% - (2 * var(--gutter))));
   margin-inline: auto;
-  padding-block: clamp(96px, 14vh, 144px) var(--page-end, 80px);
+  padding-block: var(--page-top) var(--page-end);
 }
 
 [data-page="plan"] .shell {
@@ -125,7 +132,7 @@ a:focus-visible {
   display: inline-grid;
   grid-template-columns: 26px minmax(0, 1fr);
   align-items: center;
-  gap: 12px;
+  gap: var(--mark-gap);
 }
 
 /* The Plan's return path is a navigational lockup, not prose, so it overrides the
@@ -181,7 +188,7 @@ ul {
 }
 
 .programme {
-  margin-top: 52px;
+  margin-top: var(--register-top);
 }
 
 .properties {
@@ -198,8 +205,8 @@ ul {
   display: grid;
   grid-template-columns: 92px minmax(0, 1fr);
   align-items: baseline;
-  gap: 24px;
-  padding-block: 19px 20px;
+  gap: var(--register-pair);
+  padding-block: var(--register-row);
 }
 
 .property__name {
@@ -215,7 +222,7 @@ ul {
   display: inline-flex;
   align-items: center;
   min-height: 48px;
-  margin-top: 43px;
+  margin-top: var(--action-gap);
   margin-inline-start: -8px;
   padding-inline: 8px;
   font-weight: 500;
@@ -319,15 +326,17 @@ ul {
 
 @media (max-width: 600px) {
   :root {
-    --lockup-gap: 64px;
+    --register-pair: 4px;
+    --register-row: 12px 13px;
+    --action-gap: 24px;
+    --register-top: 24px;
+    --lockup-gap: 32px;
     --section: 56px;
     --section-close: 96px;
     --close-rule: 32px;
+    --page-top: 24px;
+    --page-end: 16px;
     --plan-end: 120px;
-  }
-
-  .shell {
-    padding-block: 56px var(--page-end, 40px);
   }
 
   .headline {
@@ -346,20 +355,9 @@ ul {
     font-size: 22px;
   }
 
-  .programme {
-    margin-top: 40px;
-  }
-
   .property__row {
     grid-template-columns: minmax(0, 1fr);
-    gap: 4px;
-    padding-block: 16px 17px;
   }
-
-  .primary-link {
-    margin-top: 35px;
-  }
-
 }
 
 @media (max-width: 360px) {
@@ -369,8 +367,10 @@ ul {
 }
 
 @media print {
-  .shell {
-    padding-block: 32px;
+  :root {
+    --page-top: 32px;    /* on paper the sheet edge does the opening's work */
+    --page-end: 32px;
+    --plan-end: 32px;
   }
 }
 

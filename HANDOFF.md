@@ -41,12 +41,19 @@ larger gap before `In The Loop exists to find out.`
 Plan spacing was rebuilt on a 4px scale. The opening lines sit 12px apart and the conclusion follows
 after 32px at both widths. A heading sits 14px above its body, paragraphs inside a section sit 26px
 apart, and sections separate by 72px on desktop and 56px on mobile. The lockup-to-opening gap is
-88px on desktop and 64px on mobile. The Plan ends 160px below its last words on desktop and 120px on
-mobile; the homepage ending is unchanged at 80px and 40px. Page-scoped spacing is applied through
-the `data-page` attribute on `<body>`. The Plan closes with one quiet mailto link to
+88px on desktop and 32px on mobile. The Plan ends 160px below its last words on desktop and 120px on
+mobile; the homepage ends 80px below its action on desktop and 16px on mobile. Page-scoped spacing
+is applied through the `data-page` attribute on `<body>`. The Plan closes with one quiet mailto link to
 `ryan@in-the-loop.studio` as inline prose under no heading of its own, set apart by a bespoke 144px
 closing interval on desktop and 96px on mobile, with a hairline at 15% of the current text colour
 sitting 14px above it, 60px wide on desktop and 32px on mobile.
+
+The homepage now runs on the same named tokens rather than on literals, and at 600px and below it
+compresses to hold one screen: a 24px page top, a 32px opening gap, 24px from the headline to the
+register, 12px/13px register rows, 24px to the action and a 16px ending. It measures 643px at 360px
+wide and above, inside the roughly 664px a 390x844 phone shows under its browser chrome. A 375x667
+or 320x568 screen still scrolls. No copy was cut, no type size shrank and all three tap targets
+remain 48px.
 
 `PRODUCT.md` holds product truth, `DESIGN.md` holds the implemented visual system, and
 `src/config.ts` holds shared copy, routes and metadata values. Each page has an explicit title,

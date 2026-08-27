@@ -54,22 +54,31 @@ spacing:
   gutter: "24px"
   gutter-narrow: "20px"
   base: "4px"
+  mark-gap: "12px"
   lede-line: "12px"
-  lede-turn: "32px"
   heading-gap: "14px"
+  register-pair: "24px"
+  register-pair-mobile: "4px"
   para: "26px"
-  lockup-gap: "88px"
-  lockup-gap-mobile: "64px"
+  lede-turn: "32px"
+  register-row: "19px 20px"
+  register-row-mobile: "12px 13px"
+  action-gap: "43px"
+  action-gap-mobile: "24px"
+  register-top: "52px"
+  register-top-mobile: "24px"
   section: "72px"
   section-mobile: "56px"
+  lockup-gap: "88px"
+  lockup-gap-mobile: "32px"
   section-close: "144px"
   section-close-mobile: "96px"
   close-rule: "60px"
   close-rule-mobile: "32px"
   page-top: "clamp(96px, 14vh, 144px)"
-  page-mobile-top: "56px"
+  page-mobile-top: "24px"
   page-bottom: "80px"
-  page-mobile-bottom: "40px"
+  page-mobile-bottom: "16px"
   plan-end: "160px"
   plan-end-mobile: "120px"
 components:
@@ -130,9 +139,13 @@ renders the right-arrow glyph. `end-to-end` is always hyphenated.
 
 ## Layout
 
-Both routes use a centered 600px shell with 24px gutters. Every spacing value is a multiple of 4px.
-Desktop page padding starts between 96px and 144px and ends at 80px on the homepage and 160px on the
-Plan. The visible A6 mark is 26px; the mark-to-copy gap is 12px.
+Both routes use a centered 600px shell with 24px gutters. Every layout interval on both pages is a
+named custom property declared once in `:root` and overridden once in the 600px block; no interval
+is a bare literal inside a rule or a `var()` fallback. Both pages therefore read from one scale
+rather than from two. The scale is built on 4px; the only departure is the register row, whose lower
+padding carries one extra optical pixel. Desktop page padding starts between 96px and 144px and ends
+at 80px on the homepage and 160px on the Plan. The visible A6 mark is 26px; the mark-to-copy gap is
+12px.
 
 The homepage moves from identity to headline after 88px, from headline to the five-part register
 after 52px, and from the register to `Read the plan ->` after 43px. Register rows use a 92px name
@@ -161,11 +174,19 @@ it holds roughly a tenth of the column at every width rather than growing propor
 the column narrows. The Plan ends 160px below its last words: a page with no footer needs a closing
 interval at least twice its largest interval. Prose remains within 600px.
 
-At 600px and below, page padding becomes 56px, ending at 40px on the homepage and 120px on the Plan.
-The homepage and Plan opening gap becomes 64px, register rows stack name above description, Plan
-sections separate by 56px and the closing interval becomes 96px. The opening line gaps stay at 12px
-and 32px. Only intervals between whole blocks compress on mobile; intervals inside the prose do not,
-because Plan body type is 16px/1.625 at both widths. At 360px and below, gutters reduce to 20px.
+At 600px and below the homepage compresses to hold one screen. Page padding becomes 24px, ending at
+16px on the homepage and 120px on the Plan. The homepage and Plan opening gap becomes 32px, the
+headline-to-register gap 24px and the register-to-action gap 24px. Register rows stack name above
+description on a 4px gap with 12px/13px vertical padding. Plan sections separate by 56px and the
+closing interval becomes 96px. The opening line gaps stay at 12px and 32px. Only intervals between
+whole blocks compress on mobile; intervals inside the prose do not, because Plan body type is
+16px/1.625 at both widths. At 360px and below, gutters reduce to 20px.
+
+The measured result is a 643px homepage at 360px wide and above, against the roughly 664px a
+390x844 phone shows under its browser chrome. The whole argument, register and action included, is
+visible there without scrolling. A 375x667 or 320x568 screen still scrolls, and that is accepted:
+the remaining distance could only be bought from type size or from the register itself. No type size
+shrinks to reach the fit, no copy is cut and no tap target falls below 48px.
 
 **The One Argument Rule.** Do not add a second homepage action, a footer or unavailable-product
 links. The Plan may close with one quiet mailto link set as the last line of the page, carrying no
