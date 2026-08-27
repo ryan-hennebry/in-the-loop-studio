@@ -2,46 +2,56 @@
 
 ## Built
 
-The Astro site, static, on Cloudflare Workers, matching the Startup Skills stack. No Tailwind: the
-CSS is hand written from `../shared/design-system.md`. Two routes, `/` and `/newsletter`, and
-nothing else.
+A static Astro site with two routes: `/` and `/plan/`. The homepage presents the compact 26px A6
+lockup, settled proposition, five-part Signal/Skills/Harness/Agents/Newsletter register and one
+`Read the plan ->` action. The five concepts are non-interactive until they have real destinations.
+Signal and Newsletter are not routes. There is no footer, email action or client JavaScript.
 
-The positioning line is settled. The nav label is `AI-NATIVE STARTUP OPERATIONS` and the headline is
-"I build the systems startups use to run on agents.", set over two lines with the break after
-"startups". Neither is to be reworded, and the long descriptor list that used to sit under the
-headline was cut on purpose. The headline carries the page.
+The Plan is a continuous-system essay using the exact supplied copy. Its visible title and diagrams
+have been removed. The shared five-part register is the only visual structure; prose carries the
+strategy and causal argument. The opening uses tight premise spacing followed by a larger gap before
+`In The Loop exists to find out.` Plan sections use a 96px desktop and 68px mobile rhythm.
 
-Everything that is likely to change lives in `src/config.ts` and nowhere else: the outbound URLs
-(`LINKS`), the capture endpoint (`CAPTURE_ENDPOINT`), the CTA label (`CTA_LABEL`) and the site URL.
-No page hardcodes a URL or an email address.
+`PRODUCT.md` holds product truth, `DESIGN.md` holds the implemented visual system, and
+`src/config.ts` holds shared copy, routes and metadata values. Each page has an explicit title,
+description, apex-domain canonical, Open Graph and Twitter metadata, and the same small WebSite and
+Organization identity graph. The full A6 logo and web-icon system lives under `public/`;
+`public/brand/social-card-1200x630.png` is the shared 1200x630 Open Graph and Twitter image.
+`robots.txt` permits search crawling and names `sitemap.xml`; the sitemap contains only the two real
+canonical pages.
 
-Not deployed. The domain is owned, at Porkbun, expiring 2027-06-11, and it still serves the
-superseded operator-led agent studio site that sells a priced service ladder the current direction
-retired. That site is replaced, not amended, and replacing it is Ryan's call. `wrangler.jsonc` binds
-no custom route for that reason.
+The implementation remains in the working tree and has not been committed. It was deployed on
+2026-08-26 to the existing Cloudflare Pages project `in-the-loop`, replacing the superseded site on
+`https://in-the-loop.studio` and `https://www.in-the-loop.studio`. The technical-polish release was
+deployed on 2026-08-27 as production deployment `f9527a9a-13cd-4eff-aced-930e433d35a3` on branch
+`main`. `SITE_URL`, the package deployment script and `wrangler.jsonc` describe the Pages production
+setup.
 
 ## Test
 
-Run `./verify.sh`. It checks house style on the Markdown, then the copy gate that matters most on
-this surface: no "we", no prices, no `/work` route. Those three are the specific ways this page has
-drifted before. It finishes with `npm run build`.
+`./verify.sh` passed. It checked the two-route boundary, exact homepage and Plan copy, truth
+constraints, the diagram-free Plan, brand assets and the production Astro build. The search and
+sharing gate checks crawl files, exact canonical URLs, page-specific titles and descriptions,
+social-image metadata, the identity graph and the absence of client JavaScript.
 
-Copy is not signed off by a script. Run it through the four-lens panel in
-`../shared/voice-and-tone.md` and read the synthesis verdict before shipping any of it.
+Browser verification covered the Plan at 1440px and 390px, then both routes and both navigation
+directions at 320px. There were no browser warnings, errors or horizontal overflow. The Plan
+contained five sections and no `figure` or `svg` elements. Computed opening gaps were 0/7/19px on
+desktop and 0/6/17px on mobile; section gaps were 96px and 68px respectively.
+
+Post-deployment verification repeated those checks against `https://in-the-loop.studio`. The apex
+and `/plan/` return 200 with no `noindex` response header; `/plan` normalises to `/plan/` with a 308.
+The `www` copy canonicals to the apex. The sitemap, manifest, social card, SVG/PNG/ICO favicons and
+Apple touch icon all return successfully with the right content type. Cloudflare's managed crawler
+policy allows search indexing, declines named AI-training crawlers and preserves the production
+sitemap declaration.
 
 ## Next
 
-1. Settle the CTA wording. It is `[ START A CONVERSATION ]` today, held in `CTA_LABEL`. The
-   alternatives are `[ EMAIL ME ]` and `[ WHAT I'M WORKING ON ]`, and it is a one string change.
-2. Choose the ESP. Read the 16 consolidation decision docs first. Buttondown is the standing
-   assumption, Postmark the fallback. Wiring it is `CAPTURE_ENDPOINT` plus `CAPTURE_FIELD`, with no
-   vendor SDK. Until the endpoint is set the form renders disabled and says it is not wired.
-3. Fill in `LINKS.skills` when startupskills.ai is registered, and `LINKS.feed` when the Feed is
-   built. Both are placeholders and both point at workers.dev today.
-4. Pull the archive from the `in-the-loop-newsletter` repo once a first issue exists. `/newsletter`
-   renders an empty state until then, and this repo owns the route and the styling, not the content.
-5. Confirm `ryan@in-the-loop.studio` receives mail before the page goes live. The CTA points at it.
-6. Deploy over the existing site on the live domain, on Ryan's say-so: set `SITE_URL`, add a
-   `routes` block to `wrangler.jsonc`, then `npm run deploy`.
-
-At launch all four surfaces go live and only Startup Skills is announced. This page ships quietly.
+1. Apply Ryan's remaining copy edits.
+2. Commit the working tree when Ryan approves it.
+3. Submit `https://in-the-loop.studio/sitemap.xml` in Google Search Console when the domain property
+   is connected. Crawl readiness is live, but search inclusion is controlled by the search engine.
+4. Add a concept destination only when it is real and has a specific user job.
+5. Re-upload the LinkedIn logo or banner only if LinkedIn still holds the previous exports; website
+   icons update with deployment.
