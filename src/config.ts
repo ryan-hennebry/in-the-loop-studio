@@ -61,7 +61,7 @@ export const PROPERTIES = [
   },
   {
     name: "Newsletter",
-    description: "Share what we learn along the way.",
+    description: "Share what we learn as we go.",
   },
 ] as const;
 

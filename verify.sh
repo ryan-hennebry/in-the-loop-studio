@@ -73,7 +73,7 @@ for phrase in \
   'Index agent skills for startup work.' \
   'Install the startup context agents need.' \
   'Solve valuable workflows end-to-end.' \
-  'Share what we learn along the way.' \
+  'Share what we learn as we go.' \
   'Read the plan' \
   'Agents can now do real startup work.' \
   'We’re still figuring out what that changes.' \
