@@ -56,12 +56,12 @@ Organization identity graph. The full A6 logo and web-icon system lives under `p
 `robots.txt` permits search crawling and names `sitemap.xml`; the sitemap contains only the two real
 canonical pages.
 
-The implementation is committed on local `main`, which is 12 commits ahead of `origin/main`. It was
-deployed on 2026-08-26 to the existing Cloudflare Pages project `in-the-loop`, replacing the
-superseded site on `https://in-the-loop.studio` and `https://www.in-the-loop.studio`. Ryan's
-final-copy release was deployed on 2026-08-27 as production deployment
-`c8df63de-0f24-4201-b69c-1439af9a9d1f` on branch `main`. `SITE_URL`, the trailing-slash route
-policy, package deployment script and `wrangler.jsonc` describe the Pages production setup.
+The implementation is committed on local `main`, which has not been pushed to `origin` and does not
+need to be for a release. It was deployed on 2026-08-26 to the existing Cloudflare Pages project
+`in-the-loop`, replacing the superseded site on `https://in-the-loop.studio` and
+`https://www.in-the-loop.studio`. Ryan's final-copy release was deployed on 2026-08-27 as production
+deployment `c8df63de-0f24-4201-b69c-1439af9a9d1f` on branch `main`. `SITE_URL`, the trailing-slash
+route policy, package deployment script and `wrangler.jsonc` describe the Pages production setup.
 
 The Pages project has no git integration, so pushing to git triggers nothing. Production changes
 only through a direct `wrangler pages deploy ./dist` upload of a fresh build.
