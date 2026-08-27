@@ -1,0 +1,7 @@
+- [Plan page spacing scale](spacing-scale-plan-page.md) — shipped 4px scale for /plan: 2.77:1:0.54 rhythm, --para 26px, the 12px declared delta the heading bond needs, closing-interval rule.
+- [Plan intro lede measurements](plan-intro-lede-measurements.md) — text-wrap pretty is inert on short paragraphs, the 390px wrap cliff, why a non-breaking space is forbidden there.
+- [Emil's article endings](emil-article-endings.md) — CTA appended to the last content section is his rule, a dedicated closing section the exception; every CTA offers, none asks.
+- [Plan closing section](plan-closing-section-decision.md) — proposed fifth section for the contact line, and why a bare isolating gap keeps getting re-proposed and re-rejected.
+- [Emil Kowalski typography reference](emil-kowalski-typography-reference.md) — measured spacing/hierarchy from his /ui/ articles, and the body-sized-heading condition on reusing them.
+- [ITL studio constraints](itl-studio-constraints.md) — DESIGN.md's double bookkeeping, the reinstated mailto, the real scope of the One Argument Rule, what verify.sh does and doesn't gate.
+- [Page scoping hook](page-scoping-hook-decision.md) — why data-page on body beat :has() and custom-property inheritance for splitting shared .shell styles.
