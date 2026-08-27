@@ -81,6 +81,8 @@ spacing:
   page-mobile-bottom: "16px"
   plan-end: "160px"
   plan-end-mobile: "120px"
+  footer-gap: "224px"
+  footer-gap-mobile: "128px"
 components:
   primary-link:
     textColor: "{colors.ink}"
@@ -122,7 +124,7 @@ and they live here now.
 - Compact identity instead of broad navigation
 - Hairline structure instead of cards
 - A five-part homepage register and a prose-only Plan
-- No footer or client-side JavaScript
+- A two-part colophon closing both pages, and no client-side JavaScript
 
 ## Colors
 
@@ -184,8 +186,8 @@ instead of 72px, and its hairline, 60px on desktop and 32px at 600px and below, 
 copy, borrowing the heading gap in place of the heading the closing does not have; the interval is
 measured to the hairline, not to the paragraph. The rule is sized as a fraction of the measure, so
 it holds roughly a tenth of the column at every width rather than growing proportionally larger as
-the column narrows. The Plan ends 160px below its last words: a page with no footer needs a closing
-interval at least twice its largest interval. Prose remains within 600px.
+the column narrows. The colophon closes both pages: it sits 224px below the last content, 128px at
+600px and below, and each page's own ending falls beneath it. Prose remains within 600px.
 
 At 600px and below the homepage compresses to hold one screen. Page padding becomes 24px, ending at
 16px on the homepage and 120px on the Plan. The homepage and Plan opening gap becomes 32px, the
@@ -201,14 +203,16 @@ visible there without scrolling. A 375x667 or 320x568 screen still scrolls, and 
 the remaining distance could only be bought from type size or from the register itself. No type size
 shrinks to reach the fit, no copy is cut and no tap target falls below 48px.
 
-**The One Argument Rule.** Do not add a second homepage action, a footer or unavailable-product
-links. The Plan may close with one quiet mailto link set as the last line of the page, carrying no
-heading of its own and separated by a bespoke 144px closing interval, with a hairline 60px wide on
-desktop and 32px at 600px and below set 14px above it. The closing turns from describing the
-company's work to addressing the reader, and with no heading to mark that turn the standard section
-interval was indistinguishable from a normal section break: the hairline and the longer interval are
-the only signal the turn gets. The closing line is still prose, not furniture, and gains no
-container, bracket or box. The Plan identity is the only return path.
+**The One Argument Rule.** Do not add a second homepage action or unavailable-product links. The
+colophon is the only structure allowed below the argument, and it is a signature rather than a
+second action: two spans of 13px identity type, one link, and nothing that competes for the reader
+the homepage action has just asked for. The Plan may close with one quiet mailto link set as the
+last line of the page, carrying no heading of its own and separated by a bespoke 144px closing
+interval, with a hairline 60px wide on desktop and 32px at 600px and below set 14px above it. The
+closing turns from describing the company's work to addressing the reader, and with no heading to
+mark that turn the standard section interval was indistinguishable from a normal section break: the
+hairline and the longer interval are the only signal the turn gets. The closing line is still prose,
+not furniture, and gains no container, bracket or box. The Plan identity is the only return path.
 
 ## Elevation & Depth
 
@@ -245,18 +249,29 @@ name. It is the one thing on either page that moves: hover translates it 3px, in
 padding the label reserves at rest, so the announced movement happens and the link's own box does
 not change size.
 
+### Colophon
+
+Both pages close on the same line: the studio name at the left, `by Ryan Hennebry` at the right,
+linking to LinkedIn. It borrows the identity's 13px role, so the page ends in the voice it opened
+in, and it carries no rule, box or background; the interval above it is the only separation it
+needs. The name link takes every state from the shared `.link` base and adds nothing but a 48px
+target, bought with symmetric vertical padding and an equal negative margin so the line itself does
+not move. It is the site's one outbound link, and the colophon carries no mailto: contact belongs to
+the Plan's closing line, which is prose, and putting the same offer in furniture would say it twice.
+
 ### Plan essay
 
 The Plan is one continuous article: founding question, discover what matters, install the context,
 let use decide and share what we learn, then one quiet closing line offering contact under no
 heading of its own. It is prose only.
-There is no visible page title, diagram, register, local table of contents, sticky navigation or
-footer. The closing carries no heading; a hairline at 15% of the current text colour, flush left
-with the measure and 60px wide on desktop and 32px at 600px and below, is the only rule on the page
-and marks the turn a heading would otherwise make. It is drawn as a pseudo-element, so it adds no
-markup and stays out of the accessibility tree. The closing contact link is a plain inline prose
-link; symmetric vertical padding and an equal negative margin give it a 48px tap target without
-disturbing the 26px paragraph interval, and it does not wrap.
+There is no visible page title, diagram, register, local table of contents or sticky navigation. The
+essay ends on the shared colophon, which belongs to the shell rather than to the essay. The closing
+carries no heading; a hairline at 15% of the current text colour, flush left with the measure and
+60px wide on desktop and 32px at 600px and below, is the only rule on the page and marks the turn a
+heading would otherwise make. It is drawn as a pseudo-element, so it adds no markup and stays out of
+the accessibility tree. The closing contact link is a plain inline prose link; symmetric vertical
+padding and an equal negative margin give it a 48px tap target without disturbing the 26px paragraph
+interval, and it does not wrap.
 
 ## Do's and Don'ts
 
@@ -269,7 +284,8 @@ disturbing the 26px paragraph interval, and it does not wrap.
 
 ### Don't
 
-- **Don't** add cards, ordinal numbers, broad navigation or a footer.
+- **Don't** add cards, ordinal numbers or broad navigation.
+- **Don't** grow the colophon: it carries the studio name, the author and one link.
 - **Don't** turn Signal or Newsletter into routes without a new user job.
 - **Don't** add client logos, testimonials, metrics, case studies, pricing or invented maturity.
 - **Don't** use decorative imagery, gradients, shadows or animation for its own sake.

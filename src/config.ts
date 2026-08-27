@@ -41,6 +41,15 @@ export const CONTACT_EMAIL = "ryan@in-the-loop.studio";
 /** The href the contact link carries, so no page has to build a mailto of its own. */
 export const CONTACT_HREF = `mailto:${CONTACT_EMAIL}`;
 
+/** The one outbound link on the site. The colophon hangs it on the name. */
+export const LINKEDIN_URL = "https://www.linkedin.com/in/ryanhennebry";
+
+/** The person behind the studio, named once at the foot of every page. */
+export const COLOPHON_NAME = "Ryan Hennebry";
+
+/** The colophon prefix that hands the page to its author. */
+export const COLOPHON_BY = "by ";
+
 /** The studio programme. Each property is public in intent and still being built. */
 export const PROPERTIES = [
   {

@@ -1,8 +1,11 @@
 ---
 import {
+  COLOPHON_BY,
+  COLOPHON_NAME,
   DISCIPLINE,
   HOME_PATH,
   HEADLINE,
+  LINKEDIN_URL,
   SCHEMA_CONTEXT_URL,
   SITE_NAME,
   SITE_URL,
@@ -126,6 +129,10 @@ const structuredData = JSON.stringify({
       <main class="main">
         <slot />
       </main>
+      <footer class="colophon identity__copy">
+        <span class="identity__name">{SITE_NAME}</span>
+        <span class="identity__discipline">{COLOPHON_BY}<a class="link colophon__link" href={LINKEDIN_URL}>{COLOPHON_NAME}</a></span>
+      </footer>
     </div>
   </body>
 </html>

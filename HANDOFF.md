@@ -29,8 +29,9 @@ or with a purpose-scoped API token: the current wrangler OAuth token carries `zo
 A static Astro site with two routes: `/` and `/plan/`. The homepage presents the compact 26px A6
 lockup, settled proposition, five-part Signal/Skills/Harness/Agents/Newsletter register and one
 `Read the plan ->` action. The five concepts are non-interactive until they have real destinations.
-Signal and Newsletter are not routes. There is no footer, homepage email action or client
-JavaScript.
+Signal and Newsletter are not routes. Both pages close on a colophon: `In The Loop` at the left and
+`by Ryan Hennebry` at the right, linking to LinkedIn as the site's one outbound link. There is no
+homepage email action and no client JavaScript.
 
 The homepage's final register says `Curate what matters on the frontier.` and `Index agent skills
 for startup work.` The Plan uses Ryan's final supplied copy as a prose-only causal essay: discover

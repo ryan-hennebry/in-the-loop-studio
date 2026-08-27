@@ -35,6 +35,7 @@
   --page-top: clamp(96px, 14vh, 144px);  /* page top to the identity */
   --page-end:    80px;   /* last words to page end */
   --plan-end:   160px;   /* the Plan ends further down: it has further to fall */
+  --footer-gap: 224px;   /* the last content on either page to the colophon */
   /* Interaction. One timing and one resting underline for every link on the site. */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --link-motion: 140ms;
@@ -329,6 +330,25 @@ ul {
   white-space: nowrap;
 }
 
+/* The colophon. One quiet line a fixed interval below the last content, borrowing
+   the identity's 13px role so the page closes in the voice it opened in: the studio
+   holds the left, its author the right, and nothing rules them apart. */
+.colophon {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: var(--footer-gap);
+}
+
+/* The site's one outbound link takes every state from .link and adds nothing but a
+   48px target: symmetric padding with an equal negative margin, so the line itself
+   never moves. */
+.colophon__link {
+  padding-block: 16px;
+  margin-block: -16px;
+  white-space: nowrap;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -354,6 +374,7 @@ ul {
     --page-top: 24px;
     --page-end: 16px;
     --plan-end: 120px;
+    --footer-gap: 128px;
   }
 
   .headline {
