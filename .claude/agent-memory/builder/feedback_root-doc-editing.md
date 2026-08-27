@@ -22,3 +22,9 @@ number carries unrelated meanings (e.g. 48px was both the closing hairline width
 minimum), so match the full surrounding phrase and assert exactly one hit per site. Prefer an exact-string Python replacement with an assertion that
 the match count is 1 over regex or `sed`. See [[email-routing]] for current doc content
 worth verifying before acting on.
+
+Root docs must not carry facts that go stale on their own, such as a commit count ahead of
+`origin/main` or any other running tally. State the durable fact instead (committed on local `main`,
+not pushed) and let the neighbouring paragraph carry the reason. Ryan flagged a "12 commits ahead"
+sentence in `HANDOFF.md` once it read 13, and asked explicitly for no duplication of the adjacent
+"pushing to git triggers nothing" point, so read the whole surrounding passage before rewriting.

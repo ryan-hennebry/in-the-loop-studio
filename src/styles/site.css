@@ -28,7 +28,10 @@
   --close-rule: 60px;      /* the closing hairline, a fraction of the measure */
   /* Terminal. */
   --plan-end:   160px;   /* last words to page end */
+  /* Interaction. One timing and one resting underline for every link on the site. */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --link-motion: 140ms;
+  --link-rule: #858a8f;
 }
 
 *,
@@ -70,6 +73,44 @@ a:focus-visible {
   outline-offset: 3px;
 }
 
+/* The site has one link interaction system. Every interactive element carries
+   .link and takes its rest, hover and press states from here. An element may
+   override a declaration where its job genuinely differs, but nothing below
+   restates a link state of its own. */
+.link {
+  --link-decoration-color: var(--link-rule);
+  --link-decoration-thickness: 0.075em;
+  --link-muted: var(--muted);
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration-line: underline;
+  text-decoration-color: var(--link-decoration-color);
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: var(--link-decoration-thickness);
+  text-underline-offset: 0.17em;
+  text-underline-position: from-font;
+  transform-origin: left center;
+  transition:
+    text-decoration-color var(--link-motion) var(--ease-out),
+    text-decoration-thickness var(--link-motion) var(--ease-out),
+    transform var(--link-motion) var(--ease-out);
+}
+
+.link:active {
+  transform: scale(0.98);
+}
+
+/* One hover idiom: whatever is muted about the link comes up to ink, and the
+   underline it draws gets a little more weight. Layout never moves. */
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    --link-decoration-color: var(--ink);
+    --link-decoration-thickness: 0.105em;
+    --link-muted: var(--ink);
+  }
+}
+
 .shell {
   width: min(var(--measure), calc(100% - (2 * var(--gutter))));
   margin-inline: auto;
@@ -87,18 +128,19 @@ a:focus-visible {
   gap: 12px;
 }
 
+/* The Plan's return path is a navigational lockup, not prose, so it overrides the
+   base underline away and spends its hover on the one muted channel it has. */
 .identity__home {
   display: inline-flex;
   min-height: 48px;
   margin: -5px -8px;
   padding: 5px 8px;
-  text-decoration: none;
-  transform-origin: left center;
-  transition: transform 140ms var(--ease-out);
+  text-decoration-line: none;
 }
 
-.identity__home:active {
-  transform: scale(0.98);
+.identity__home .identity__discipline {
+  color: var(--link-muted);
+  transition: color var(--link-motion) var(--ease-out);
 }
 
 .identity__mark {
@@ -168,6 +210,7 @@ ul {
   text-wrap: pretty;
 }
 
+/* The sole homepage action overrides the base only to become a padded 48px target. */
 .primary-link {
   display: inline-flex;
   align-items: center;
@@ -176,25 +219,11 @@ ul {
   margin-inline-start: -8px;
   padding-inline: 8px;
   font-weight: 500;
-  text-decoration: underline;
-  text-decoration-color: #858a8f;
-  text-decoration-skip-ink: auto;
-  text-decoration-thickness: 0.075em;
-  text-underline-position: from-font;
-  text-underline-offset: 0.17em;
-  transform-origin: left center;
-  transition: transform 140ms var(--ease-out);
 }
 
-.primary-link:active {
-  transform: scale(0.98);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .primary-link:hover {
-    text-decoration-color: var(--ink);
-    text-decoration-thickness: 0.105em;
-  }
+/* The label holds the action and its arrow on one line at every width. */
+.primary-link__label {
+  white-space: nowrap;
 }
 
 .plan__header {
@@ -268,6 +297,8 @@ ul {
   font-weight: 600;
 }
 
+/* The Plan's closing action is inline in prose: symmetric padding and an equal
+   negative margin give it a 48px target without disturbing the paragraph interval. */
 .plan__contact {
   padding-block: 14px;
   margin-block: -14px;
@@ -343,9 +374,13 @@ ul {
   }
 }
 
+/* Structural, not a list of elements: anything the site grows is guarded by default. */
 @media (prefers-reduced-motion: reduce) {
-  .identity__home,
-  .primary-link {
-    transition: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
