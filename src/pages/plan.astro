@@ -1,0 +1,67 @@
+---
+import Base from "../layouts/Base.astro";
+import {
+  PLAN_INTRO,
+  PLAN_PATH,
+  PLAN_TITLE,
+  PROPERTIES,
+} from "../config.ts";
+---
+
+<Base title={PLAN_TITLE} description={PLAN_INTRO.join(" ")} path={PLAN_PATH}>
+  <article class="plan">
+    <header class="plan__header">
+      <h1 class="sr-only">The plan</h1>
+      <div class="plan__intro">
+        {PLAN_INTRO.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </header>
+
+    <section class="plan__section" aria-labelledby="system-heading">
+      <h2 class="plan__heading" id="system-heading">The system</h2>
+      <dl class="plan-register">
+        {PROPERTIES.map((property) => (
+          <div class="plan-register__row">
+            <dt>{property.name}</dt>
+            <dd>{property.description}</dd>
+          </div>
+        ))}
+      </dl>
+      <div class="plan__copy plan__copy--after-register">
+        <p>Signal and Skills keep us close to what is changing and what already works. The Harness makes the useful parts work inside startups. Use tells us where to go deeper.</p>
+      </div>
+    </section>
+
+    <section class="plan__section" aria-labelledby="frontier-heading">
+      <h2 class="plan__heading" id="frontier-heading">Stay close to the frontier</h2>
+      <div class="plan__copy">
+        <p><strong>Signal</strong> curates the articles, podcasts, research and tools worth following. <strong>Skills</strong> indexes the best agent skills for startup work: research, growth, hiring, fundraising and operations.</p>
+        <p>Most of this is curation. We build our own where useful.</p>
+      </div>
+    </section>
+
+    <section class="plan__section" aria-labelledby="context-heading">
+      <h2 class="plan__heading" id="context-heading">Install the context</h2>
+      <div class="plan__copy">
+        <p>To do useful startup work, agents need to understand the startup they are working with.</p>
+        <p>The <strong>Harness</strong> installs that context: strategy, customers, product, decisions, feedback and metrics. It also gives agents the tools, memory and permissions they need to act.</p>
+      </div>
+    </section>
+
+    <section class="plan__section" aria-labelledby="use-heading">
+      <h2 class="plan__heading" id="use-heading">Let use decide</h2>
+      <div class="plan__copy">
+        <p>Put the Skills and Harness to work with founders and early operators. See which workflows repeatedly create value.</p>
+        <p>When one does, build an <strong>Agent</strong> around it. Then put it back into use and learn again.</p>
+      </div>
+    </section>
+
+    <section class="plan__section" aria-labelledby="newsletter-heading">
+      <h2 class="plan__heading" id="newsletter-heading">Share what we learn</h2>
+      <div class="plan__copy">
+        <p>The <strong>Newsletter</strong> is our direct channel to founders and early operators.</p>
+        <p>Some become users. Their use and feedback shape what we build next.</p>
+      </div>
+    </section>
+  </article>
+</Base>

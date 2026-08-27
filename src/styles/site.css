@@ -1,89 +1,22 @@
-/*
-  in-the-loop.studio. Hand written, no framework, no Tailwind.
-
-  This stylesheet is a port of ../../ryanhennebry.xyz/assets/site.css. The
-  earlier studio design (cream paper, a ruled frame around the page, JetBrains
-  Mono throughout, an amber caret and amber accents) was rejected. The two
-  surfaces now share one visual language: white paper, no hue, Inter at one
-  size, and hierarchy carried by colour, position and one long silence.
-
-  Every token value below is copied from the personal site, not approximated.
-  The reasoning behind each one lives in ../../ryanhennebry.xyz/DESIGN.md and
-  is not restated here, but the two rules most likely to be broken by accident
-  are repeated at the point where they bite: the measure is frozen and
-  --space-group is one token doing two jobs.
-*/
-
-/*
-  Inter, variable, latin subset, served locally. Zero network requests. The
-  declaration is the personal site's, byte for byte, except the url: Astro
-  bundles this file into /_astro/, so a relative "fonts/..." would resolve
-  against that directory. The file is served from public/ at a root absolute
-  path instead. Same file, same hash, no CDN and no Google Fonts.
-*/
 @font-face {
   font-family: "Inter";
   src: url("/fonts/inter-latin-var.woff2") format("woff2-variations");
-  font-weight: 100 900;
   font-style: normal;
+  font-weight: 100 900;
   font-display: swap;
 }
 
-/*
-  Two weights only: 400 and 500. Inter's default instance is also 400, so every
-  rule that sets type below states its font-weight rather than letting the
-  default stand in for a decision. The opsz axis (14 to 32) is never pinned to a
-  fixed value: `font-optical-sizing: auto` states explicitly that the browser is
-  to resolve it from the rendered size.
-
-  500 is spent on exactly two elements across this site, and they are the same
-  element on two routes: the h1. Do not raise a third thing to 500.
-*/
-
 :root {
-  --paper: #ffffff;         /* 1.00:1  pure white, the background */
-  --ink: #16181A;           /* 17.80:1 near-black, narrative text */
-  --muted: #5F656B;         /* 5.90:1  muted grey, the discipline label and the section labels */
-  --rule: #777777;          /* 4.48:1  resting link underline and field border; clears 3:1 as a non-text identifier */
-  --rule-strong: #646464;   /* 5.92:1  hover underline and focus ring */
-  --selection: #E6E6E6;
-
-  /*
-    FROZEN at 600px, the same number as the personal site and for the same
-    reason: it is ibelick.com's measure, about 80 characters per line at 15px.
-    The prohibition on tuning it to fit copy stands here too, in both
-    directions. If a future line does not fit, the line changes, not the
-    measure. A new number needs a named reference behind it.
-  */
+  --paper: #ffffff;
+  --ink: #17191b;
+  --muted: #5f656b;
+  --rule: #e1e3e4;
+  --focus: #555b60;
+  --selection: #e8e9ea;
+  --brand: #9da3a8;
   --measure: 600px;
   --gutter: 24px;
-
-  --leading: 1.5;             /* everything. No letter-spacing is set anywhere on this site: at 15px Inter's own
-                                 tracking stands unaltered, including on the two strings that are stored shouted. */
-
-  --size-name: 15px;
-  --size-body: 15px;
-  --weight-regular: 400;
-  --weight-strong: 500;
-
-  --radius-focus: 2px;      /* the only radius on the site. See the capture form below. */
-
-  /*
-    Void, then dense. One long silence above the wordmark, then a block whose
-    internal steps are small enough that the page reads as a single object.
-    The values are the personal site's and the derivations are recorded there:
-    8 and 12 come from nolanperk/rad-spacing, and 24 against 12 is exactly the
-    2.0x between-groups ratio jakubkrehel/better-layout requires.
-  */
-  --space-void: 117px;         /* above the wordmark, desktop */
-  --space-void-narrow: 56px;   /* above the wordmark, below 481px */
-  --space-tight: 8px;          /* a label to its first item, and the gap inside the capture row */
-  --space-para: 12px;          /* adjacent paragraphs */
-  --space-group: 24px;         /* block to block, AND the wordmark to the headline. One token, one value, both
-                                  uses: do not split it. The personal site considered the split, three reference
-                                  designers recommended it, and Ryan chose to keep the two identical. The
-                                  flattening is the intent, not a side effect. */
-  --space-bottom: 48px;        /* below the last line */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 *,
@@ -93,374 +26,343 @@
 }
 
 html {
+  background: var(--paper);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  background-color: var(--paper);
 }
 
 body {
   margin: 0;
-  background-color: var(--paper);
+  background: var(--paper);
   color: var(--ink);
-  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: var(--size-body);
-  font-weight: var(--weight-regular);
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  font-synthesis: none;
+  font-size: 15px;
   font-optical-sizing: auto;
-  line-height: var(--leading);
+  font-weight: 400;
+  line-height: 1.5;
 }
 
-/*
-  Background only. Setting `color` here also resets text-decoration-color, which
-  flattens the muted tier: selected muted text jumps to ink and the link
-  underline jumps from --rule to ink. Selection recolours the ground only.
-*/
 ::selection {
-  background-color: var(--selection);
+  background: var(--selection);
 }
 
-/*
-  The frame. The class name is inherited from the rejected design, where it was
-  a bordered card. There is no border, no radius and no card now: it is the
-  page container, and it follows The Padded Measure Rule. The container is
-  always wider than the text and the reading measure comes from padding-inline,
-  never from a narrower content box.
-*/
-.frame {
-  max-width: calc(var(--measure) + 2 * var(--gutter));
-  margin-inline: auto;
-  padding-inline: var(--gutter);
-  padding-block: var(--space-void) var(--space-bottom);
-}
-
-h1,
-h2,
-p,
-ul {
-  margin: 0;
-}
-
-p {
-  text-wrap: pretty;
-}
-
-/*
-  The head: the wordmark, with the discipline label sitting directly under it at
-  one line-height, baseline to baseline, so the two read as one unit. This is
-  the personal site's name-and-role-line pairing with different words in it.
-  It was a flex row with a bottom rule; the rule and the row are both gone.
-*/
-.head {
-  display: block;
-}
-
-/*
-  The wordmark. Ink, 500, and the only 500 in the head. It carries no underline
-  because it is the mark rather than a link into the page, exactly as the
-  personal site's h1 carries none.
-*/
-.brand {
-  display: inline-block;
-  color: var(--ink);
-  font-size: var(--size-name);
-  font-weight: var(--weight-strong);
-  text-decoration: none;
-}
-
-.brand:focus-visible {
-  outline: 2px solid var(--rule-strong);
-  outline-offset: 2px;
-  border-radius: var(--radius-focus);
-}
-
-/*
-  The caret. The blinking amber block was the rejected design's one moving
-  part, and this site has no motion and no hue. The span is empty and
-  aria-hidden in the markup, so removing it from the render costs nothing and
-  the markup is left untouched.
-*/
-.caret {
-  display: none;
-}
-
-/*
-  The discipline label, and the capture heading, which are the same thing: an
-  annotation on the element above, separated from it by colour alone. Body
-  size, body weight, muted tier. No letter-spacing and no text-transform: the
-  string is stored shouted in src/config.ts, so the capitals are copy rather
-  than styling, and The Untracked Type Rule forbids adding tracking to rescue
-  them.
-*/
-.label {
-  font-size: var(--size-body);
-  font-weight: var(--weight-regular);
-  color: var(--muted);
-}
-
-/*
-  Link technique: text inherits its context colour, the underline carries the
-  signal. --rule is the sole non-colour identifier of a link, so it is raised
-  well past the 1.7 to 2.5:1 the references use and clears 3:1. It is a neutral
-  grey, so the page carries no hue at all.
-*/
 a {
   color: inherit;
-  text-decoration: underline;
-  text-decoration-color: var(--rule);
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.15em;
-  text-decoration-skip-ink: auto;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  a:hover {
-    text-decoration-color: var(--rule-strong);
-    text-decoration-thickness: 0.11em;
-  }
 }
 
 a:focus-visible {
-  outline: 2px solid var(--rule-strong);
-  outline-offset: 2px;
-  border-radius: var(--radius-focus);
+  border-radius: 2px;
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
 }
 
-.main {
-  margin-top: var(--space-group);
+.shell {
+  width: min(var(--measure), calc(100% - (2 * var(--gutter))));
+  margin-inline: auto;
+  padding-block: clamp(96px, 14vh, 144px) 80px;
 }
 
-/*
-  The headline. One sentence over two lines, and the break is set in
-  src/config.ts because the line ends where the sense turns.
-
-  There is deliberately NO max-width here. The rejected design set 22ch, which
-  was shorter than line one ("I build the systems startups", 28 characters), so
-  the browser wrapped inside the first span and the sentence set as three
-  lines with "startups" stranded alone. The page measure of 600px already
-  governs, and at 15px Inter that first line is roughly 190px of ink, so a
-  max-width could only ever introduce a wrap the sentence does not ask for.
-  If a max-width is ever needed here, derive it from the rendered width of the
-  longest line and say so in a comment.
-
-  It is set at --size-name, not at a display size, because this site has no
-  size hierarchy: every piece of text is 15px and the h1 is separated from the
-  body by weight and position. Adding a second type size here reopens a
-  decision that was measured and settled on the personal site.
-*/
-.headline {
-  font-size: var(--size-name);
-  font-weight: var(--weight-strong);
-  max-width: none;
+.identity__lockup {
+  display: inline-grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
 }
 
-/* The two lines are explicit spans, so each takes its own line box. */
-.headline span {
+.identity__home {
+  display: inline-flex;
+  min-height: 48px;
+  margin: -5px -8px;
+  padding: 5px 8px;
+  text-decoration: none;
+  transform-origin: left center;
+  transition: transform 140ms var(--ease-out);
+}
+
+.identity__home:active {
+  transform: scale(0.98);
+}
+
+.identity__mark {
   display: block;
+  width: 26px;
+  height: 26px;
 }
 
-/*
-  The links out. One column, no markers, one line each. Columns were measured
-  and rejected on the personal site at five items across two sections, and this
-  is three items in one, so the threshold is not close.
-*/
-.links {
-  margin-top: var(--space-group);
+.identity__copy {
+  display: grid;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.identity__name {
+  font-weight: 600;
+}
+
+.identity__discipline,
+.property__description {
+  color: var(--muted);
+}
+
+.headline,
+p,
+ul,
+dl,
+dd {
+  margin: 0;
+}
+
+.headline {
+  max-width: 560px;
+  margin-top: 88px;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.026em;
+  line-height: 1.24;
+  text-wrap: balance;
+}
+
+.programme {
+  margin-top: 52px;
+}
+
+.properties {
   padding: 0;
+  border-bottom: 1px solid var(--rule);
   list-style: none;
 }
 
-/*
-  The one call to action. It sits in a bare <p> after the list, and is selected
-  as such rather than by adding a class, because this is a restyle and the
-  markup is not to change. The brackets are markup and are muted, so the label
-  reads first. The link itself takes the site-wide underline treatment.
-*/
-.links + p {
-  margin-top: var(--space-group);
+.property {
+  border-top: 1px solid var(--rule);
 }
 
-.bracket {
+.property__row {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 24px;
+  padding-block: 19px 20px;
+}
+
+.property__name {
+  font-weight: 500;
+}
+
+.property__description {
+  text-wrap: pretty;
+}
+
+.primary-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  margin-top: 43px;
+  margin-inline-start: -8px;
+  padding-inline: 8px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: #858a8f;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: 0.075em;
+  text-underline-position: from-font;
+  text-underline-offset: 0.17em;
+  transform-origin: left center;
+  transition: transform 140ms var(--ease-out);
+}
+
+.primary-link:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primary-link:hover {
+    text-decoration-color: var(--ink);
+    text-decoration-thickness: 0.105em;
+  }
+}
+
+.plan__header {
+  max-width: 580px;
+  margin-top: 88px;
+}
+
+.plan__heading {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.plan__intro {
+  display: grid;
+  max-width: 570px;
+  margin-top: 0;
+  gap: 0;
+  font-size: 19px;
+  line-height: 1.55;
+}
+
+.plan__intro p {
+  text-wrap: pretty;
+}
+
+.plan__intro p + p {
+  margin-top: 7px;
+}
+
+.plan__intro p:last-child {
+  margin-top: 19px;
+  font-weight: 500;
+}
+
+.plan__section {
+  margin-top: 96px;
+}
+
+.plan__heading {
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  line-height: 1.3;
+}
+
+.plan__copy {
+  display: grid;
+  max-width: 570px;
+  margin-top: 22px;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 1.625;
+}
+
+.plan__copy p {
+  text-wrap: pretty;
+}
+
+.plan__copy--after-register {
+  margin-top: 28px;
+}
+
+.plan__copy strong {
+  font-weight: 600;
+}
+
+.plan-register {
+  margin-top: 28px;
+  padding: 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.plan-register__row {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 24px;
+  padding-block: 18px 19px;
+  border-top: 1px solid var(--rule);
+}
+
+.plan-register dt {
+  font-weight: 500;
+}
+
+.plan-register dd {
   color: var(--muted);
+  text-wrap: pretty;
 }
 
-/*
-  Newsletter capture. The personal site has no form language at all, because it
-  has no forms: nothing on it is a box. This surface has to carry one, so the
-  field and the button are built from the tokens that already exist rather than
-  from new ones. The border is --rule, the same grey and the same 3:1 job as
-  the link underline. The radius is --radius-focus, the only radius on the
-  site. The padding is --space-tight by --space-para, both already on the
-  scale. No fill, no shadow, no second size, no 500 weight.
-*/
-.capture {
-  margin-top: var(--space-group);
-}
-
-.capture .label {
-  margin-bottom: var(--space-tight);
-}
-
-.capture__row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-tight);
-}
-
-.capture input,
-.capture button {
-  font-family: inherit;
-  font-size: var(--size-body);
-  font-weight: var(--weight-regular);
-  line-height: var(--leading);
-  color: var(--ink);
-  background-color: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-focus);
-  padding: var(--space-tight) var(--space-para);
-}
-
-/*
-  The field is a fixed 15rem and deliberately does not grow to fill the row. On
-  a page whose whole discipline is that nothing is a box, a 600px box would be
-  the largest object on the surface and would outweigh the headline. It caps at
-  the container so it still fits a narrow phone, where the row wraps and the
-  button drops to its own line.
-*/
-.capture input {
-  flex: 0 1 auto;
-  width: 15rem;
-  max-width: 100%;
-}
-
-.capture input::placeholder {
-  color: var(--muted);
-}
-
-.capture button {
-  cursor: pointer;
-}
-
-/*
-  Held closed until CAPTURE_ENDPOINT is set. The disabled state is stated in
-  the muted tier rather than by a fill, and .note beneath says so in words, so
-  colour is never the only carrier.
-*/
-.capture input:disabled,
-.capture button:disabled {
-  color: var(--muted);
-  cursor: default;
-}
-
-.capture input:focus-visible,
-.capture button:focus-visible {
-  outline: 2px solid var(--rule-strong);
-  outline-offset: 2px;
-  border-radius: var(--radius-focus);
-}
-
-.note {
-  margin-top: var(--space-tight);
-  color: var(--muted);
-}
-
-/* The foot. Two muted lines, one per span. No rule above it: the space is the separation. */
-.foot {
-  margin-top: var(--space-group);
-  color: var(--muted);
-}
-
-.foot span {
-  display: block;
-}
-
-/* The archive. Same h1 treatment as the headline, since it is the same rank. */
-.page-title {
-  font-size: var(--size-name);
-  font-weight: var(--weight-strong);
-}
-
-.empty {
-  margin-top: var(--space-group);
-}
-
-.visually-hidden {
+.sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
+  padding: 0;
+  margin: -1px;
   overflow: hidden;
-  clip-path: inset(50%);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
+  border: 0;
 }
 
-@media (forced-colors: active) {
-  a {
-    text-decoration-color: LinkText;
+@media (max-width: 600px) {
+  .shell {
+    padding-block: 56px 40px;
   }
 
-  /* .label is --muted on screen; in forced colours it resolves to CanvasText, the
-     same value as body text, so its rank is carried by weight instead. */
-  .label {
-    font-weight: var(--weight-strong);
+  .headline {
+    margin-top: 62px;
+    font-size: 24px;
+    letter-spacing: -0.022em;
+    line-height: 1.28;
   }
 
-  a:focus-visible,
-  .brand:focus-visible,
-  .capture input:focus-visible,
-  .capture button:focus-visible {
-    outline-color: Highlight;
+  .plan__header {
+    margin-top: 62px;
+  }
+
+  .plan__intro {
+    margin-top: 0;
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .plan__intro p + p {
+    margin-top: 6px;
+  }
+
+  .plan__intro p:last-child {
+    margin-top: 17px;
+  }
+
+  .plan__section {
+    margin-top: 68px;
+  }
+
+  .plan__heading {
+    font-size: 22px;
+  }
+
+  .plan__copy {
+    margin-top: 18px;
+    font-size: 16px;
+  }
+
+  .programme {
+    margin-top: 40px;
+  }
+
+  .property__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding-block: 16px 17px;
+  }
+
+  .plan-register__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding-block: 16px 17px;
+  }
+
+  .primary-link {
+    margin-top: 35px;
+  }
+
+}
+
+@media (max-width: 360px) {
+  :root {
+    --gutter: 20px;
   }
 }
 
-/* Same page, same sizes, same gutter. Only the silence above the wordmark shrinks. */
-@media (max-width: 480px) {
-  .frame {
-    padding-block: var(--space-void-narrow) var(--space-bottom);
-  }
-}
-
-/* This may well be printed. Ink on paper, no tints, no focus ring, no form chrome. */
 @media print {
-  html,
-  body {
-    background: #FFFFFF;
-  }
-
-  body,
-  h1 {
-    color: #000000;
-  }
-
-  .label,
-  .note,
-  .foot,
-  .bracket {
-    color: #4A4A4A;
-  }
-
-  a {
-    text-decoration-color: #000000;
-  }
-
-  /* Printed links are otherwise inert words. mailto: is left alone: the address
-     is already the link text on the pages that print it. */
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-weight: var(--weight-regular);
-  }
-
-  a:focus-visible {
-    outline: none;
-  }
-
-  /* A form is not a thing on paper. The heading and the note still print. */
-  .capture__row {
-    display: none;
+  .shell {
+    padding-block: 32px;
   }
 }
 
-/*
-  Motion: none, anywhere. A decision, not an omission, and the same one the
-  personal site made. Because nothing on this site moves, there is deliberately
-  no prefers-reduced-motion block: there is nothing to reduce. Adding a single
-  transition makes that omission a defect and obliges the block.
-*/
+@media (prefers-reduced-motion: reduce) {
+  .identity__home,
+  .primary-link {
+    transition: none;
+  }
+}

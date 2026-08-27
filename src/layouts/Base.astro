@@ -1,60 +1,150 @@
 ---
-import { NAV_LABEL, SITE_NAME, WORDMARK, LINKS, absolute } from "../config.ts";
-import Capture from "../components/Capture.astro";
+import {
+  DISCIPLINE,
+  HOME_PATH,
+  HEADLINE,
+  PLAN_PATH,
+  SCHEMA_CONTEXT_URL,
+  SITE_NAME,
+  SITE_URL,
+  SOCIAL_IMAGE_ALT,
+  SOCIAL_IMAGE_PATH,
+  absolute,
+} from "../config.ts";
 import "../styles/site.css";
 
 interface Props {
   title: string;
   description: string;
-  /** Site relative path, no trailing slash. The canonical is built from SITE_URL. */
+  /** Final production pathname. The canonical is built from SITE_URL. */
   path: string;
 }
 
 const { title, description, path } = Astro.props;
 const canonical = absolute(path);
-const year = new Date().getFullYear();
+const socialImage = absolute(SOCIAL_IMAGE_PATH);
+const isHome = path === HOME_PATH;
+const structuredData = JSON.stringify({
+  "@context": SCHEMA_CONTEXT_URL,
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: absolute(HOME_PATH),
+      name: SITE_NAME,
+      description: HEADLINE,
+      inLanguage: "en-GB",
+    },
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      url: absolute(HOME_PATH),
+      description: DISCIPLINE,
+      logo: absolute("/brand/in-the-loop-mark.svg"),
+    },
+  ],
+});
+const directionContract = path === PLAN_PATH
+  ? `<!--
+      THESIS: The company plan as one learning system, not a roadmap or manifesto.
+      OWN-WORLD: A6 grey, white bond, Inter, quiet rules and exact spacing.
+      STORY: Why uncertainty exists, how Signal, Skills, Harness, Agents and Newsletter form a learning loop.
+      FIRST VIEWPORT: Compact identity, The plan, the founding question and the system overview.
+      FORM: A continuous-system essay; assigned structure 5; seed 13e54a9e.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+    -->`
+  : `<!--
+      THESIS: A studio index, composed rather than decorated.
+      OWN-WORLD: A6 grey, white paper, precise type, quiet rules.
+      STORY: Identity, proposition, five-part system, direct path to the plan.
+      FIRST VIEWPORT: The complete studio argument, without a sales funnel.
+      FORM: A compact register; approved Studio Register comp; seed 34a1afad.
+      FINISH: Exact copy, truthful states and a direct next step.
+    -->`;
 ---
 <!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!--
-      No imagery of any kind on this surface, so there is no favicon file to
-      serve. An empty data URI silences the browser's automatic /favicon.ico
-      request without inventing an image. Same technique as ryanhennebry.xyz.
-    -->
-    <link rel="icon" href="data:," />
-    <!--
-      The page is white paper with one text colour. Declaring the scheme stops a
-      dark-mode browser inverting the capture field and its button, which are
-      the only native controls here.
-    -->
+    <link
+      rel="preload"
+      href="/fonts/inter-latin-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- The studio is intentionally light in every browser colour scheme. -->
     <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#FFFFFF" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={SOCIAL_IMAGE_ALT} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={SOCIAL_IMAGE_ALT} />
+    <script type="application/ld+json" set:html={structuredData}></script>
   </head>
   <body>
-    <div class="frame">
-      <header class="head">
-        <a class="brand" href="/">{WORDMARK}<span class="caret" aria-hidden="true"></span></a>
-        <p class="label">{NAV_LABEL}</p>
+    <Fragment set:html={directionContract} />
+    <div class="shell">
+      <header class="identity">
+        {isHome ? (
+          <div class="identity__lockup">
+            <img
+              class="identity__mark"
+              src="/brand/in-the-loop-mark.svg"
+              width="26"
+              height="26"
+              alt=""
+            />
+            <span class="identity__copy">
+              <span class="identity__name">{SITE_NAME}</span>
+              <span class="identity__discipline">{DISCIPLINE}</span>
+            </span>
+          </div>
+        ) : (
+          <a class="identity__home" href={HOME_PATH} aria-label="In The Loop home">
+            <span class="identity__lockup">
+              <img
+                class="identity__mark"
+                src="/brand/in-the-loop-mark.svg"
+                width="26"
+                height="26"
+                alt=""
+              />
+              <span class="identity__copy">
+                <span class="identity__name">{SITE_NAME}</span>
+                <span class="identity__discipline">{DISCIPLINE}</span>
+              </span>
+            </span>
+          </a>
+        )}
       </header>
       <main class="main">
-        <div class="rail">
-          <slot />
-        </div>
+        <slot />
       </main>
-      <Capture />
-      <footer class="foot">
-        <span>{SITE_NAME}, {year}.</span>
-        <span><a href={LINKS.identity}>Ryan Hennebry</a></span>
-      </footer>
     </div>
   </body>
 </html>

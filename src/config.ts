@@ -6,82 +6,63 @@
  * that is a bug.
  */
 
-/**
- * Base URL of this site. in-the-loop.studio still serves the superseded site
- * and replacing it is Ryan's call, so this points at the workers.dev
- * placeholder. When he says go, change this line and bind the route in
- * wrangler.jsonc.
- */
-export const SITE_URL = "https://in-the-loop-studio.workers.dev";
+/** Base URL of the production site. */
+export const SITE_URL = "https://in-the-loop.studio";
+
+export const SCHEMA_CONTEXT_URL = "https://schema.org";
 
 export const SITE_NAME = "In The Loop";
 
-/** The wordmark, lowercase, carrying the caret. */
-export const WORDMARK = "in-the-loop";
+export const HOME_PATH = "/";
 
-/**
- * The discipline label beside the wordmark. Settled with Ryan, not to be
- * reworded. It is stored shouted because that is how it is set on the page.
- */
-export const NAV_LABEL = "AI-NATIVE STARTUP OPERATIONS";
+export const PLAN_PATH = "/plan/";
 
-/** The same line in sentence case, for the browser tab and search results. */
-export const SITE_TITLE = "In The Loop, AI-native startup operations";
+export const DISCIPLINE = "Agent-native startup operations";
 
-/**
- * The headline, one sentence over two lines. The break is deliberate and is
- * the reason this is an array rather than a string: the line ends where the
- * sense turns, not where the viewport happens to wrap.
- */
-export const HEADLINE_LINES = [
-  "I build the systems startups",
-  "use to run on agents.",
+export const SITE_TITLE = "In The Loop, agent-native startup operations";
+
+export const PLAN_TITLE = "The plan, In The Loop";
+
+export const SOCIAL_IMAGE_PATH = "/brand/social-card-1200x630.png";
+
+export const SOCIAL_IMAGE_ALT = "In The Loop mark";
+
+export const HEADLINE =
+  "Building the systems startups need now that agents work.";
+
+export const HOME_CTA_LABEL = "Read the plan →";
+
+export const HOME_CTA_HREF = PLAN_PATH;
+
+/** The studio programme. Each property is public in intent and still being built. */
+export const PROPERTIES = [
+  {
+    name: "Signal",
+    description: "Curate what's changing in startup operations.",
+  },
+  {
+    name: "Skills",
+    description: "Index the best agent skills for startup work.",
+  },
+  {
+    name: "Harness",
+    description: "Install the startup context agents need.",
+  },
+  {
+    name: "Agents",
+    description: "Solve valuable workflows end-to-end.",
+  },
+  {
+    name: "Newsletter",
+    description: "Share what we learn along the way.",
+  },
 ] as const;
 
-/**
- * The call to action, in one place because the wording is not finally settled.
- * Change this one string to swap it. The alternatives Ryan is weighing are
- * "EMAIL ME" and "WHAT I'M WORKING ON". The brackets are added by the markup,
- * so this is the label only.
- */
-export const CTA_LABEL = "START A CONVERSATION";
-
-/** Where the CTA points. No subject is set on purpose: it is a conversation, not a ticket. */
-export const CTA_EMAIL = "ryan@in-the-loop.studio";
-
-/** The href the CTA carries, so no page has to build a mailto of its own. */
-export const CTA_HREF = `mailto:${CTA_EMAIL}`;
-
-/**
- * Every outbound URL on the site. Startup Skills has no live domain yet and
- * the Feed is not built, so both are placeholders. Change them here and the
- * page follows; nothing links out except through this object.
- */
-export const LINKS = {
-  /** The name is chosen, registration is pending, so this does not resolve yet. */
-  skills: "https://startupskills.dev",
-  /** The Feed. Closed and email gated until it is built, so this is a placeholder. */
-  feed: "https://in-the-loop-feed.workers.dev",
-  /** The archive. A route on this site, so it is live the moment this ships. */
-  newsletter: "/newsletter",
-  /** The identity page, which lists the same projects. */
-  identity: "https://ryanhennebry.xyz",
-} as const;
-
-/**
- * Where the newsletter form posts. The list provider is not chosen: Buttondown
- * is the standing assumption pending a spike, with Postmark the fallback, and
- * the 16 consolidation decision docs are read before anything is wired. No
- * vendor SDK is installed, so swapping provider is this one string plus the
- * field name below.
- *
- * Empty string means "not wired yet": the form renders and says so rather than
- * posting into the dark.
- */
-export const CAPTURE_ENDPOINT = "";
-
-/** The email field name the chosen provider expects. Buttondown uses "email". */
-export const CAPTURE_FIELD = "email";
+export const PLAN_INTRO = [
+  "Agents are changing how startups work.",
+  "We do not yet know what the best agent-native startup looks like.",
+  "In The Loop exists to find out.",
+] as const;
 
 /** Build an absolute URL from a site relative path. Use this, never string concatenation. */
 export function absolute(path: string): string {
