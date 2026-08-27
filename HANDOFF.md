@@ -1,19 +1,28 @@
 # Handoff: in-the-loop.studio
 
-## Required before launch
+## Mail
 
-Cloudflare Email Routing must be enabled for `in-the-loop.studio` before the Plan's contact link
-ships. The domain has no MX records, no SPF and no DMARC today, verified with `dig` against
-Cloudflare's authoritative nameservers and with an SMTP fallback check. Mail to
-`ryan@in-the-loop.studio` hard-bounces right now.
+Cloudflare Email Routing is enabled for `in-the-loop.studio` on zone
+`61e7ce9772a085983236241e9d85c2b1`, with status `ready` and a synced configuration. The domain
+serves the three authoritative Cloudflare MX records, `route1.mx.cloudflare.net` at priority 71,
+`route2.mx.cloudflare.net` at 15 and `route3.mx.cloudflare.net` at 88, and the SPF record
+`v=spf1 include:_spf.mx.cloudflare.net ~all`. The enabled rule `Plan contact link` sits at
+priority 0 and forwards the literal address `ryan@in-the-loop.studio` to the account owner's Gmail,
+a destination verified on 2026-08-27. A catch-all drop rule exists but is disabled, so it does not
+shadow that rule.
 
-Fix: in the Cloudflare dashboard open Email, then Email Routing, then enable it. Cloudflare
-auto-creates the `route1.mx.cloudflare.net`, `route2.mx.cloudflare.net` and
-`route3.mx.cloudflare.net` MX records and an SPF record, then forwards to a destination inbox that
-is verified by clicking a confirmation link.
+Delivery has been observed rather than only configured. Cloudflare's `emailRoutingAdaptiveGroups`
+analytics dataset records exactly one event since 2026-07-28: a `forward` with status `delivered` at
+2026-08-27 13:44 UTC. That status ends at the receiving MX accepting the message. DNS records only
+prove that a server accepts mail, and `delivered` proves the same thing one step later; neither
+proves the message lands in an inbox a human reads rather than a spam folder.
 
-DNS records only prove that a server accepts mail. Only a real test send proves the message lands in
-an inbox a human reads.
+One improvement is still open and it blocks nothing. There is no `_dmarc` TXT record;
+`_dmarc.in-the-loop.studio` returns an authoritative NODATA. DMARC is not required to receive mail
+and does not affect delivery, but it improves deliverability and prevents trivial spoofing. The
+suggested value is `v=DMARC1; p=none; rua=mailto:<owner inbox>`, added from the Cloudflare dashboard
+or with a purpose-scoped API token: the current wrangler OAuth token carries `zone (read)` and no
+`dns_records:write`, so it cannot write the record.
 
 ## Built
 
@@ -37,7 +46,7 @@ mobile; the homepage ending is unchanged at 80px and 40px. Page-scoped spacing i
 the `data-page` attribute on `<body>`. The Plan closes with one quiet mailto link to
 `ryan@in-the-loop.studio` as inline prose under no heading of its own, set apart by a bespoke 144px
 closing interval on desktop and 96px on mobile, with a hairline at 15% of the current text colour
-sitting 14px above it, 48px wide on desktop and 32px on mobile.
+sitting 14px above it, 60px wide on desktop and 32px on mobile.
 
 `PRODUCT.md` holds product truth, `DESIGN.md` holds the implemented visual system, and
 `src/config.ts` holds shared copy, routes and metadata values. Each page has an explicit title,
@@ -47,14 +56,17 @@ Organization identity graph. The full A6 logo and web-icon system lives under `p
 `robots.txt` permits search crawling and names `sitemap.xml`; the sitemap contains only the two real
 canonical pages.
 
-The implementation remains in the working tree and has not been committed. It was deployed on
-2026-08-26 to the existing Cloudflare Pages project `in-the-loop`, replacing the superseded site on
-`https://in-the-loop.studio` and `https://www.in-the-loop.studio`. Ryan's final-copy release was
-deployed on 2026-08-27 as production deployment `c8df63de-0f24-4201-b69c-1439af9a9d1f` on branch
-`main`. `SITE_URL`, the trailing-slash route policy, package deployment script and `wrangler.jsonc`
-describe the Pages production setup.
+The implementation is committed on local `main`, which is 12 commits ahead of `origin/main`. It was
+deployed on 2026-08-26 to the existing Cloudflare Pages project `in-the-loop`, replacing the
+superseded site on `https://in-the-loop.studio` and `https://www.in-the-loop.studio`. Ryan's
+final-copy release was deployed on 2026-08-27 as production deployment
+`c8df63de-0f24-4201-b69c-1439af9a9d1f` on branch `main`. `SITE_URL`, the trailing-slash route
+policy, package deployment script and `wrangler.jsonc` describe the Pages production setup.
 
-The working tree is ahead of production. That deployment predates the Plan spacing rebuild, the 160px
+The Pages project has no git integration, so pushing to git triggers nothing. Production changes
+only through a direct `wrangler pages deploy ./dist` upload of a fresh build.
+
+Local `main` is ahead of production. That deployment predates the Plan spacing rebuild, the 160px
 Plan ending, the `Discover what matters` rename and the contact link, so none of those are live yet.
 
 ## Test
@@ -85,10 +97,9 @@ search indexing, declines named AI-training crawlers and preserves the productio
 
 ## Next
 
-1. Enable Cloudflare Email Routing and confirm a real test send reaches Ryan's inbox. This must
-   happen before the contact link ships live.
-2. Commit the working tree when Ryan approves the final live copy, then deploy so production matches
-   it.
+1. Add the `_dmarc` TXT record from the Cloudflare dashboard or with a purpose-scoped API token.
+   It improves deliverability and is not a launch blocker.
+2. Deploy local `main` with `wrangler pages deploy ./dist` so production matches it.
 3. Submit `https://in-the-loop.studio/sitemap.xml` in Google Search Console when the domain property
    is connected. Crawl readiness is live, but search inclusion is controlled by the search engine.
 4. Add a concept destination only when it is real and has a specific user job.

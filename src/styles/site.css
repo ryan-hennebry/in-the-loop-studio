@@ -25,7 +25,7 @@
   --lockup-gap:  88px;   /* identity to the essay */
   --section:     72px;   /* section to section */
   --section-close: 144px;  /* the essay's last words to its closing line */
-  --close-rule: 48px;      /* the closing hairline, a fraction of the measure */
+  --close-rule: 60px;      /* the closing hairline, a fraction of the measure */
   /* Terminal. */
   --plan-end:   160px;   /* last words to page end */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);

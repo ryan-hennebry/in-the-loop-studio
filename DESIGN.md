@@ -64,7 +64,7 @@ spacing:
   section-mobile: "56px"
   section-close: "144px"
   section-close-mobile: "96px"
-  close-rule: "48px"
+  close-rule: "60px"
   close-rule-mobile: "32px"
   page-top: "clamp(96px, 14vh, 144px)"
   page-mobile-top: "56px"
@@ -154,7 +154,7 @@ rhythm. That heading gap is deliberately low because headings are set at 23px on
 so they carry almost no half-leading and the box sits close to its own baseline; a declared gap
 within about 6px of the paragraph gap therefore disappears optically. The bond has to be bought in
 the box model rather than assumed from the declared numbers. The closing line is set apart by 144px
-instead of 72px, and its hairline, 48px on desktop and 32px at 600px and below, sits 14px above the
+instead of 72px, and its hairline, 60px on desktop and 32px at 600px and below, sits 14px above the
 copy, borrowing the heading gap in place of the heading the closing does not have; the interval is
 measured to the hairline, not to the paragraph. The rule is sized as a fraction of the measure, so
 it holds roughly a tenth of the column at every width rather than growing proportionally larger as
@@ -169,7 +169,7 @@ because Plan body type is 16px/1.625 at both widths. At 360px and below, gutters
 
 **The One Argument Rule.** Do not add a second homepage action, a footer or unavailable-product
 links. The Plan may close with one quiet mailto link set as the last line of the page, carrying no
-heading of its own and separated by a bespoke 144px closing interval, with a hairline 48px wide on
+heading of its own and separated by a bespoke 144px closing interval, with a hairline 60px wide on
 desktop and 32px at 600px and below set 14px above it. The closing turns from describing the
 company's work to addressing the reader, and with no heading to mark that turn the standard section
 interval was indistinguishable from a normal section break: the hairline and the longer interval are
@@ -214,7 +214,7 @@ let use decide and share what we learn, then one quiet closing line offering con
 heading of its own. It is prose only.
 There is no visible page title, diagram, register, local table of contents, sticky navigation or
 footer. The closing carries no heading; a hairline at 15% of the current text colour, flush left
-with the measure and 48px wide on desktop and 32px at 600px and below, is the only rule on the page
+with the measure and 60px wide on desktop and 32px at 600px and below, is the only rule on the page
 and marks the turn a heading would otherwise make. It is drawn as a pseudo-element, so it adds no
 markup and stays out of the accessibility tree. The closing contact link is a plain inline prose
 link; symmetric vertical padding and an equal negative margin give it a 48px tap target without

@@ -17,6 +17,8 @@ repo whose whole point is restraint. Prose replacements done with `sed` silently
 substituting a longer sentence into an existing wrapped paragraph leaves one overlong line.
 
 **How to apply:** When rewriting a sentence inside a wrapped paragraph, replace and re-wrap the whole
-paragraph, not just the sentence. Prefer an exact-string Python replacement with an assertion that
-the match count is 1 over regex or `sed`. See [[email-routing-blocker]] for current doc content
+paragraph, not just the sentence. Never find-and-replace a bare px value across these docs: the same
+number carries unrelated meanings (e.g. 48px was both the closing hairline width and the tap-target
+minimum), so match the full surrounding phrase and assert exactly one hit per site. Prefer an exact-string Python replacement with an assertion that
+the match count is 1 over regex or `sed`. See [[email-routing]] for current doc content
 worth verifying before acting on.
