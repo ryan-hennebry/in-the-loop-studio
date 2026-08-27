@@ -16,6 +16,18 @@
   --brand: #9da3a8;
   --measure: 600px;
   --gutter: 24px;
+  /* Micro: bound to the line box. */
+  --lede-line:   12px;   /* line to line inside the opening stanza */
+  --lede-turn:   32px;   /* lede body to its conclusion */
+  --heading-gap: 14px;   /* heading to the copy it owns */
+  --para:        26px;   /* paragraph to paragraph */
+  /* Macro. */
+  --lockup-gap:  88px;   /* identity to the essay */
+  --section:     72px;   /* section to section */
+  --section-close: 144px;  /* the essay's last words to its closing line */
+  --close-rule: 48px;      /* the closing hairline, a fraction of the measure */
+  /* Terminal. */
+  --plan-end:   160px;   /* last words to page end */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -61,7 +73,11 @@ a:focus-visible {
 .shell {
   width: min(var(--measure), calc(100% - (2 * var(--gutter))));
   margin-inline: auto;
-  padding-block: clamp(96px, 14vh, 144px) 80px;
+  padding-block: clamp(96px, 14vh, 144px) var(--page-end, 80px);
+}
+
+[data-page="plan"] .shell {
+  --page-end: var(--plan-end);
 }
 
 .identity__lockup {
@@ -108,15 +124,13 @@ a:focus-visible {
 
 .headline,
 p,
-ul,
-dl,
-dd {
+ul {
   margin: 0;
 }
 
 .headline {
   max-width: 560px;
-  margin-top: 88px;
+  margin-top: var(--lockup-gap);
   font-size: 28px;
   font-weight: 500;
   letter-spacing: -0.026em;
@@ -185,12 +199,7 @@ dd {
 
 .plan__header {
   max-width: 580px;
-  margin-top: 88px;
-}
-
-.plan__heading {
-  margin: 0;
-  text-wrap: balance;
+  margin-top: var(--lockup-gap);
 }
 
 .plan__intro {
@@ -200,37 +209,53 @@ dd {
   gap: 0;
   font-size: 19px;
   line-height: 1.55;
+  letter-spacing: -0.011em;
 }
 
 .plan__intro p {
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 
 .plan__intro p + p {
-  margin-top: 7px;
+  margin-top: var(--lede-line);
 }
 
 .plan__intro p:last-child {
-  margin-top: 19px;
+  margin-top: var(--lede-turn);
   font-weight: 500;
 }
 
 .plan__section {
-  margin-top: 96px;
+  margin-top: var(--section);
+}
+
+.plan__close {
+  margin-top: var(--section-close);
+}
+
+.plan__close::before {
+  content: "";
+  display: block;
+  width: var(--close-rule);
+  height: 1px;
+  background: currentColor;
+  opacity: 0.15;
 }
 
 .plan__heading {
+  margin: 0;
   font-size: 23px;
   font-weight: 500;
   letter-spacing: -0.022em;
   line-height: 1.3;
+  text-wrap: balance;
 }
 
 .plan__copy {
   display: grid;
   max-width: 570px;
-  margin-top: 22px;
-  gap: 12px;
+  margin-top: var(--heading-gap);
+  gap: var(--para);
   font-size: 16px;
   line-height: 1.625;
 }
@@ -239,36 +264,14 @@ dd {
   text-wrap: pretty;
 }
 
-.plan__copy--after-register {
-  margin-top: 28px;
-}
-
 .plan__copy strong {
   font-weight: 600;
 }
 
-.plan-register {
-  margin-top: 28px;
-  padding: 0;
-  border-bottom: 1px solid var(--rule);
-}
-
-.plan-register__row {
-  display: grid;
-  grid-template-columns: 92px minmax(0, 1fr);
-  align-items: baseline;
-  gap: 24px;
-  padding-block: 18px 19px;
-  border-top: 1px solid var(--rule);
-}
-
-.plan-register dt {
-  font-weight: 500;
-}
-
-.plan-register dd {
-  color: var(--muted);
-  text-wrap: pretty;
+.plan__contact {
+  padding-block: 14px;
+  margin-block: -14px;
+  white-space: nowrap;
 }
 
 .sr-only {
@@ -284,19 +287,22 @@ dd {
 }
 
 @media (max-width: 600px) {
+  :root {
+    --lockup-gap: 64px;
+    --section: 56px;
+    --section-close: 96px;
+    --close-rule: 32px;
+    --plan-end: 120px;
+  }
+
   .shell {
-    padding-block: 56px 40px;
+    padding-block: 56px var(--page-end, 40px);
   }
 
   .headline {
-    margin-top: 62px;
     font-size: 24px;
     letter-spacing: -0.022em;
     line-height: 1.28;
-  }
-
-  .plan__header {
-    margin-top: 62px;
   }
 
   .plan__intro {
@@ -305,25 +311,8 @@ dd {
     line-height: 1.55;
   }
 
-  .plan__intro p + p {
-    margin-top: 6px;
-  }
-
-  .plan__intro p:last-child {
-    margin-top: 17px;
-  }
-
-  .plan__section {
-    margin-top: 68px;
-  }
-
   .plan__heading {
     font-size: 22px;
-  }
-
-  .plan__copy {
-    margin-top: 18px;
-    font-size: 16px;
   }
 
   .programme {
@@ -331,12 +320,6 @@ dd {
   }
 
   .property__row {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 4px;
-    padding-block: 16px 17px;
-  }
-
-  .plan-register__row {
     grid-template-columns: minmax(0, 1fr);
     gap: 4px;
     padding-block: 16px 17px;

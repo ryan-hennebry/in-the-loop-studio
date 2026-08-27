@@ -16,14 +16,14 @@ plans to learn what an agent-native startup should become.
 
 In The Loop is the hub for Ryan's work on how startups operate now that agents work. The homepage
 states that position and introduces Signal, Skills, Harness, Agents and Newsletter. The Plan page
-explains how those five parts form a learning system.
+explains the causal sequence from finding what matters to learning from customers.
 
 ## Positioning
 
 The settled position is `Agent-native startup operations`, expressed through the line `Building the
-systems startups need now that agents work.` Signal curates what is changing. Skills indexes useful
-capabilities. The Harness installs startup context. Agents package valuable workflows. Newsletter
-shares learning and brings people, use and feedback back into the system.
+systems startups need now that agents work.` Signal curates what matters on the frontier. Skills
+indexes agent skills for startup work. The Harness installs startup context. Agents package valuable
+workflows. Newsletter shares learning and brings customers, use and feedback back into the system.
 
 ## Operating Context
 
@@ -38,8 +38,8 @@ work in one pass; the Plan page rewards a slower read.
 - Signal, Skills, Harness, Agents and Newsletter are concepts, not links to unavailable products.
 - Signal and Newsletter are not routes.
 - Shared homepage and Plan metadata remain centralised in `src/config.ts`.
-- The Plan uses prose and the five-part register only. Add a visual only when it makes a relationship
-  clearer than the words already do.
+- The Plan uses prose only. Add a visual only when it makes a relationship clearer than the words
+  already do.
 - No invented team, client proof, testimonials, results, prices or provenance.
 - The studio repository is the entire scope; `ryanhennebry.xyz` remains untouched.
 

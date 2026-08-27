@@ -33,6 +33,12 @@ if [ -d src/pages ]; then
   else
     echo "ok: homepage and Plan are the only routes"
   fi
+  if ! grep -Fq 'trailingSlash: "always"' astro.config.mjs; then
+    echo "FAIL local and production Plan URLs must both end in a trailing slash."
+    fail=1
+  else
+    echo "ok: local and production route policy agree"
+  fi
 else
   echo "not built: no src/pages. The site has not been scaffolded."
 fi
@@ -63,14 +69,14 @@ fi
 for phrase in \
   'Agent-native startup operations' \
   'Building the systems startups need now that agents work.' \
-  "Curate what's changing in startup operations." \
-  'Index the best agent skills for startup work.' \
+  'Curate what matters on the frontier.' \
+  'Index agent skills for startup work.' \
   'Install the startup context agents need.' \
   'Solve valuable workflows end-to-end.' \
   'Share what we learn along the way.' \
   'Read the plan →' \
-  'Agents are changing how startups work.' \
-  'We do not yet know what the best agent-native startup looks like.' \
+  'Agents can now do real startup work.' \
+  'We’re still figuring out what that changes.' \
   'In The Loop exists to find out.'
 do
   if ! grep -Fq "$phrase" src/config.ts; then
@@ -86,21 +92,25 @@ else
   echo "ok: settled homepage and Plan copy, including end-to-end"
 fi
 
-if grep -RqiE '<(svg|figure)|Diagram' src/pages/plan.astro src/components --include='*.astro'; then
-  echo "FAIL Plan diagrams returned. The register and prose carry the explanation."
+if grep -RqiE '<(svg|figure|dl)|Diagram|plan-register' src/pages/plan.astro src/components --include='*.astro'; then
+  echo "FAIL Plan visual structure returned. The final Plan is prose only."
   fail=1
 else
-  echo "ok: Plan stays diagram-free"
+  echo "ok: Plan stays diagram- and register-free"
 fi
 
 for phrase in \
-  'Signal and Skills keep us close to what is changing and what already works.' \
-  '<strong>Signal</strong> curates the articles, podcasts, research and tools worth following.' \
-  'Most of this is curation. We build our own where useful.' \
-  'The <strong>Harness</strong> installs that context: strategy, customers, product, decisions, feedback and metrics.' \
-  'When one does, build an <strong>Agent</strong> around it.' \
-  'The <strong>Newsletter</strong> is our direct channel to founders and early operators.' \
-  'Some become users. Their use and feedback shape what we build next.'
+  'Discover what matters' \
+  '<strong>Signal</strong> curates the articles, podcasts, research and tools worth following on the frontier.' \
+  '<strong>Skills</strong> indexes agent skills for startup work: research, growth, hiring, fundraising and operations.' \
+  'Together, they keep us close to what is emerging and what already works. We mostly curate, and build our own where useful.' \
+  'But agents still need to understand the startup they are working with.' \
+  'What an agent should do depends on the startup.' \
+  'The <strong>Harness</strong> installs the context agents need to understand it: strategy, customers, product, decisions, feedback and metrics, plus the tools, memory and permissions they need to act.' \
+  'We put the Skills and Harness to work with founders and early operators instead of guessing what to build next.' \
+  'What they keep coming back to tells us where to go deeper. When a workflow repeatedly creates value, we build an <strong>Agent</strong> around it, put it back into use and learn again.' \
+  '<strong>Signal</strong> and <strong>Skills</strong> give founders and early operators a reason to find In The Loop. The <strong>Newsletter</strong> keeps us in touch.' \
+  'Some readers become customers. Their use and feedback shape what we build next.'
 do
   if ! grep -Fq "$phrase" src/pages/plan.astro; then
     echo "FAIL settled Plan copy is missing: $phrase"
@@ -177,7 +187,7 @@ done
 if grep -Fq '<title>In The Loop, agent-native startup operations</title>' dist/index.html \
   && grep -Fq '<meta name="description" content="Building the systems startups need now that agents work.">' dist/index.html \
   && grep -Fq '<title>The plan, In The Loop</title>' dist/plan/index.html \
-  && grep -Fq '<meta name="description" content="Agents are changing how startups work. We do not yet know what the best agent-native startup looks like. In The Loop exists to find out.">' dist/plan/index.html; then
+  && grep -Fq '<meta name="description" content="Agents can now do real startup work. We’re still figuring out what that changes. In The Loop exists to find out.">' dist/plan/index.html; then
   echo "ok: page titles and descriptions are explicit and page-specific"
 else
   echo "FAIL a page title or description has drifted."

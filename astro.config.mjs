@@ -8,7 +8,7 @@ import { SITE_URL } from "./src/config.ts";
 export default defineConfig({
   site: SITE_URL,
   output: "static",
-  trailingSlash: "never",
+  trailingSlash: "always",
   build: { format: "directory" },
   devToolbar: { enabled: false },
 });

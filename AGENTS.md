@@ -17,9 +17,11 @@ Shared copy and changeable data live in `src/config.ts`. `Agent-native startup o
 explicit repository-level exception to the parent vocabulary ban.
 
 The homepage presents Signal, Skills, Harness, Agents and Newsletter, then links to `/plan`. The
-Plan page explains the same system with the supplied copy and the same five-part register. Signal and
-Newsletter are concepts, not routes. Keep `Projects in development` and the email action retired
-unless Ryan requests them again.
+Plan page explains the causal sequence in four prose sections: discover what matters, install the
+context, let use decide and share what we learn. Signal and Newsletter are concepts, not routes.
+Keep `Projects in development` retired unless Ryan requests it again. The Plan then closes with one
+quiet mailto to `ryan@in-the-loop.studio`, written as inline prose set apart by the standard section
+interval and carrying no heading of its own. The homepage keeps no contact action.
 
 ## Truth
 

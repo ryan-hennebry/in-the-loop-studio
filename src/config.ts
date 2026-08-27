@@ -34,15 +34,21 @@ export const HOME_CTA_LABEL = "Read the plan →";
 
 export const HOME_CTA_HREF = PLAN_PATH;
 
+/** Where the contact link points. No subject is set on purpose: it is a conversation, not a ticket. */
+export const CONTACT_EMAIL = "ryan@in-the-loop.studio";
+
+/** The href the contact link carries, so no page has to build a mailto of its own. */
+export const CONTACT_HREF = `mailto:${CONTACT_EMAIL}`;
+
 /** The studio programme. Each property is public in intent and still being built. */
 export const PROPERTIES = [
   {
     name: "Signal",
-    description: "Curate what's changing in startup operations.",
+    description: "Curate what matters on the frontier.",
   },
   {
     name: "Skills",
-    description: "Index the best agent skills for startup work.",
+    description: "Index agent skills for startup work.",
   },
   {
     name: "Harness",
@@ -59,8 +65,8 @@ export const PROPERTIES = [
 ] as const;
 
 export const PLAN_INTRO = [
-  "Agents are changing how startups work.",
-  "We do not yet know what the best agent-native startup looks like.",
+  "Agents can now do real startup work.",
+  "We’re still figuring out what that changes.",
   "In The Loop exists to find out.",
 ] as const;
 

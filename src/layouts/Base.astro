@@ -49,9 +49,9 @@ const directionContract = path === PLAN_PATH
   ? `<!--
       THESIS: The company plan as one learning system, not a roadmap or manifesto.
       OWN-WORLD: A6 grey, white bond, Inter, quiet rules and exact spacing.
-      STORY: Why uncertainty exists, how Signal, Skills, Harness, Agents and Newsletter form a learning loop.
-      FIRST VIEWPORT: Compact identity, The plan, the founding question and the system overview.
-      FORM: A continuous-system essay; assigned structure 5; seed 13e54a9e.
+      STORY: Discover what matters, install context, let use decide and share the learning.
+      FIRST VIEWPORT: Compact identity, the founding question and the start of the causal sequence.
+      FORM: A prose-only causal essay; assigned structure 5; seed 13e54a9e.
       FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
     -->`
   : `<!--
@@ -106,7 +106,7 @@ const directionContract = path === PLAN_PATH
     <meta name="twitter:image:alt" content={SOCIAL_IMAGE_ALT} />
     <script type="application/ld+json" set:html={structuredData}></script>
   </head>
-  <body>
+  <body data-page={isHome ? "home" : "plan"}>
     <Fragment set:html={directionContract} />
     <div class="shell">
       <header class="identity">

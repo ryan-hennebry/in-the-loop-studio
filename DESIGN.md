@@ -1,6 +1,6 @@
 ---
 name: In The Loop
-description: A restrained studio index and continuous-system plan.
+description: A restrained studio index and causal Plan.
 colors:
   paper: "#ffffff"
   ink: "#17191b"
@@ -27,6 +27,7 @@ typography:
     fontSize: "19px"
     fontWeight: 400
     lineHeight: 1.55
+    letterSpacing: "-0.011em"
   plan-body:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "16px"
@@ -52,12 +53,25 @@ rounded:
 spacing:
   gutter: "24px"
   gutter-narrow: "20px"
+  base: "4px"
+  lede-line: "12px"
+  lede-turn: "32px"
+  heading-gap: "14px"
+  para: "26px"
+  lockup-gap: "88px"
+  lockup-gap-mobile: "64px"
+  section: "72px"
+  section-mobile: "56px"
+  section-close: "144px"
+  section-close-mobile: "96px"
+  close-rule: "48px"
+  close-rule-mobile: "32px"
   page-top: "clamp(96px, 14vh, 144px)"
-  page-bottom: "80px"
   page-mobile-top: "56px"
+  page-bottom: "80px"
   page-mobile-bottom: "40px"
-  section: "96px"
-  section-mobile: "68px"
+  plan-end: "160px"
+  plan-end-mobile: "120px"
 components:
   primary-link:
     textColor: "{colors.ink}"
@@ -77,8 +91,8 @@ In The Loop is composed, not decorated. A compact A6 identity, exact language, w
 rules make the company legible without turning the site into a sales
 funnel.
 
-The homepage is the concise studio argument. The Plan page is the slower explanation of the same
-five-part learning system. They share one visual world but have different reading rhythms.
+The homepage is the concise studio argument. The Plan page is the slower causal explanation of how
+that argument is carried out. They share one visual world but have different reading rhythms.
 
 **Key Characteristics:**
 
@@ -86,7 +100,7 @@ five-part learning system. They share one visual world but have different readin
 - White paper, dark ink and restrained grey
 - Compact identity instead of broad navigation
 - Hairline structure instead of cards
-- The five-part register as the page's only explanatory structure
+- A five-part homepage register and a prose-only Plan
 - No footer or client-side JavaScript
 
 ## Colors
@@ -104,32 +118,63 @@ font, uppercase label system or oversized type.
 
 The homepage uses the Headline, Body, Identity and Action roles. The Plan adds Section Title, Plan
 Intro and Plan Body. On screens up to 600px, the headline becomes 24px, the section title 22px and
-the Plan introduction 18px. Other roles remain stable.
+the Plan introduction 18px. Other roles remain stable. The Plan introduction balances its line
+breaks so its three sentences break at clause boundaries rather than at the last word that fits, and
+carries -0.011em tracking so the second sentence holds one line down to 384px. Balanced wrapping is
+for the introduction and the headings only; the Plan body does not use it.
 
-**The Exact Language Rule.** Homepage copy lives in `src/config.ts`; Plan copy lives in
-`src/pages/plan.astro` with shared introduction and register data in `src/config.ts`. Do not
+**The Exact Language Rule.** Homepage copy and the Plan introduction live in `src/config.ts`; the
+rest of the Plan copy lives in `src/pages/plan.astro`. Do not
 paraphrase it. This ASCII document writes the interface action as `Read the plan ->`; the interface
 renders the right-arrow glyph. `end-to-end` is always hyphenated.
 
 ## Layout
 
-Both routes use a centered 600px shell with 24px gutters. Desktop page padding starts between 96px
-and 144px and ends at 80px. The visible A6 mark is 26px; the mark-to-copy gap is 12px.
+Both routes use a centered 600px shell with 24px gutters. Every spacing value is a multiple of 4px.
+Desktop page padding starts between 96px and 144px and ends at 80px on the homepage and 160px on the
+Plan. The visible A6 mark is 26px; the mark-to-copy gap is 12px.
 
 The homepage moves from identity to headline after 88px, from headline to the five-part register
 after 52px, and from the register to `Read the plan ->` after 43px. Register rows use a 92px name
 column, a flexible description column, a 24px gap and 19px/20px vertical padding.
 
-The Plan identity-to-introduction gap is 88px. The visible page title is deliberately omitted.
-The first two opening lines sit 7px apart; the conclusion follows after 19px. Sections are separated
-by 96px and headings sit 22px above body copy. Prose remains within 600px.
+`<body>` carries `data-page="home"` or `data-page="plan"`, and that attribute is how page-scoped
+spacing such as the Plan's longer ending is applied: CSS custom properties inherit downward only, so
+a value set on `.plan` cannot reach the `.shell` padding above it.
 
-At 600px and below, page padding becomes 56px/40px. The homepage and Plan opening gap becomes 62px,
-register rows stack name above description and Plan sections separate by 68px. The opening line gaps
-become 6px and 17px. At 360px and below, gutters reduce to 20px.
+The Plan identity-to-introduction gap is 88px. Its lockup carries the same name and discipline line
+as the homepage, and the visible page title is deliberately omitted.
+The first two opening lines sit 12px apart; the conclusion follows after 32px. That turn is the
+widest interval inside the prose, because it is the page's one rhetorical turn; at 26px it would tie
+the ordinary paragraph gap optically and stop reading as a turn at all. Sections are separated by
+72px, paragraphs inside a section by 26px, and a heading sits 14px above the body it introduces. A
+heading is bound more tightly to its own copy than paragraphs are to each other; measured against
+the paragraph gap those three intervals hold a 2.77 to 1 to 0.54 ratio, and that ratio is the page
+rhythm. That heading gap is deliberately low because headings are set at 23px on a 1.3 line-height,
+so they carry almost no half-leading and the box sits close to its own baseline; a declared gap
+within about 6px of the paragraph gap therefore disappears optically. The bond has to be bought in
+the box model rather than assumed from the declared numbers. The closing line is set apart by 144px
+instead of 72px, and its hairline, 48px on desktop and 32px at 600px and below, sits 14px above the
+copy, borrowing the heading gap in place of the heading the closing does not have; the interval is
+measured to the hairline, not to the paragraph. The rule is sized as a fraction of the measure, so
+it holds roughly a tenth of the column at every width rather than growing proportionally larger as
+the column narrows. The Plan ends 160px below its last words: a page with no footer needs a closing
+interval at least twice its largest interval. Prose remains within 600px.
+
+At 600px and below, page padding becomes 56px, ending at 40px on the homepage and 120px on the Plan.
+The homepage and Plan opening gap becomes 64px, register rows stack name above description, Plan
+sections separate by 56px and the closing interval becomes 96px. The opening line gaps stay at 12px
+and 32px. Only intervals between whole blocks compress on mobile; intervals inside the prose do not,
+because Plan body type is 16px/1.625 at both widths. At 360px and below, gutters reduce to 20px.
 
 **The One Argument Rule.** Do not add a second homepage action, a footer or unavailable-product
-links. The Plan identity is the only return path.
+links. The Plan may close with one quiet mailto link set as the last line of the page, carrying no
+heading of its own and separated by a bespoke 144px closing interval, with a hairline 48px wide on
+desktop and 32px at 600px and below set 14px above it. The closing turns from describing the
+company's work to addressing the reader, and with no heading to mark that turn the standard section
+interval was indistinguishable from a normal section break: the hairline and the longer interval are
+the only signal the turn gets. The closing line is still prose, not furniture, and gains no
+container, bracket or box. The Plan identity is the only return path.
 
 ## Elevation & Depth
 
@@ -151,8 +196,8 @@ geometry for small sizes.
 
 ### Identity
 
-The 26px A6 mark sits beside a two-line 13px lockup: the name at 600 and the discipline at 400 in
-muted ink. It is static on the homepage. On the Plan page, the lockup is a 48px home target with a
+The 26px A6 mark sits beside a 13px lockup. Both routes carry the identical full lockup: the name at
+600 and the discipline at 400 in muted ink. The Plan makes that lockup a 48px home target with a
 visible focus outline and a subtle 140ms press scale. Reduced motion removes the transition.
 
 ### Homepage register and action
@@ -164,10 +209,16 @@ layout.
 
 ### Plan essay
 
-The Plan is one continuous article: founding question, system overview, stay close to the frontier,
-install the context, let use decide and share what we learn. The same five-part register from the
-homepage is its only visual structure. There is no visible page title, diagram, local table of
-contents, sticky navigation or footer.
+The Plan is one continuous article: founding question, discover what matters, install the context,
+let use decide and share what we learn, then one quiet closing line offering contact under no
+heading of its own. It is prose only.
+There is no visible page title, diagram, register, local table of contents, sticky navigation or
+footer. The closing carries no heading; a hairline at 15% of the current text colour, flush left
+with the measure and 48px wide on desktop and 32px at 600px and below, is the only rule on the page
+and marks the turn a heading would otherwise make. It is drawn as a pseudo-element, so it adds no
+markup and stays out of the accessibility tree. The closing contact link is a plain inline prose
+link; symmetric vertical padding and an equal negative margin give it a 48px tap target without
+disturbing the 26px paragraph interval, and it does not wrap.
 
 ## Do's and Don'ts
 
