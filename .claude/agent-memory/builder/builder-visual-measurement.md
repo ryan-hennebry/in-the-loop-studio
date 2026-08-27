@@ -1,6 +1,6 @@
 ---
 name: builder-visual-measurement
-description: How to measure rendered tap targets, hover states and overflow on this site without adding repo dependencies, plus two gotchas that produce false results
+description: How to measure rendered tap targets, hover states and overflow on this site without adding repo dependencies, plus three gotchas that produce false results
 metadata:
   type: feedback
 ---
@@ -16,7 +16,12 @@ script must import it by absolute path, e.g.
 `import { chromium } from '/Users/ryanhennebry/.npm/_npx/<hash>/node_modules/playwright/index.mjs'`,
 because `NODE_PATH` does not apply to ESM resolution.
 
-**How to apply:** Two gotchas have already produced wrong readings here. (1) The Plan's closing link
+**How to apply:** Three gotchas have already produced wrong readings here. (0) `dist/` is only
+refreshed by `npm run build` or `./verify.sh`, so measuring straight after editing `src/` measures
+the previous commit. This has already happened: a homepage that ends exactly at the foot of a
+390x664 screen measured 789px and looked like a 125px overflow, and the numbers were about to be
+written into DESIGN.md as a failure. Rebuild first, every time, and sanity-check one value against
+what the change was supposed to do before trusting the table. (1) The Plan's closing link
 sits far below the fold: a raw `mouse.move` to its bounding-box centre lands off-screen and silently
 reports no `:hover` and no `:active`. Call `scrollIntoView({block:'center'})` first, or use
 `page.hover()`, which scrolls for you. (2) Chromium does not run CSS transitions on

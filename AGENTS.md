@@ -43,4 +43,10 @@ geometry. The visible lockup follows the compact two-line treatment in `DESIGN.m
 
 Run `./verify.sh`. For visual changes, inspect `/` and `/plan` at 1440px, 390px and 320px. Completion
 means the production build passes, both pages load without browser errors or horizontal overflow,
-the supplied copy remains intact, the Plan keeps a clear reading rhythm, and navigation works in both directions.
+the supplied copy remains intact, the Plan keeps a clear reading rhythm, and navigation works in
+both directions.
+
+The homepage must also hold one screen without scrolling on current phones and laptop windows. It
+ends exactly at the foot of the screen at 360x700, 390x664, 393x659, 412x811, 430x780 and at 1440px
+by 800px and taller. A 375x553 and a 320x460 still scroll, by 94px and 218px, and that is accepted:
+closing either would cost a register row, a type size or a tap target.

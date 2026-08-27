@@ -25,17 +25,29 @@
   --lede-turn:   32px;   /* lede body to its conclusion */
   --register-row: 19px 20px;  /* a register row, set optically between its rules */
   /* Macro. */
-  --action-gap:  43px;   /* the register to the one action */
-  --register-top: 52px;  /* headline to the register */
   --section:     72px;   /* section to section */
   --lockup-gap:  88px;   /* identity to the essay */
   --section-close: 144px;  /* the essay's last words to its closing line */
   --close-rule: 60px;      /* the closing hairline, a fraction of the measure */
   /* Terminal. */
   --page-top: clamp(96px, 14vh, 144px);  /* page top to the identity */
-  --page-end:    80px;   /* last words to page end */
-  --plan-end:   160px;   /* the Plan ends further down: it has further to fall */
-  --footer-gap: 224px;   /* the last content on either page to the colophon */
+  --page-end:    48px;   /* colophon to page end; the tail below must not outrun the tail above */
+  --plan-end:    80px;   /* the Plan still ends further down, but the colophon now closes it */
+  --footer-gap: 224px;   /* the Plan's composed close: it always outruns the screen, so this is what you see */
+  /* The homepage's elastic intervals. Each holds the least it may be; whatever height
+     the screen leaves over is divided between them in fixed proportion. The two terminal
+     risers are open ended and take the surplus 3:5; the two interior risers grow a little
+     and stop, so the headline, the register and the action keep reading as one block.
+     The floors are set low enough that a laptop window, browser chrome included, still
+     holds one screen. They were lowered in the same 3:1:1:5 the risers grow in, which is
+     what keeps every screen that already fitted composed exactly as before: the height
+     comes back as surplus and the surplus is divided the way it was taken. */
+  --riser-open:         46px;  /* identity to the headline */
+  --riser-register:     38px;  /* headline to the register */
+  --riser-register-max: 76px;
+  --riser-action:       29px;  /* register to the one action */
+  --riser-action-max:   64px;
+  --riser-close:        18px;  /* the action to the colophon */
   /* Interaction. One timing and one resting underline for every link on the site. */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --link-motion: 140ms;
@@ -125,14 +137,68 @@ a:focus-visible {
   }
 }
 
+/* One column, at least one screen tall. A page shorter than the screen ends at the
+   foot of it; a page longer than the screen simply runs on. The measurement is the
+   small viewport, the state a page that does not scroll permanently sits in. */
 .shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
   width: min(var(--measure), calc(100% - (2 * var(--gutter))));
   margin-inline: auto;
   padding-block: var(--page-top) var(--page-end);
 }
 
+/* The column fills the screen before the colophon, never after it, so the surplus a
+   short page leaves is always absorbed above the closing line. */
+.main {
+  flex: 1 0 auto;
+}
+
 [data-page="plan"] .shell {
   --page-end: var(--plan-end);
+}
+
+/* The homepage's rhythm is elastic. Its macro intervals are items in the column rather
+   than margins on the blocks: each holds a floor, and any height the screen leaves over
+   is divided between them in fixed proportion. A tall screen reads as composure, a short
+   one still fits, and nothing anywhere is measured in script. */
+[data-page="home"] .main {
+  display: flex;
+  flex-direction: column;
+}
+
+.riser {
+  flex-shrink: 0;
+}
+
+.riser--open {
+  flex-grow: 3;
+  flex-basis: var(--riser-open);
+}
+
+.riser--register {
+  flex-grow: 1;
+  flex-basis: var(--riser-register);
+  max-height: var(--riser-register-max);
+}
+
+.riser--action {
+  flex-grow: 1;
+  flex-basis: var(--riser-action);
+  max-height: var(--riser-action-max);
+}
+
+.riser--close {
+  flex-grow: 5;
+  flex-basis: var(--riser-close);
+}
+
+/* The riser below the action is the homepage's closing interval, so the colophon adds
+   none of its own. Only the Plan, which always outruns the screen, keeps a fixed one. */
+[data-page="home"] .colophon {
+  margin-top: 0;
 }
 
 .identity__lockup {
@@ -186,16 +252,11 @@ ul {
 
 .headline {
   max-width: 560px;
-  margin-top: var(--lockup-gap);
   font-size: 28px;
   font-weight: 500;
   letter-spacing: -0.026em;
   line-height: 1.24;
   text-wrap: balance;
-}
-
-.programme {
-  margin-top: var(--register-top);
 }
 
 .properties {
@@ -229,7 +290,6 @@ ul {
   display: inline-flex;
   align-items: center;
   min-height: 48px;
-  margin-top: var(--action-gap);
   margin-inline-start: -8px;
   padding-inline: 8px;
   font-weight: 500;
@@ -365,16 +425,20 @@ ul {
   :root {
     --register-pair: 4px;
     --register-row: 12px 13px;
-    --action-gap: 24px;
-    --register-top: 24px;
     --lockup-gap: 32px;
     --section: 56px;
     --section-close: 96px;
     --close-rule: 32px;
     --page-top: 24px;
     --page-end: 16px;
-    --plan-end: 120px;
+    --plan-end: 40px;
     --footer-gap: 128px;
+    --riser-open: 15px;
+    --riser-register: 15px;
+    --riser-register-max: 32px;
+    --riser-action: 15px;
+    --riser-action-max: 32px;
+    --riser-close: 21px;
   }
 
   .headline {

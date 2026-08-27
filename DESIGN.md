@@ -63,10 +63,18 @@ spacing:
   lede-turn: "32px"
   register-row: "19px 20px"
   register-row-mobile: "12px 13px"
-  action-gap: "43px"
-  action-gap-mobile: "24px"
-  register-top: "52px"
-  register-top-mobile: "24px"
+  riser-open: "46px"
+  riser-open-mobile: "15px"
+  riser-register: "38px"
+  riser-register-mobile: "15px"
+  riser-register-max: "76px"
+  riser-register-max-mobile: "32px"
+  riser-action: "29px"
+  riser-action-mobile: "15px"
+  riser-action-max: "64px"
+  riser-action-max-mobile: "32px"
+  riser-close: "18px"
+  riser-close-mobile: "21px"
   section: "72px"
   section-mobile: "56px"
   lockup-gap: "88px"
@@ -77,10 +85,10 @@ spacing:
   close-rule-mobile: "32px"
   page-top: "clamp(96px, 14vh, 144px)"
   page-mobile-top: "24px"
-  page-bottom: "80px"
+  page-bottom: "48px"
   page-mobile-bottom: "16px"
-  plan-end: "160px"
-  plan-end-mobile: "120px"
+  plan-end: "80px"
+  plan-end-mobile: "40px"
   footer-gap: "224px"
   footer-gap-mobile: "128px"
 components:
@@ -159,12 +167,35 @@ named custom property declared once in `:root` and overridden once in the 600px 
 is a bare literal inside a rule or a `var()` fallback. Both pages therefore read from one scale
 rather than from two. The scale is built on 4px; the only departure is the register row, whose lower
 padding carries one extra optical pixel. Desktop page padding starts between 96px and 144px and ends
-at 80px on the homepage and 160px on the Plan. The visible A6 mark is 26px; the mark-to-copy gap is
-12px.
+48px below the colophon on the homepage and 80px below it on the Plan. The visible A6 mark is 26px;
+the mark-to-copy gap is 12px.
 
-The homepage moves from identity to headline after 88px, from headline to the five-part register
-after 52px, and from the register to `Read the plan ->` after 43px. Register rows use a 92px name
-column, a flexible description column, a 24px gap and 19px/20px vertical padding.
+Both pages sit in a `.shell` that is a flex column at least one screen tall, and `.main` is the only
+part of that column allowed to grow. A page shorter than the screen therefore ends at the foot of
+the screen, with its surplus absorbed above the colophon rather than below it; a page longer than
+the screen simply runs on, and the colophon follows the last words. The screen is measured as
+`100svh`, the small viewport, because that is the height a page which never scrolls permanently sits
+in. A `100vh` declaration precedes it as a fallback for engines that predate `svh`, but Astro's CSS
+minifier discards the duplicate property, so `dist` ships `100svh` alone and a pre-2022 engine gets
+no fallback at all. That is accepted: the consequence there is a colophon that sits above the fold
+on a short page, not a broken layout.
+
+The homepage's macro intervals are not margins on its blocks. They are four empty `.riser` items in
+that column, each holding a floor as its `flex-basis` and taking a share of whatever height the
+screen leaves over: 46px and three shares from the identity to the headline, 38px and one share from
+the headline to the five-part register, 29px and one share from the register to `Read the plan ->`,
+and 18px and five shares from the action to the colophon. The two interior risers are capped, at
+76px and 64px, so the headline, the register and the action keep reading as one block however tall
+the window is. The two terminal risers are uncapped and divide the rest three to five, which holds
+the argument a little above the optical centre. `flex-shrink` is 0 on all four, so a screen too
+short for the page takes a scrollbar rather than an interval below its floor, and nothing on the
+page is measured in script. Register rows use a 92px name column, a flexible description column, a
+24px gap and 19px/20px vertical padding.
+
+Those floors replaced fixed intervals of 88px, 52px and 43px, lowered by 42px, 14px and 14px: the
+same three to one to one the risers grow in. That is what keeps a screen which already held the page
+composed exactly as it was, because the height comes back as surplus and the surplus is divided the
+way it was taken.
 
 `<body>` carries `data-page="home"` or `data-page="plan"`, and that attribute is how page-scoped
 spacing such as the Plan's longer ending is applied: CSS custom properties inherit downward only, so
@@ -186,22 +217,36 @@ instead of 72px, and its hairline, 60px on desktop and 32px at 600px and below, 
 copy, borrowing the heading gap in place of the heading the closing does not have; the interval is
 measured to the hairline, not to the paragraph. The rule is sized as a fraction of the measure, so
 it holds roughly a tenth of the column at every width rather than growing proportionally larger as
-the column narrows. The colophon closes both pages: it sits 224px below the last content, 128px at
-600px and below, and each page's own ending falls beneath it. Prose remains within 600px.
+the column narrows. The colophon closes both pages. On the Plan it sits 224px below the last words,
+128px at 600px and below, and the page then ends 80px beneath it on desktop and 40px on mobile.
+Those tails were 160px and 120px, sized on the argument that a page with no footer needs a closing
+interval at least twice its largest interval. The colophon terminates the page now, so that argument
+is void and the air it bought has moved above the signature instead of below it. A long approach and
+a short tail reads as an ending; 160px of empty paper under a signature reads as a page still
+loading. Prose remains within 600px.
 
-At 600px and below the homepage compresses to hold one screen. Page padding becomes 24px, ending at
-16px on the homepage and 120px on the Plan. The homepage and Plan opening gap becomes 32px, the
-headline-to-register gap 24px and the register-to-action gap 24px. Register rows stack name above
-description on a 4px gap with 12px/13px vertical padding. Plan sections separate by 56px and the
-closing interval becomes 96px. The opening line gaps stay at 12px and 32px. Only intervals between
-whole blocks compress on mobile; intervals inside the prose do not, because Plan body type is
-16px/1.625 at both widths. At 360px and below, gutters reduce to 20px.
+At 600px and below the homepage compresses to hold one screen. Page padding becomes 24px, ending
+16px below the colophon on the homepage and 40px below it on the Plan. The Plan's opening gap
+becomes 32px. The homepage's four riser floors become 15px, 15px, 15px and 21px, with both interior
+caps at 32px; the shares are unchanged, so the page composes on the same proportions it does on a
+desktop. Register rows stack name above description on a 4px gap with 12px/13px vertical padding.
+Plan sections separate by 56px and the closing interval becomes 96px. The opening line gaps stay at
+12px and 32px. Only intervals between whole blocks compress on mobile; intervals inside the prose do
+not, because Plan body type is 16px/1.625 at both widths. At 360px and below, gutters reduce to
+20px.
 
-The measured result is a 643px homepage at 360px wide and above, against the roughly 664px a
-390x844 phone shows under its browser chrome. The whole argument, register and action included, is
-visible there without scrolling. A 375x667 or 320x568 screen still scrolls, and that is accepted:
-the remaining distance could only be bought from type size or from the register itself. No type size
-shrinks to reach the fit, no copy is cut and no tap target falls below 48px.
+Measured against the built output, the homepage document height now equals the viewport height
+exactly at 1440x1080, 1440x900, 1440x800, 430x780, 412x811, 393x659, 390x664 and 360x700. The whole
+argument, register, action and colophon included, is visible there without scrolling: the page ends
+at the foot of the screen on current phones and on a laptop window.
+
+Two screens still scroll, and both are recorded rather than fixed. A 375x553 viewport, an iPhone SE
+2 or 3 under its browser chrome, runs 94px long; a 320x460, the first generation SE, runs 218px
+long. Closing either would mean cutting a register row, dropping a type size or shrinking a tap
+target, and none of those is for sale. No type size shrinks to reach the fit, no copy is cut, there
+is no horizontal overflow or console error at any of those widths on either route, and every link on
+the site measures 48px: the homepage action, the Plan's home link, its closing contact link and the
+colophon link on both pages.
 
 **The One Argument Rule.** Do not add a second homepage action or unavailable-product links. The
 colophon is the only structure allowed below the argument, and it is a signature rather than a
@@ -254,10 +299,13 @@ not change size.
 Both pages close on the same line: the studio name at the left, `by Ryan Hennebry` at the right,
 linking to LinkedIn. It borrows the identity's 13px role, so the page ends in the voice it opened
 in, and it carries no rule, box or background; the interval above it is the only separation it
-needs. The name link takes every state from the shared `.link` base and adds nothing but a 48px
-target, bought with symmetric vertical padding and an equal negative margin so the line itself does
-not move. It is the site's one outbound link, and the colophon carries no mailto: contact belongs to
-the Plan's closing line, which is prose, and putting the same offer in furniture would say it twice.
+needs. On the Plan that interval is the fixed 224px footer gap. On the homepage it is the closing
+riser, which starts at 18px and grows, so the colophon adds no margin of its own and the page's last
+interval is whatever the screen has left. The name link takes every state from the shared `.link`
+base and adds nothing but a 48px target, bought with symmetric vertical padding and an equal
+negative margin so the line itself does not move. It is the site's one outbound link, and the
+colophon carries no mailto: contact belongs to the Plan's closing line, which is prose, and putting
+the same offer in furniture would say it twice.
 
 ### Plan essay
 

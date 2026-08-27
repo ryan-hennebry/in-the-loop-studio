@@ -17,7 +17,11 @@ repo whose whole point is restraint. Prose replacements done with `sed` silently
 substituting a longer sentence into an existing wrapped paragraph leaves one overlong line.
 
 **How to apply:** When rewriting a sentence inside a wrapped paragraph, replace and re-wrap the whole
-paragraph, not just the sentence. Never find-and-replace a bare px value across these docs: the same
+paragraph, not just the sentence: an exact-string replacement whose match starts mid-line leaves the
+tail of the original line appended, which silently produces 130 to 176 column lines. Check with
+`awk 'length>100 {print FILENAME":"FNR": "length}' *.md` after every edit. Five lines are over 100
+columns before you start (one in `AGENTS.md`, four in `HANDOFF.md`); anything beyond those five is
+yours, and `textwrap.fill(' '.join(block.split()), width=100)` over the whole paragraph fixes it. Never find-and-replace a bare px value across these docs: the same
 number carries unrelated meanings (e.g. 48px was both the closing hairline width and the tap-target
 minimum), so match the full surrounding phrase and assert exactly one hit per site. Prefer an exact-string Python replacement with an assertion that
 the match count is 1 over regex or `sed`. See [[email-routing]] for current doc content

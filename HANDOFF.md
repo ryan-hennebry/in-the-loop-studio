@@ -42,19 +42,27 @@ larger gap before `In The Loop exists to find out.`
 Plan spacing was rebuilt on a 4px scale. The opening lines sit 12px apart and the conclusion follows
 after 32px at both widths. A heading sits 14px above its body, paragraphs inside a section sit 26px
 apart, and sections separate by 72px on desktop and 56px on mobile. The lockup-to-opening gap is
-88px on desktop and 32px on mobile. The Plan ends 160px below its last words on desktop and 120px on
-mobile; the homepage ends 80px below its action on desktop and 16px on mobile. Page-scoped spacing
-is applied through the `data-page` attribute on `<body>`. The Plan closes with one quiet mailto link to
+88px on desktop and 32px on mobile. The colophon sits 224px below the Plan's last words on desktop
+and 128px on mobile, and the page ends 80px below the colophon on desktop and 40px on mobile; the
+homepage ends 48px below its colophon on desktop and 16px on mobile. Page-scoped spacing is applied
+through the `data-page` attribute on `<body>`. The Plan closes with one quiet mailto link to
 `ryan@in-the-loop.studio` as inline prose under no heading of its own, set apart by a bespoke 144px
 closing interval on desktop and 96px on mobile, with a hairline at 15% of the current text colour
 sitting 14px above it, 60px wide on desktop and 32px on mobile.
 
-The homepage now runs on the same named tokens rather than on literals, and at 600px and below it
-compresses to hold one screen: a 24px page top, a 32px opening gap, 24px from the headline to the
-register, 12px/13px register rows, 24px to the action and a 16px ending. It measures 643px at 360px
-wide and above, inside the roughly 664px a 390x844 phone shows under its browser chrome. A 375x667
-or 320x568 screen still scrolls. No copy was cut, no type size shrank and all three tap targets
-remain 48px.
+The homepage's vertical rhythm is elastic. Its four macro intervals are empty `.riser` items in a
+flex column with floors of 46px, 38px, 29px and 18px on desktop and 15px, 15px, 15px and 21px at
+600px and below, growing 3:1:1:5 into whatever height the screen leaves over, with the two interior
+risers capped at 76px and 64px on desktop and 32px on mobile. The shell is a flex column at least
+`100svh` tall and only `.main` grows, so a short page ends at the foot of the screen with the
+surplus above the colophon. Astro's minifier drops the duplicate `100vh` fallback, so `dist` ships
+`100svh` alone and a pre-2022 engine gets none.
+
+Measured against the build, the homepage document height equals the viewport height exactly at
+1440x1080, 1440x900, 1440x800, 430x780, 412x811, 393x659, 390x664 and 360x700. A 375x553 runs 94px
+long and a 320x460 runs 218px long, and both are accepted. No copy was cut, no type size shrank, and
+every link measures 48px: the homepage action, the Plan's home link, its closing contact link and
+the colophon link on both pages.
 
 `PRODUCT.md` holds product truth, `DESIGN.md` holds the implemented visual system, and
 `src/config.ts` holds shared copy, routes and metadata values. Each page has an explicit title,
@@ -74,17 +82,27 @@ route policy, package deployment script and `wrangler.jsonc` describe the Pages 
 The Pages project has no git integration, so pushing to git triggers nothing. Production changes
 only through a direct `wrangler pages deploy ./dist` upload of a fresh build.
 
-Local `main` is ahead of production. That deployment predates the Plan spacing rebuild, the 160px
-Plan ending, the `Discover what matters` rename and the contact link, so none of those are live yet.
+Local `main` is ahead of production. That deployment predates the Plan spacing rebuild, the
+`Discover what matters` rename, the contact link, the colophon, the elastic homepage rhythm, the
+shortened page endings, the drawn arrow and the `Share what we learn as we go.` register line, so
+none of those are live yet.
 
 ## Test
 
-`./verify.sh` passed against the previously shipped state. It checked the two-route boundary,
-local/production route agreement, exact homepage and Plan copy, truth constraints, the diagram- and
-register-free Plan, brand assets and the production Astro build. Re-run it against the current
-working tree before the next deployment. The search and sharing gate checks crawl files, exact
-canonical URLs, page-specific titles and descriptions, social-image metadata, the identity graph and
-the absence of client JavaScript.
+`./verify.sh` passes against the current tree, and passed at each commit that produced it. It checks
+the two-route boundary, local/production route agreement, exact homepage and Plan copy, truth
+constraints, the diagram- and register-free Plan, brand assets and the production Astro build.
+Re-run it before every deployment. The search and sharing gate checks crawl files, exact canonical
+URLs, page-specific titles and descriptions, social-image metadata, the identity graph and the
+absence of client JavaScript.
+
+The current tree was also measured against the built output rather than asserted from the CSS:
+`dist` served locally and driven headless at 1440x1080, 1440x900, 1440x800, 430x780, 412x811,
+393x659, 390x664, 375x553, 360x700 and 320x460, on both routes. No console error, no page error and
+no horizontal overflow at any of them. The homepage document height equals the viewport height at
+every one of those sizes except 375x553 and 320x460, which run 94px and 218px long. Every link
+measures 48px on both routes at 1440px, 390px and 320px. The homepage arrow translates 3px on hover
+without changing the link's box, and the colophon link's underline moves from muted to ink.
 
 Browser verification covered the Plan at 1440px, 390px and 320px, then the homepage and both
 navigation directions at 320px. There were no browser warnings, errors or horizontal overflow. The
