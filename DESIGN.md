@@ -322,15 +322,17 @@ change and its place in the transition list are both gone. Rebuilding the underl
 element or a gradient would animate more and would cost `text-decoration-skip-ink`. The
 rest-to-hover colour step is 5.06:1 and carries the hover on its own.
 
-**Two presses, because there are two kinds of link.** `.primary-link` and `.identity__home` are
-padded targets and press with `transform: scale(0.98)`. The three set as inline runs,
-`.plan__contact`, `.colophon__home` and `.colophon__link`, press by taking their underline to ink
-instead. A transform does not apply to a non-replaced inline box at all, so those links used to show
-nothing on tap: hover is behind `(hover: hover) and (pointer: fine)` and the tap
-highlight is suppressed, which left a touch reader with no feedback whatsoever. They deliberately do
-not get a scale either, because `transform-origin: left center` on an 88.6px run would
-draw its right edge 1.77px in while the full stop after it stayed put, opening a gap in the middle
-of a sentence.
+**One press, in one channel.** Every link on the site presses the way it hovers: whatever is muted
+about it comes up to ink, and nothing moves. `.primary-link` and `.identity__home` used to scale to
+0.98 instead, and that scale fought the hover it arrives under. The arrow sits 127px from a
+`transform-origin: left center` on a 135.06px box, so the press drew it 2.5px back the instant the
+pointer went down and undid five sixths of the 3px it had just travelled: the click read as the
+arrow snapping backwards rather than as a confirmation. A press is in any case only ever seen alone
+under a coarse pointer, because hover is behind `(hover: hover) and (pointer: fine)` and the tap
+highlight is suppressed. There the colour step is much the louder of the two, a 5.06:1 crossing
+against a 2 per cent shrink of a 48px target that is barely legible. A transform never applied to a
+non-replaced inline box either, so `.plan__contact`, `.colophon__home` and `.colophon__link` could
+not have taken a scale in the first place. One `.link:active` rule now covers all five.
 
 **One thing moves.** The homepage arrow travels 3px on hover, on `--ease-arrow`,
 `cubic-bezier(0.4, 0, 0.2, 1)`, over the same 140ms. The shared `--ease-out`,
@@ -381,10 +383,11 @@ off the document root in a separate tree.
 
 The 26px A6 mark sits beside a 13px lockup. Both routes carry the identical full lockup: the name at
 600 and the discipline at 400 in muted ink. The Plan makes that lockup a 48px home target with a
-visible focus outline and a subtle 140ms press scale. Reduced motion removes the transition. That
-home link centres its flex item rather than letting it stretch, so the lockup box measures 36.38px
-on both routes; stretched it was 38px on the Plan, and the named view transition would have animated
-the 1.62px difference on every navigation.
+visible focus outline, and it presses by bringing its discipline line up to ink over 140ms, the same
+step its hover makes. Reduced motion removes the transition. That home link centres its flex item
+rather than letting it stretch, so the lockup box measures 36.38px on both routes; stretched it was
+38px on the Plan, and the named view transition would have animated the 1.62px difference on every
+navigation.
 
 ### Homepage register and action
 

@@ -119,23 +119,18 @@ a:focus-visible {
   text-decoration-skip-ink: auto;
   text-decoration-thickness: var(--link-decoration-thickness);
   text-underline-offset: 0.17em;
-  transform-origin: left center;
-  transition:
-    text-decoration-color var(--link-motion) var(--ease-out),
-    transform var(--link-motion) var(--ease-out);
+  transition: text-decoration-color var(--link-motion) var(--ease-out);
 }
 
-/* Two presses, because there are two kinds of link. A padded target can be
-   scaled. A run inside a sentence cannot, so it presses in the one channel
-   that moves nothing. */
-.primary-link:active,
-.identity__home:active {
-  transform: scale(0.98);
-}
-
-.plan__contact:active,
-.colophon__home:active,
-.colophon__link:active {
+/* One press, in the one channel that moves nothing: whatever is muted about the link
+   comes up to ink. The two padded targets used to scale instead, and the scale fought
+   the hover it arrives under. On a 135px box with `transform-origin: left center` the
+   arrow sits 127px from the origin, so 0.98 pulled it 2.5px back the instant the
+   pointer went down and undid five sixths of the 3px it had just travelled: the click
+   read as the arrow snapping backwards. A press is in any case only ever seen alone
+   on a coarse pointer, where hover is gated out, and there the colour step is by far
+   the louder of the two. A 2 per cent shrink of a 48px target is barely legible. */
+.link:active {
   --link-decoration-color: var(--ink);
   --link-muted: var(--ink);
 }
