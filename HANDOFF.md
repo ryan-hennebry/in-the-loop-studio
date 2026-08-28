@@ -56,11 +56,13 @@ The homepage's vertical rhythm is elastic. Its four macro intervals are empty `.
 flex column with floors of 46px, 56px, 44px and 18px on desktop and 15px, 15px, 15px and 21px at
 600px and below, with the two interior risers capped at 112px and 96px on desktop and 32px on
 mobile. They grow into whatever height the screen leaves over on named share tokens, 1:2:2:9 above
-600px and 3:1:1:5 at 600px and below. The homepage also opens higher than the Plan above 600px, on
-`clamp(64px, 8vh, 96px)` against the Plan's `clamp(96px, 14vh, 144px)`; both are 24px on mobile. The
-shell is a flex column at least `100svh` tall and only `.main` grows, so a short page ends at the
-foot of the screen with the surplus above the colophon. Astro's minifier drops the duplicate `100vh`
-fallback, so `dist` ships `100svh` alone and a pre-2022 engine gets none.
+600px and 3:1:1:5 at 600px and below. Both routes now open at the same height, on one shared
+`clamp(64px, 8vh, 96px)` above 600px and 24px on mobile. The Plan used to open lower, on
+`clamp(96px, 14vh, 144px)`, and because the lockup is named for the page transition that difference
+was animated on every navigation rather than absorbed. The shell is a flex column at least `100svh`
+tall and only `.main` grows, so a short page ends at the foot of the screen with the surplus above
+the colophon. Astro's minifier drops the duplicate `100vh` fallback, so `dist` ships `100svh` alone
+and a pre-2022 engine gets none.
 
 Measured against the build, the homepage document height equals the viewport height exactly at
 1920x1080, 1728x1117, 1512x982, 1440x1080, 1440x900, 1440x800, 430x780, 412x811, 393x659, 390x664
@@ -90,8 +92,9 @@ Local `main` is ahead of production. That deployment predates the Plan spacing r
 `Discover what matters` rename, the contact link, the colophon, the elastic homepage rhythm, the
 shortened page endings, the drawn arrow, the `Share what we learn as we go.` register line, the
 replaced Plan introduction and body copy, the desktop composition on 1:2:2:9 shares, the link
-interaction fixes, the colophon wordmark's home link and the cross-document page transition, so none
-of those are live yet. The live Plan description still reads `In The Loop exists to find out.`
+interaction fixes, the colophon wordmark's home link, the cross-document page transition and the
+shared page top, so none of those are live yet. The live Plan description still reads
+`In The Loop exists to find out.`
 
 ## Test
 
@@ -112,15 +115,18 @@ on both routes at 1440px, 390px and 320px. The homepage arrow translates 3px on 
 changing the link's box, and every underline on the site moves from muted to ink on hover and again
 on press.
 
-Three interaction readings are worth carrying forward. `.primary-link` now measures 135.06px rather
+Four interaction readings are worth carrying forward. `.primary-link` now measures 135.06px rather
 than stretching the whole column, so it no longer puts a pointer over empty paper. The page
 transition fires forward, on Back and from the colophon's home link, and is suppressed under
-`prefers-reduced-motion: reduce`; Firefox ignores it entirely and navigates normally. The closing
-contact link takes no focus outline at all, because no offset clears the glyph band above it without
-cutting the word itself; focus is drawn instead as a 2px rule above the word and another below,
-painted at y 551.88 and 572.88 inside the link's own content box. Measured from the pixels against
-the ink of the line above, which runs 531.63 to 547.38, the marks overlap it by zero at 1440px,
-390px and 320px, and they still paint under forced colours.
+`prefers-reduced-motion: reduce`; Firefox ignores it entirely and navigates normally. The named
+lockup no longer moves during it: at 1440x900 the identity group's keyframes start and end at
+`matrix(1, 0, 0, 1, 420, 72)` at 233.25 by 36.375px, and every stepped frame of the navigation,
+forward and back, is pixel-identical over the lockup. The closing contact link takes no focus
+outline at all, because no offset clears the glyph band above it without cutting the word itself;
+focus is drawn instead as a 2px rule above the word and another below, painted at y 551.88 and
+572.88 inside the link's own content box. Measured from the pixels against the ink of the line
+above, which runs 531.63 to 547.38, the marks overlap it by zero at 1440px, 390px and 320px, and
+they still paint under forced colours.
 
 Browser verification covered the Plan at 1440px, 390px and 320px, then the homepage and both
 navigation directions at 320px. There were no browser warnings, errors or horizontal overflow. The

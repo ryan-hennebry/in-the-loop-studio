@@ -87,8 +87,7 @@ spacing:
   section-close-mobile: "96px"
   close-rule: "60px"
   close-rule-mobile: "32px"
-  page-top: "clamp(96px, 14vh, 144px)"
-  page-top-home: "clamp(64px, 8vh, 96px)"
+  page-top: "clamp(64px, 8vh, 96px)"
   page-mobile-top: "24px"
   page-bottom: "48px"
   page-mobile-bottom: "16px"
@@ -177,12 +176,16 @@ Both routes use a centered 600px shell with 24px gutters. Every layout interval 
 named custom property declared once in `:root` and overridden once in the 600px block; no interval
 is a bare literal inside a rule or a `var()` fallback. Both pages therefore read from one scale
 rather than from two. The scale is built on 4px; the only departure is the register row, whose lower
-padding carries one extra optical pixel. Desktop page padding starts between 96px and 144px on the
-Plan and between 64px and 96px on the homepage, and ends 48px below the colophon on the homepage and
-80px below it on the Plan. The homepage opens higher because it is one screen rather than an essay:
-its top margin is a share of the screen it has, `clamp(64px, 8vh, 96px)` set on `[data-page="home"]`
-above 600px, where the Plan keeps the shared `clamp(96px, 14vh, 144px)`. The visible A6 mark is
-26px; the mark-to-copy gap is 12px.
+padding carries one extra optical pixel. Desktop page padding starts between 64px and 96px on both
+routes, and ends 48px below the colophon on the homepage and 80px below it on the Plan. The opening
+is one shared `clamp(64px, 8vh, 96px)` above 600px and 24px below it. It is sized for the homepage,
+which has to hold one screen; the Plan scrolls and has no fit to keep, so it takes the same value
+and spends the height it gets back on reading. The Plan used to fall further, on
+`clamp(96px, 14vh, 144px)`, and that was a defect rather than a refinement: the lockup is the one
+element on both pages and it is named for the page transition, so the difference in its resting
+height was not absorbed by the navigation but animated by it, as a header sliding down on arrival.
+One token, one resting position, nothing to animate. The visible A6 mark is 26px; the mark-to-copy
+gap is 12px.
 
 Both pages sit in a `.shell` that is a flex column at least one screen tall, and `.main` is the only
 part of that column allowed to grow. A page shorter than the screen therefore ends at the foot of
@@ -254,8 +257,8 @@ a short tail reads as an ending; 160px of empty paper under a signature reads as
 loading. Prose remains within 600px.
 
 At 600px and below the homepage compresses to hold one screen. Page padding becomes 24px on both
-routes, ending 16px below the colophon on the homepage and 40px below it on the Plan; the homepage's
-higher opening is gated above 600px and does not apply here. The Plan's opening gap becomes 32px.
+routes, ending 16px below the colophon on the homepage and 40px below it on the Plan; the two
+routes always opened at the same height here, and still do. The Plan's opening gap becomes 32px.
 The homepage's four riser floors become 15px, 15px, 15px and 21px, with both interior caps at 32px,
 and the shares go back to 3:1:1:5. A phone has almost no surplus to divide, so the desktop's 1:2:2:9
 would buy nothing there and would spend the little there is on the wrong intervals; the mobile
@@ -361,13 +364,19 @@ neighbouring line at any width, they shift nothing, and `text-decoration` surviv
 where a `box-shadow` would not be painted at all.
 
 **Page transition.** Navigation between the two routes cross-fades over 220ms on `--ease-out`,
-declared with `@view-transition { navigation: auto }`. It is CSS the browser
-runs itself, so the zero-JavaScript budget is intact: `dist` still ships exactly two script elements
-and both are the JSON-LD identity graph. Only `.identity__lockup` is named, as `identity`. Its group
-animates between positions while its old and new snapshots are given `animation: none` and full
-opacity, so the lockup holds still and stays solid while the page changes underneath it. The
-colophon is deliberately not named: it sits at y=833.81 on the homepage and y=1959.38 on the Plan at
-1440x900, so naming it would send it 1,126px down the screen on every navigation.
+declared with `@view-transition { navigation: auto }`. It is CSS the browser runs itself, so the
+zero-JavaScript budget is intact: `dist` still ships exactly two script elements and both are the
+JSON-LD identity graph. Only `.identity__lockup` is named, as `identity`. Its old and new snapshots
+are given `animation: none` and full opacity, so it stays solid while the page changes underneath
+it, and it now rests in precisely the same place on both routes, so its group has nothing to
+animate: at 1440x900 the group's keyframes run from `matrix(1, 0, 0, 1, 420, 72)` at 233.25 by
+36.375px to exactly those values, and every stepped frame of the navigation, forward and on Back, is
+pixel-identical over the lockup. Two corrections bought that. One `--page-top` for both routes, and
+`align-items: flex-start` on the Plan's `.identity__home`, whose 48px target is 11.62px taller than
+the lockup and, centred, held it 0.81px below the padding edge; aligned to the start, the surplus
+falls below the lockup and the target still covers it. The colophon is deliberately not named: it
+sits at y=833.81 on the homepage and y=1904.88 on the Plan at 1440x900, so naming it would send it
+1,071px down the screen on every navigation.
 
 Support is partial and the degradation is silent. Chrome and Edge 126 and Safari 18.2 run it.
 Firefox has no cross-document view transitions, Bugzilla 1860854 is open, so it ignores the block

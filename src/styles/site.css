@@ -30,7 +30,7 @@
   --section-close: 144px;  /* the essay's last words to its closing line */
   --close-rule: 60px;      /* the closing hairline, a fraction of the measure */
   /* Terminal. */
-  --page-top: clamp(96px, 14vh, 144px);  /* page top to the identity */
+  --page-top: clamp(64px, 8vh, 96px);  /* page top to the identity, one height on both routes */
   --page-end:    48px;   /* colophon to page end; the tail below must not outrun the tail above */
   --plan-end:    80px;   /* the Plan still ends further down, but the colophon now closes it */
   --footer-gap: 224px;   /* the Plan's composed close: it always outruns the screen, so this is what you see */
@@ -181,15 +181,11 @@ a:focus-visible {
   flex: 1 0 auto;
 }
 
-/* The homepage opens higher than the Plan: it is one screen, so its top margin
-   is a share of the screen rather than the essay's fixed fall. Below 600px the
-   phone composition owns the interval, so this is gated above it. */
-@media (min-width: 601px) {
-  [data-page="home"] .shell {
-    --page-top: clamp(64px, 8vh, 96px);
-  }
-}
-
+/* Both pages open at the same height. The opening is a share of the screen, sized
+   for the homepage, which has to hold one; the Plan scrolls and can spend the height
+   it gets back on reading. The lockup is the one element on both pages, and it is
+   named for the view transition, so any difference here would be animated: a header
+   sliding down on arrival. One token, one resting position, nothing to animate. */
 [data-page="plan"] .shell {
   --page-end: var(--plan-end);
 }
@@ -243,10 +239,15 @@ a:focus-visible {
 }
 
 /* The Plan's return path is a navigational lockup, not prose, so it overrides the
-   base underline away and spends its hover on the one muted channel it has. */
+   base underline away and spends its hover on the one muted channel it has. The
+   target is 48px and the lockup is 36.38px, so the leftover 11.62px has to go
+   somewhere: all of it below. Centred, it pushed the lockup 0.81px down the page and
+   the named view transition animated that difference on every navigation. Aligned to
+   the start, the lockup rests exactly on the page's top padding, as it does on the
+   homepage, and the target still covers it. */
 .identity__home {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   min-height: 48px;
   margin: -5px -8px;
   padding: 5px 8px;
