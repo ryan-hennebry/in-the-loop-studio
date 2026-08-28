@@ -251,6 +251,7 @@ a:focus-visible {
    base underline away and spends its hover on the one muted channel it has. */
 .identity__home {
   display: inline-flex;
+  align-items: center;
   min-height: 48px;
   margin: -5px -8px;
   padding: 5px 8px;
@@ -550,5 +551,51 @@ ul {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Between the two pages, a cross-fade the browser runs for us. It is declarative
+   CSS, not script, so the zero-JavaScript budget is intact: Chrome and Edge 126 and
+   Safari 18.2 honour it, and Firefox, which has no cross-document implementation
+   yet, ignores the whole block and navigates the way it always did.
+
+   Only the lockup is named. It is the one thing that is on both pages and in nearly
+   the same place, so it holds still while the rest of the page changes underneath
+   it. The colophon is deliberately not named: it sits at y=834 on the homepage and
+   y=1959 on the Plan, so naming it would send it flying 1,100px down the screen.
+
+   The reduced-motion guard has to be nested here rather than left to the block
+   above, which targets *, *::before and *::after. Those selectors do not reach the
+   ::view-transition pseudo-elements, which are children of a separate tree. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root),
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+  animation-timing-function: var(--ease-out);
+}
+
+.identity__lockup {
+  view-transition-name: identity;
+}
+
+::view-transition-group(identity) {
+  animation-duration: 220ms;
+  animation-timing-function: var(--ease-out);
+}
+
+::view-transition-old(identity),
+::view-transition-new(identity) {
+  animation: none;
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
   }
 }
