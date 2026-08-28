@@ -18,18 +18,18 @@ typography:
     letterSpacing: "-0.026em"
   section-title:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "23px"
-    fontWeight: 500
-    lineHeight: 1.3
-    letterSpacing: "-0.022em"
+    fontSize: "20px"
+    fontWeight: 550
+    fontWeightRole: "the spine of the argument, inside the reading register"
+    lineHeight: 1.35
+    letterSpacing: "-0.014em"
   plan-intro:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "19px"
+    fontSize: "16px"
     fontWeight: 400
-    fontWeightEmphasis: 500
+    fontWeightEmphasis: 550
     fontWeightEmphasisRole: "thesis, at the section title weight"
-    lineHeight: 1.55
-    letterSpacing: "-0.011em"
+    lineHeight: 1.625
   plan-body:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "16px"
@@ -155,21 +155,43 @@ Inter Variable is the only typeface. Weight and measure create the hierarchy; th
 font, uppercase label system or oversized type.
 
 The homepage uses the Headline, Body, Identity and Action roles. The Plan adds Section Title, Plan
-Intro and Plan Body. On screens up to 600px, the headline becomes 24px, the section title 22px and
-the Plan introduction 18px. Other roles remain stable. The Plan introduction balances its line
-breaks so its three sentences break at clause boundaries rather than at the last word that fits, and
-carries -0.011em tracking so the second sentence holds one line down to 381px. Balanced wrapping is
-for the introduction and the headings only; the Plan body does not use it.
+Intro and Plan Body. The section title is 20px at 550 on -0.014em tracking. The Plan introduction
+takes the Plan Body register outright, 16px at 400 on 1.625 with no tracking of its own, so the Plan
+sets three prose sizes and not four. On screens up to 600px the headline becomes 24px and the
+section title 19px, the standing 1px step it has always taken; the introduction has no step left to
+take, because the body it now matches does not step either. Other roles remain stable. The Plan
+introduction balances its line breaks so its three sentences break at clause boundaries rather than
+at the last word that fits. At 16px its second sentence holds one line down to 348px, where at 19px
+on -0.011em tracking it broke at 382px, so the tracking that bought that fit is no longer paying for
+anything. Balanced wrapping is for the introduction and the headings only; the Plan body does not
+use it.
+
+The section title came down from 23px. On a 570px measure four titles at 23px read as a second
+headline rather than as the spine of an argument, and above the fold they competed with the
+introduction. At 20px on 550 they keep 88 per cent of their skim strength: blurred to reading
+distance they peak at 78 against 88 for the old setting, where an ordinary body line peaks at 57, so
+they still stop the eye while sitting inside the reading register. The tracking follows the size
+down the scale the rest of the type already sets: -0.026em at 28px and -0.011em at 19px are -0.728px
+and -0.209px in absolute terms, which puts 20px at -0.283px, or -0.014em. The headings are not
+flattened to body size, and the essays this was measured against do not argue that they should be.
+They are a different form: each runs as one linear argument, and one of them carries a persistent
+sidebar table of contents doing the scanning. This page is a five-concept system description with no
+navigation of any kind, so a reader skimming a flattened version of it would have nothing to land
+on.
 
 Emphasis on the Plan is carried by `strong` and by nothing else, in two weights that do two named
-jobs. 500 is the thesis: the introduction's closing line, the turn from premise to purpose, and the
-sentence the four section titles answer. It takes the section title's weight at the introduction's
-smaller size, so it reads as their equal rather than their superior; at 600 it outweighed every
-heading it introduced, and at 390px, where it wraps to two lines, it became a bold block that made
-`Discover what matters` read as subordinate to it. 600 is a product name in the body, and nothing
-else, so the weight the reader meets on a single noun is never also a whole emphasised sentence.
-Neither line takes a weight of its own in the markup: the markup says which words are emphasised and
-two rules, one per role, say how much.
+jobs. 550 is the thesis: the introduction's closing line, the turn from premise to purpose, and the
+sentence the four section titles answer. It takes the section title's weight at the body size the
+introduction now shares with the copy, so it reads as their equal rather than their superior; at 600
+it outweighed every heading it introduced, and at 390px, where it wraps to two lines, it became a
+bold block that made `Discover what matters` read as subordinate to it. 600 is a product name in the
+body, and nothing else, so the weight the reader meets on a single noun is never also a whole
+emphasised sentence. It stays a weight rather than an italic because the variable font carries only
+`opsz` and `wght` and `font-synthesis` is none, so an `em` would render byte-identical upright, and
+at reading distance dropping the bold costs 11 per cent of the word's contrast against its line for
+no gain in skimming. Neither line takes a weight of its own in the markup: the markup says which
+words are emphasised and two rules, one per role, say how much. 500 has left the Plan entirely; it
+remains a homepage weight, on the headline, the register names and the action.
 
 **The Exact Language Rule.** Homepage copy and the Plan introduction live in `src/config.ts`; the
 rest of the Plan copy lives in `src/pages/plan.astro`. Do not
@@ -240,40 +262,41 @@ spacing such as the Plan's longer ending is applied: CSS custom properties inher
 a value set on `.plan` cannot reach the `.shell` padding above it.
 
 The Plan identity-to-introduction gap is 88px. Its lockup carries the same name and discipline line
-as the homepage, and the visible page title is deliberately omitted.
-The first two opening lines sit 12px apart; the conclusion follows after 32px. That turn is the
-widest interval inside the prose, because it is the page's one rhetorical turn; at 26px it would tie
-the ordinary paragraph gap optically and stop reading as a turn at all. Sections are separated by
-72px, paragraphs inside a section by 26px, and a heading sits 14px above the body it introduces. A
-heading is bound more tightly to its own copy than paragraphs are to each other; measured against
-the paragraph gap those three intervals hold a 2.77 to 1 to 0.54 ratio, and that ratio is the page
-rhythm. That heading gap is deliberately low because headings are set at 23px on a 1.3 line-height,
-so they carry almost no half-leading and the box sits close to its own baseline; a declared gap
-within about 6px of the paragraph gap therefore disappears optically. The bond has to be bought in
-the box model rather than assumed from the declared numbers. The closing line is set apart by 144px
-instead of 72px, and its hairline, 60px on desktop and 32px at 600px and below, sits 14px above the
-copy, borrowing the heading gap in place of the heading the closing does not have; the interval is
-measured to the hairline, not to the paragraph. The rule is sized as a fraction of the measure, so
-it holds roughly a tenth of the column at every width rather than growing proportionally larger as
-the column narrows. The colophon closes both pages. On the Plan it sits 224px below the last words,
-128px at 600px and below, and the page then ends 80px beneath it on desktop and 40px on mobile.
-Those tails were 160px and 120px, sized on the argument that a page with no footer needs a closing
-interval at least twice its largest interval. The colophon terminates the page now, so that argument
-is void and the air it bought has moved above the signature instead of below it. A long approach and
-a short tail reads as an ending; 160px of empty paper under a signature reads as a page still
-loading. Prose remains within 600px.
+as the homepage, and the visible page title is deliberately omitted. The first two opening lines sit
+12px apart; the conclusion follows after 32px. That turn is the widest interval inside the prose,
+because it is the page's one rhetorical turn; at 26px it would tie the ordinary paragraph gap
+optically and stop reading as a turn at all. Sections are separated by 72px, paragraphs inside a
+section by 26px, and a heading sits 14px above the body it introduces. A heading is bound more
+tightly to its own copy than paragraphs are to each other; measured against the paragraph gap those
+three intervals hold a 2.77 to 1 to 0.54 ratio, and that ratio is the page rhythm. That heading gap
+is deliberately low because headings are set at 20px on a 1.35 line-height, so they carry almost no
+half-leading and the box sits close to its own baseline; a declared gap within about 6px of the
+paragraph gap therefore disappears optically. The bond has to be bought in the box model rather than
+assumed from the declared numbers. The closing line is set apart by 144px instead of 72px, and its
+hairline, 60px on desktop and 32px at 600px and below, sits 14px above the copy, borrowing the
+heading gap in place of the heading the closing does not have; the interval is measured to the
+hairline, not to the paragraph. The rule is sized as a fraction of the measure, so it holds roughly
+a tenth of the column at every width rather than growing proportionally larger as the column
+narrows. The colophon closes both pages. On the Plan it sits 224px below the last words, 128px at
+600px and below, and the page then ends 80px beneath it on desktop and 40px on mobile. Those tails
+were 160px and 120px, sized on the argument that a page with no footer needs a closing interval at
+least twice its largest interval. The colophon terminates the page now, so that argument is void and
+the air it bought has moved above the signature instead of below it. A long approach and a short
+tail reads as an ending; 160px of empty paper under a signature reads as a page still loading. Prose
+remains within 600px.
 
 At 600px and below the homepage compresses to hold one screen. Page padding becomes 24px on both
-routes, ending 16px below the colophon on the homepage and 40px below it on the Plan; the two
-routes always opened at the same height here, and still do. The Plan's opening gap becomes 32px.
-The homepage's four riser floors become 15px, 15px, 15px and 21px, with both interior caps at 32px,
-and the shares go back to 3:1:1:5. A phone has almost no surplus to divide, so the desktop's 1:2:2:9
+routes, ending 16px below the colophon on the homepage and 40px below it on the Plan; the two routes
+always opened at the same height here, and still do. The Plan's opening gap becomes 32px. The
+homepage's four riser floors become 15px, 15px, 15px and 21px, with both interior caps at 32px, and
+the shares go back to 3:1:1:5. A phone has almost no surplus to divide, so the desktop's 1:2:2:9
 would buy nothing there and would spend the little there is on the wrong intervals; the mobile
 composition is tuned to hold one screen at 390px and is left exactly as it was. Register rows stack
 name above description on a 4px gap with 12px/13px vertical padding. Plan sections separate by 56px
 and the closing interval becomes 96px. The opening line gaps stay at 12px and 32px. Only intervals
 between whole blocks compress on mobile; intervals inside the prose do not, because Plan body type
-is 16px/1.625 at both widths. At 360px and below, gutters reduce to 20px.
+is 16px/1.625 at both widths and the introduction is now that same 16px/1.625. At 360px and below,
+gutters reduce to 20px.
 
 Measured against the built output, the homepage document height now equals the viewport height
 exactly at 1920x1080, 1728x1117, 1512x982, 1440x1080, 1440x900, 1440x800, 430x780, 412x811, 393x659,

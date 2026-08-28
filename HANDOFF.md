@@ -39,8 +39,11 @@ The homepage's final register says `Curate what matters on the frontier.` and
 causal essay: discover what matters, install the context, let use decide and share what we learn.
 Its visible title, system register and diagrams are removed. The opening uses tight premise spacing
 followed by a larger gap before `In The Loop exists to explore it and build what's missing.`, the
-essay's thesis, which is set at 500, the section title weight, so it reads as the equal of the four
-headings it introduces. 600 is reserved for the product names in the body.
+essay's thesis, which is set at 550, the section title weight, so it reads as the equal of the four
+headings it introduces. The introduction itself is set in the body register, 16px, and the four
+section titles are 20px at 550: at 23px on a 570px measure they read as a second headline rather
+than as the spine of the argument. 600 is reserved for the product names in the body, and 500 no
+longer appears on the Plan at all.
 
 Plan spacing was rebuilt on a 4px scale. The opening lines sit 12px apart and the conclusion follows
 after 32px at both widths. A heading sits 14px above its body, paragraphs inside a section sit 26px
