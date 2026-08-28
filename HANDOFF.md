@@ -83,8 +83,18 @@ link, its closing contact link, the Plan colophon's wordmark and the author link
 description, apex-domain canonical, Open Graph and Twitter metadata, and the same small WebSite and
 Organization identity graph. The full A6 logo and web-icon system lives under `public/`;
 `public/brand/social-card-1200x630.png` is the shared 1200x630 Open Graph and Twitter image.
-`robots.txt` permits search crawling and names `sitemap.xml`; the sitemap contains only the two real
+`robots.txt` permits search crawling, names `sitemap.xml` and declares
+`Content-Signal: search=yes,ai-train=no,use=reference`; the sitemap contains only the two real
 canonical pages.
+
+That signal is an express reservation of rights: index this site, read it and reference it, but do
+not train a model on it. It names no crawler and disallows nothing. Cloudflare's Managed robots.txt
+was enabled in the dashboard until 2026-08-28 and prepended nine blanket blocks, on ClaudeBot,
+GPTBot, Google-Extended, CCBot, Bytespider, Amazonbot, Applebot-Extended, meta-externalagent and
+CloudflareBrowserRenderingCrawler. They contradicted the `use=reference` signal printed beside them,
+and they made a site about agent-native operations unreadable to the assistants a reader may ask
+about it, so none of them was carried into this repository. The toggle is off, under AI Crawl
+Control -> Signals, and the repository is the single source of truth for crawler policy again.
 
 The implementation is committed on local `main`, which has not been pushed to `origin` and does not
 need to be for a release. It was deployed on 2026-08-26 to the existing Cloudflare Pages project
@@ -111,7 +121,8 @@ the two-route boundary, local/production route agreement, exact homepage and Pla
 constraints, the diagram- and register-free Plan, brand assets and the production Astro build.
 Re-run it before every deployment. The search and sharing gate checks crawl files, exact canonical
 URLs, page-specific titles and descriptions, social-image metadata, the identity graph and the
-absence of client JavaScript.
+absence of client JavaScript. It also asserts the `Content-Signal` line and that the built
+`robots.txt` disallows nothing, so the shipped crawler policy cannot drift unnoticed again.
 
 The current tree was also measured against the built output rather than asserted from the CSS:
 `dist` served locally and driven headless at 1920x1080, 1728x1117, 1512x982, 1440x1080, 1440x900,
@@ -153,8 +164,10 @@ Post-deployment verification confirmed the final homepage and Plan copy at
 `https://in-the-loop.studio`. The apex and `/plan/` return 200; `/plan` normalises to `/plan/` with a
 308. The Plan's description and social metadata use the final three-line introduction. The `www`
 copy canonicals to the apex. The sitemap, manifest, social card, SVG/PNG/ICO favicons and Apple touch
-icon all return successfully with the right content type. Cloudflare's managed crawler policy allows
-search indexing, declines named AI-training crawlers and preserves the production sitemap declaration.
+icon all return successfully with the right content type. The `robots.txt` read at that check was
+Cloudflare's managed file, not this repository's. With the managed toggle off, production served
+this repository's file on 2026-08-28: search indexing open, the sitemap declared and no `Disallow`
+anywhere.
 
 ## Next
 

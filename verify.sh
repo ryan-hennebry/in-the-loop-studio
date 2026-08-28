@@ -148,6 +148,21 @@ else
   fail=1
 fi
 
+if [ -f dist/robots.txt ] \
+  && grep -Fq 'Content-Signal: search=yes,ai-train=no,use=reference' dist/robots.txt; then
+  echo "ok: robots.txt permits reference use and declines model training"
+else
+  echo "FAIL robots.txt does not carry the Content-Signal reservation of rights."
+  fail=1
+fi
+
+if [ -f dist/robots.txt ] && ! grep -Fq 'Disallow' dist/robots.txt; then
+  echo "ok: robots.txt blocks no crawler"
+else
+  echo "FAIL robots.txt must not disallow any crawler."
+  fail=1
+fi
+
 if [ -f dist/sitemap.xml ]; then
   sitemap_urls=$(grep -c '<loc>' dist/sitemap.xml || true)
   if [ "$sitemap_urls" -eq 2 ] \
