@@ -30,6 +30,8 @@ typography:
     fontWeightEmphasis: 550
     fontWeightEmphasisRole: "thesis, at the section title weight"
     lineHeight: 1.625
+    wrap: "balance"
+    wrapRole: "the thesis clauses are inline blocks; its one break falls after 'explore it'"
   plan-body:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "16px"
@@ -192,6 +194,17 @@ at reading distance dropping the bold costs 11 per cent of the word's contrast a
 no gain in skimming. Neither line takes a weight of its own in the markup: the markup says which
 words are emphasised and two rules, one per role, say how much. 500 has left the Plan entirely; it
 remains a homepage weight, on the headline, the register names and the action.
+
+Where the thesis turns is set rather than left to the browser. All three introduction paragraphs are
+balanced, and balance broke the thesis after `explore`, which strands `it` on the second line away
+from the verb it belongs to. Greedy wrapping was worse: it broke after `and` at 320px and after
+`build` at 390px, inside the predicate both times. The two clauses are therefore each set as an
+inline block, which leaves the line exactly one legal break, between them. Measured on the build in
+10px steps, every width from 320px to 470px turns after `In The Loop exists to explore it`, and from
+480px to 1440px the sentence holds one line and does not break at all. No non-breaking space is
+involved and the copy is not restated: `PLAN_INTRO` is also the Plan's meta description and the copy
+gates match it literally, so the clauses are sliced out of that one string and the rendered text
+stays byte-identical to it.
 
 **The Exact Language Rule.** Homepage copy and the Plan introduction live in `src/config.ts`; the
 rest of the Plan copy lives in `src/pages/plan.astro`. Do not

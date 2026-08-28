@@ -6,6 +6,21 @@ import {
   PLAN_PATH,
   PLAN_TITLE,
 } from "../config.ts";
+
+/* The thesis is one sentence of two clauses, and where it turns is a reading
+   decision, not the browser's. Balanced it turned after "explore", stranding "it"
+   on the second line away from its verb; greedy it turned mid-predicate. Setting
+   each clause as its own inline block leaves the line exactly one legal break,
+   between them, so whenever the thesis turns it turns after "explore it". The
+   clauses are sliced out of the settled string rather than restated, so the
+   rendered text, the meta description and the copy gates stay byte-identical. */
+const THESIS = PLAN_INTRO[PLAN_INTRO.length - 1];
+const THESIS_SEAM = " and build";
+const seam = THESIS.indexOf(THESIS_SEAM);
+if (seam < 0) {
+  throw new Error(`The Plan's thesis no longer breaks at "${THESIS_SEAM}".`);
+}
+const THESIS_CLAUSES = [THESIS.slice(0, seam), THESIS.slice(seam + 1)];
 ---
 
 <Base title={PLAN_TITLE} description={PLAN_INTRO.join(" ")} path={PLAN_PATH}>
@@ -15,7 +30,9 @@ import {
       <div class="plan__intro">
         {PLAN_INTRO.map((paragraph, index) => (
           <p>
-            {index === PLAN_INTRO.length - 1 ? <strong>{paragraph}</strong> : paragraph}
+            {index === PLAN_INTRO.length - 1 ? (
+              <strong><span class="plan__clause">{THESIS_CLAUSES[0]}</span> <span class="plan__clause">{THESIS_CLAUSES[1]}</span></strong>
+            ) : paragraph}
           </p>
         ))}
       </div>

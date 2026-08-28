@@ -40,10 +40,14 @@ causal essay: discover what matters, install the context, let use decide and sha
 Its visible title, system register and diagrams are removed. The opening uses tight premise spacing
 followed by a larger gap before `In The Loop exists to explore it and build what's missing.`, the
 essay's thesis, which is set at 550, the section title weight, so it reads as the equal of the four
-headings it introduces. The introduction itself is set in the body register, 16px, and the four
-section titles are 20px at 550: at 23px on a 570px measure they read as a second headline rather
-than as the spine of the argument. 600 is reserved for the product names in the body, and 500 no
-longer appears on the Plan at all.
+headings it introduces. Its two clauses are each set as an inline block, which leaves the line one
+legal break: every width from 320px to 470px turns after `In The Loop exists to explore it`, and
+from 480px up the sentence holds one line. The break is bought in the layout rather than in the
+copy, with no non-breaking space, because that same string is the Plan's meta description and the
+copy gates match it literally. The introduction itself is set in the body register, 16px, and the
+four section titles are 20px at 550: at 23px on a 570px measure they read as a second headline
+rather than as the spine of the argument. 600 is reserved for the product names in the body, and 500
+no longer appears on the Plan at all.
 
 Plan spacing was rebuilt on a 4px scale. The opening lines sit 12px apart and the conclusion follows
 after 32px at both widths. A heading sits 14px above its body, paragraphs inside a section sit 26px
