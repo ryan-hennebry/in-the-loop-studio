@@ -410,14 +410,16 @@ where a `box-shadow` would not be painted at all.
 **Page transition.** Navigation between the two routes cross-fades over 220ms on `--ease-out`,
 declared with `@view-transition { navigation: auto }`. It is CSS the browser runs itself, so the
 zero-JavaScript budget is intact: `dist` still ships exactly two script elements and both are the
-JSON-LD identity graph. Nothing on either page carries a `view-transition-name`, and the absence is
-the finding rather than an omission. The lockup used to carry one, on the reasoning that naming the
-single element common to both routes pins it while the page changes underneath. Measurement says the
-opposite, twice over. `::view-transition-group` tweens from the geometry its old snapshot had in the
-VIEWPORT rather than in the document, so a name pins only a lockup that was already on screen:
-leaving the Plan scrolled to its footer and clicking the colophon ran the group from
-`matrix(1, 0, 0, 1, 420, -1009)` to `matrix(1, 0, 0, 1, 420, 72)`, flying the lockup 1,081px down
-the screen, and Back ran it 1,078px the other way. Only unscrolled navigations had ever been
+JSON-LD identity graph. That count is a claim about what this repository builds rather than about
+what production serves, which a Cloudflare setting rewrote until 2026-08-28; `HANDOFF.md` records
+the live check that catches it. Nothing on either page carries a `view-transition-name`, and the
+absence is the finding rather than an omission. The lockup used to carry one, on the reasoning that
+naming the single element common to both routes pins it while the page changes underneath.
+Measurement says the opposite, twice over. `::view-transition-group` tweens from the geometry its
+old snapshot had in the VIEWPORT rather than in the document, so a name pins only a lockup that was
+already on screen: leaving the Plan scrolled to its footer and clicking the colophon ran the group
+from `matrix(1, 0, 0, 1, 420, -1009)` to `matrix(1, 0, 0, 1, 420, 72)`, flying the lockup 1,081px
+down the screen, and Back ran it 1,078px the other way. Only unscrolled navigations had ever been
 watched, which is why it read as pinned. And the named old and new snapshots, held at
 `animation: none` and full opacity so the lockup would stay solid, drew the same antialiased edges
 twice for the whole 220ms: against two resting lockups that are pixel-identical, 0 changed pixels, a

@@ -99,20 +99,46 @@ Control -> Signals, and the repository is the single source of truth for crawler
 The implementation is committed on local `main`, which has not been pushed to `origin` and does not
 need to be for a release. It was deployed on 2026-08-26 to the existing Cloudflare Pages project
 `in-the-loop`, replacing the superseded site on `https://in-the-loop.studio` and
-`https://www.in-the-loop.studio`. Ryan's final-copy release was deployed on 2026-08-27 as production
-deployment `c8df63de-0f24-4201-b69c-1439af9a9d1f` on branch `main`. `SITE_URL`, the trailing-slash
-route policy, package deployment script and `wrangler.jsonc` describe the Pages production setup.
+`https://www.in-the-loop.studio`. Production is now deployment `568c93cd`, uploaded on 2026-08-28
+from commit `f5e1e54` on branch `main` and superseding the 2026-08-27 release
+`c8df63de-0f24-4201-b69c-1439af9a9d1f`. `SITE_URL`, the trailing-slash route policy, package
+deployment script and `wrangler.jsonc` describe the Pages production setup.
 
 The Pages project has no git integration, so pushing to git triggers nothing. Production changes
 only through a direct `wrangler pages deploy ./dist` upload of a fresh build.
 
-Local `main` is ahead of production. That deployment predates the Plan spacing rebuild, the
-`Discover what matters` rename, the contact link, the colophon, the elastic homepage rhythm, the
-shortened page endings, the drawn arrow, the `Share what we learn as we go.` register line, the
-replaced Plan introduction and body copy, the desktop composition on 1:2:2:9 shares, the link
-interaction fixes, the Plan colophon wordmark's home link, the cross-document page transition and
-the shared page top, so none of those are live yet. The live Plan description still reads
-`In The Loop exists to find out.`
+Production matches local `main`. The Plan spacing rebuild, the `Discover what matters` rename, the
+closing contact link, the colophon, the elastic homepage rhythm, the shortened page endings, the
+drawn arrow, the `Share what we learn as we go.` register line, the replaced Plan introduction and
+body copy, the desktop composition on 1:2:2:9 shares, the link interaction fixes, the Plan colophon
+wordmark's home link, the cross-document page transition, the shared page top and the crawler policy
+stated in `robots.txt` are all live. The Plan description now reads
+`In The Loop exists to explore it and build what's missing.`
+
+## Edge
+
+Cloudflare dashboard settings can rewrite what production serves, and no gate in this repository can
+see it. `verify.sh` is deliberately offline and inspects `dist`, so a page can pass every check here
+and still reach a reader changed. Two settings were doing that and both were turned off on
+2026-08-28. So read production directly after every deployment: fetch the live `robots.txt` and the
+live `/plan/`, and confirm the crawler policy is this repository's file, the closing contact link is
+a real `mailto:` and neither page carries a `/cdn-cgi/` script.
+
+Managed robots.txt, under AI Crawl Control -> Signals, prepended a `Content-Signal` line of its own
+and nine blanket `Disallow: /` blocks to the built file. The Built section above records what it
+blocked and why none of it was carried here.
+
+Email Address Obfuscation, under Scrape Shield and held as the zone setting `email_obfuscation`,
+rewrote the Plan's closing contact link from `href="mailto:ryan@in-the-loop.studio"` to
+`href="/cdn-cgi/l/email-protection#..."` and injected a third script,
+`/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js`. The site's only call to action
+then depended on injected JavaScript, on a site that ships none by design, and with JavaScript
+disabled the link led to a Cloudflare interstitial instead of opening a mail client. It also broke
+the zero-JavaScript budget in production while `verify.sh` still passed locally, because that gate
+counts `<script` in `dist` and never sees what the edge injects. It was turned off by PATCHing the
+zone setting to `off`: the Security -> Settings page renders an empty list on this account, so the
+dashboard could not. Production then served `mailto:ryan@in-the-loop.studio`, exactly two `<script`
+elements across the two pages and no `/cdn-cgi/scripts` reference.
 
 ## Test
 
@@ -169,13 +195,19 @@ Cloudflare's managed file, not this repository's. With the managed toggle off, p
 this repository's file on 2026-08-28: search indexing open, the sitemap declared and no `Disallow`
 anywhere.
 
+Deployment `568c93cd` was then measured live rather than only fetched. Both routes return 200, and
+the homepage document height equals the viewport height exactly at 360x700, 390x664, 393x659,
+412x811, 430x780, 1440x800, 1440x900, 1512x982 and 1920x1080, while 375x553 and 320x460 still run
+94px and 218px long as accepted. There is no horizontal overflow from 320px to 1920px on either
+route and no console error. The page transition fires and the lockup does not translate. Every link
+measures 48.000px, and `og:image` returns 200 at 1200x630.
+
 ## Next
 
 1. Add the `_dmarc` TXT record from the Cloudflare dashboard or with a purpose-scoped API token.
    It improves deliverability and is not a launch blocker.
-2. Deploy local `main` with `wrangler pages deploy ./dist` so production matches it.
-3. Submit `https://in-the-loop.studio/sitemap.xml` in Google Search Console when the domain property
+2. Submit `https://in-the-loop.studio/sitemap.xml` in Google Search Console when the domain property
    is connected. Crawl readiness is live, but search inclusion is controlled by the search engine.
-4. Add a concept destination only when it is real and has a specific user job.
-5. Re-upload the LinkedIn logo or banner only if LinkedIn still holds the previous exports; website
+3. Add a concept destination only when it is real and has a specific user job.
+4. Re-upload the LinkedIn logo or banner only if LinkedIn still holds the previous exports; website
    icons update with deployment.
