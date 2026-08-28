@@ -53,8 +53,13 @@
   --grow-register: 2;
   --grow-action:   2;
   --grow-close:    9;
-  /* Interaction. One timing and one resting underline for every link on the site. */
+  /* Interaction. One timing and one resting underline for every link on the site.
+     Two curves, because two things move: a colour crossing 140ms reads as one
+     event whatever its shape, but a 3px travel on a front-loaded curve is over
+     before the eye registers it, so the one thing that moves gets a curve that
+     spends its duration. */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-arrow: cubic-bezier(0.4, 0, 0.2, 1);
   --link-motion: 140ms;
   --link-rule: #858a8f;
 }
@@ -117,20 +122,31 @@ a:focus-visible {
   transform-origin: left center;
   transition:
     text-decoration-color var(--link-motion) var(--ease-out),
-    text-decoration-thickness var(--link-motion) var(--ease-out),
     transform var(--link-motion) var(--ease-out);
 }
 
-.link:active {
+/* Two presses, because there are two kinds of link. A padded target can be
+   scaled. A run inside a sentence cannot, so it presses in the one channel
+   that moves nothing. */
+.primary-link:active,
+.identity__home:active {
   transform: scale(0.98);
 }
 
+.plan__contact:active,
+.colophon__link:active {
+  --link-decoration-color: var(--ink);
+  --link-muted: var(--ink);
+}
+
 /* One hover idiom: whatever is muted about the link comes up to ink, and the
-   underline it draws gets a little more weight. Layout never moves. */
+   underline it draws comes up with it. Layout never moves. Colour is the only
+   channel here, because it is the only part of a real underline that animates:
+   Chromium snaps text-decoration-thickness at frame 0, so an eased colour and a
+   stepped weight arrive apart and the mark reads as fattening before it darkens. */
 @media (hover: hover) and (pointer: fine) {
   .link:hover {
     --link-decoration-color: var(--ink);
-    --link-decoration-thickness: 0.105em;
     --link-muted: var(--ink);
   }
 
@@ -138,6 +154,15 @@ a:focus-visible {
      label already reserved, so the link's own box is unchanged. */
   .primary-link:hover .primary-link__label::after {
     transform: translateX(3px);
+  }
+}
+
+/* In forced colours the system paints every decoration in its own colour, which
+   collapses rest and hover into one mark. Thickness is not animated anywhere on
+   the site, but it does survive the override, so it carries the hover there. */
+@media (forced-colors: active) {
+  .link:hover {
+    text-decoration-thickness: 0.16em;
   }
 }
 
@@ -298,9 +323,12 @@ ul {
   text-wrap: pretty;
 }
 
-/* The sole homepage action overrides the base only to become a padded 48px target. */
+/* The sole homepage action overrides the base only to become a padded 48px target.
+   It is a flex item of .main, so inline-flex blockifies: without align-self it
+   would stretch the full measure and put a cursor over the empty half of it. */
 .primary-link {
   display: inline-flex;
+  align-self: flex-start;
   align-items: center;
   min-height: 48px;
   margin-inline-start: -8px;
@@ -321,7 +349,7 @@ ul {
   content: "\2192" / "";
   display: inline-block;
   padding-inline-start: 0.34em;
-  transition: transform var(--link-motion) var(--ease-out);
+  transition: transform var(--link-motion) var(--ease-arrow);
 }
 
 .plan__header {
@@ -403,6 +431,12 @@ ul {
   padding-block: 14px;
   margin-block: -14px;
   white-space: nowrap;
+}
+
+/* The target is padded far past the line it sits in, so the shared 3px outset
+   would draw the ring through the glyphs of the line above. It sits inside. */
+.plan__contact:focus-visible {
+  outline-offset: -1px;
 }
 
 /* The colophon. One quiet line a fixed interval below the last content, borrowing
