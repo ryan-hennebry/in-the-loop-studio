@@ -34,12 +34,13 @@ linking home from the Plan and set as plain text on the homepage, and `by Ryan H
 right, linking to LinkedIn as the site's one outbound link. There is no homepage email action and no
 client JavaScript; the page transition between the two routes is CSS the browser runs itself.
 
-The homepage's final register says `Curate what matters on the frontier.` and `Index agent skills
-for startup work.` The Plan uses Ryan's final supplied copy as a prose-only causal essay: discover
-what matters, install the context, let use decide and share what we learn. Its visible title, system
-register and diagrams are removed. The opening uses tight premise spacing followed by a larger gap
-before `In The Loop exists to explore it and build what's missing.`, which is set in the Plan's 600
-emphasis weight as the essay's one emphasised line.
+The homepage's final register says `Curate what matters on the frontier.` and
+`Index agent skills for startup work.` The Plan uses Ryan's final supplied copy as a prose-only
+causal essay: discover what matters, install the context, let use decide and share what we learn.
+Its visible title, system register and diagrams are removed. The opening uses tight premise spacing
+followed by a larger gap before `In The Loop exists to explore it and build what's missing.`, the
+essay's thesis, which is set at 500, the section title weight, so it reads as the equal of the four
+headings it introduces. 600 is reserved for the product names in the body.
 
 Plan spacing was rebuilt on a 4px scale. The opening lines sit 12px apart and the conclusion follows
 after 32px at both widths. A heading sits 14px above its body, paragraphs inside a section sit 26px

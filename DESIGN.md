@@ -26,7 +26,8 @@ typography:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "19px"
     fontWeight: 400
-    fontWeightEmphasis: 600
+    fontWeightEmphasis: 500
+    fontWeightEmphasisRole: "thesis, at the section title weight"
     lineHeight: 1.55
     letterSpacing: "-0.011em"
   plan-body:
@@ -34,6 +35,7 @@ typography:
     fontSize: "16px"
     fontWeight: 400
     fontWeightEmphasis: 600
+    fontWeightEmphasisRole: "product name, and nothing else"
     lineHeight: 1.625
   body:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
@@ -159,10 +161,15 @@ breaks so its three sentences break at clause boundaries rather than at the last
 carries -0.011em tracking so the second sentence holds one line down to 381px. Balanced wrapping is
 for the introduction and the headings only; the Plan body does not use it.
 
-Emphasis on the Plan is one weight, 600, carried by `strong` and by nothing else. It marks the
-product names in the body and the whole of the introduction's closing line, which is the essay's one
-emphasised sentence and the turn from premise to purpose. That line takes no weight of its own in
-CSS: the markup says which words are emphasised and one shared rule says how much.
+Emphasis on the Plan is carried by `strong` and by nothing else, in two weights that do two named
+jobs. 500 is the thesis: the introduction's closing line, the turn from premise to purpose, and the
+sentence the four section titles answer. It takes the section title's weight at the introduction's
+smaller size, so it reads as their equal rather than their superior; at 600 it outweighed every
+heading it introduced, and at 390px, where it wraps to two lines, it became a bold block that made
+`Discover what matters` read as subordinate to it. 600 is a product name in the body, and nothing
+else, so the weight the reader meets on a single noun is never also a whole emphasised sentence.
+Neither line takes a weight of its own in the markup: the markup says which words are emphasised and
+two rules, one per role, say how much.
 
 **The Exact Language Rule.** Homepage copy and the Plan introduction live in `src/config.ts`; the
 rest of the Plan copy lives in `src/pages/plan.astro`. Do not

@@ -416,9 +416,15 @@ ul {
   text-wrap: pretty;
 }
 
-/* One emphasis weight for the whole essay: the introduction's closing line and the
-   product names in the body are the same voice, so they carry the same weight. */
-.plan__intro strong,
+/* Two emphasis weights, one job each. 500 carries the thesis: the introduction's closing
+   line is the sentence the four headings answer, so it takes the heading weight at the
+   lede's smaller size and reads as their equal rather than their superior. 600 names a
+   product, and nothing else, so the weight the reader meets on a single noun never also
+   arrives as a whole bold sentence. */
+.plan__intro strong {
+  font-weight: 500;
+}
+
 .plan__copy strong {
   font-weight: 600;
 }
