@@ -134,6 +134,7 @@ a:focus-visible {
 }
 
 .plan__contact:active,
+.colophon__home:active,
 .colophon__link:active {
   --link-decoration-color: var(--ink);
   --link-muted: var(--ink);
@@ -447,6 +448,18 @@ ul {
   justify-content: space-between;
   align-items: baseline;
   margin-top: var(--footer-gap);
+}
+
+/* The wordmark is the page's own name, so it goes home. It takes the whole .link
+   treatment rather than the lockup's: the lockup hovers by bringing its muted second
+   line up to ink, and the wordmark, already ink at 600, has no muted line to bring,
+   so that idiom would produce a hover that changed nothing. Its 48px target is the
+   colophon link's, below: an inline run padded symmetrically and pulled back by an
+   equal negative margin, so the closing line does not move. */
+.colophon__home {
+  padding-block: 16px;
+  margin-block: -16px;
+  white-space: nowrap;
 }
 
 /* The site's one outbound link takes every state from .link and adds nothing but a
