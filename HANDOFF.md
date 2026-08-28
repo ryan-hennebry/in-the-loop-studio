@@ -116,9 +116,11 @@ Three interaction readings are worth carrying forward. `.primary-link` now measu
 than stretching the whole column, so it no longer puts a pointer over empty paper. The page
 transition fires forward, on Back and from the colophon's home link, and is suppressed under
 `prefers-reduced-motion: reduce`; Firefox ignores it entirely and navigates normally. The closing
-contact link's focus ring is improved rather than fixed: at `outline-offset: -1px` its painted top
-edge is y 539.38 against a glyph band above running to 547.12, so it still crosses that line by
-7.74px and still reads as a strikethrough. Clearing it needs roughly -9px and has not been done.
+contact link takes no focus outline at all, because no offset clears the glyph band above it without
+cutting the word itself; focus is drawn instead as a 2px rule above the word and another below,
+painted at y 551.88 and 572.88 inside the link's own content box. Measured from the pixels against
+the ink of the line above, which runs 531.63 to 547.38, the marks overlap it by zero at 1440px,
+390px and 320px, and they still paint under forced colours.
 
 Browser verification covered the Plan at 1440px, 390px and 320px, then the homepage and both
 navigation directions at 320px. There were no browser warnings, errors or horizontal overflow. The

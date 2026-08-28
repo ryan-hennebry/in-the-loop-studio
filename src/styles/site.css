@@ -435,10 +435,22 @@ ul {
   white-space: nowrap;
 }
 
-/* The target is padded far past the line it sits in, so the shared 3px outset
-   would draw the ring through the glyphs of the line above. It sits inside. */
+/* The one focus mark that is not a ring, because this is the one link whose box cannot
+   carry one. A 48px target inside a 26px line overlaps its neighbours by construction,
+   and no offset escapes that: the shared 3px outset paints its top edge at y 535.38 and
+   -1px paints it at 539.38, both inside a glyph band above that runs 531.63 to 547.38.
+   Clearing that band needs -8.75px, and an inset that deep on an 88.63px run would draw
+   the ring's own sides through the first and last letters. So focus is drawn on the line
+   rather than around it, in the site's own focus colour at the same 2px: one rule above
+   the word and one below. They paint at 551.88 and 572.88, inside the link's 20px
+   content box, so they cannot reach a neighbouring line at any width. Nothing moves, and
+   `text-decoration` is one of the few things forced colours repaint rather than drop, so
+   the mark survives High Contrast where a `box-shadow` would not. */
 .plan__contact:focus-visible {
-  outline-offset: -1px;
+  outline: none;
+  --link-decoration-color: var(--focus);
+  --link-decoration-thickness: 2px;
+  text-decoration-line: underline overline;
 }
 
 /* The colophon. One quiet line a fixed interval below the last content, borrowing

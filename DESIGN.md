@@ -348,8 +348,15 @@ does not, so a `forced-colors: active` block gives hover 0.16em there. It is a s
 transition; nothing animates it.
 
 **Focus.** Links take a 2px `#555b60` outline offset 3px, with 2px rounding. `.plan__contact` is the
-one exception, at -1px, because it is padded to a 48px target inside a 19px line and the shared
-outset drew its ring through the glyphs of the line above.
+one exception and takes no outline at all. It is padded to a 48px target inside a 26px line, so its
+box overlaps the line above by construction and no offset escapes that: the shared 3px outset
+painted its top edge at y 535.38 and -1px painted it at 539.38, both inside a glyph band above that
+runs 531.63 to 547.38. Clearing that band needs -8.75px, and an inset that deep on an 88.63px run
+would draw the ring's own sides through the first and last letters. So that one link is marked on
+the line rather than around it, in the same focus colour at the same 2px: one rule above the word
+and one below, painted at 551.88 and 572.88, inside its own 20px content box. They cannot reach a
+neighbouring line at any width, they shift nothing, and `text-decoration` survives forced colours,
+where a `box-shadow` would not be painted at all.
 
 **Page transition.** Navigation between the two routes cross-fades over 220ms on `--ease-out`,
 declared with `@view-transition { navigation: auto }`. It is CSS the browser
@@ -420,18 +427,18 @@ twice.
 
 The Plan is one continuous article: founding question, discover what matters, install the context,
 let use decide and share what we learn, then one quiet closing line offering contact under no
-heading of its own. It is prose only.
-There is no visible page title, diagram, register, local table of contents or sticky navigation. The
-essay ends on the shared colophon, which belongs to the shell rather than to the essay. The closing
-carries no heading; a hairline at 15% of the current text colour, flush left with the measure and
-60px wide on desktop and 32px at 600px and below, is the only rule on the page and marks the turn a
-heading would otherwise make. It is drawn as a pseudo-element, so it adds no markup and stays out of
-the accessibility tree. The closing contact link is a plain inline prose link; symmetric vertical
-padding and an equal negative margin give it a 48px tap target without disturbing the 26px paragraph
-interval, and it does not wrap. Its focus ring is offset -1px rather than the shared 3px, and that
-is recorded as improved rather than solved: the painted top edge moves from y 535.38 to 539.38 while
-the glyph band of the line above runs 531.62 to 547.12, so 7.74px of the ring still crosses it and
-it still reads as a strikethrough. Clearing that band needs about -9px.
+heading of its own. It is prose only. There is no visible page title, diagram, register, local table
+of contents or sticky navigation. The essay ends on the shared colophon, which belongs to the shell
+rather than to the essay. The closing carries no heading; a hairline at 15% of the current text
+colour, flush left with the measure and 60px wide on desktop and 32px at 600px and below, is the
+only rule on the page and marks the turn a heading would otherwise make. It is drawn as a
+pseudo-element, so it adds no markup and stays out of the accessibility tree. The closing contact
+link is a plain inline prose link; symmetric vertical padding and an equal negative margin give it a
+48px tap target without disturbing the 26px paragraph interval, and it does not wrap. Its focus mark
+is the site's one exception: not a ring but a 2px rule above the word and another below it, in the
+focus colour, because a 48px target inside a 26px line has no outline offset that clears the glyph
+band above without cutting the word itself. The marks paint at 551.88 and 572.88, inside the link's
+own content box.
 
 ## Do's and Don'ts
 
