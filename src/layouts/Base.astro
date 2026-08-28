@@ -130,7 +130,9 @@ const structuredData = JSON.stringify({
         <slot />
       </main>
       <footer class="colophon identity__copy">
-        <span class="identity__name"><a class="link colophon__home" href={HOME_PATH}>{SITE_NAME}</a></span>
+        <span class="identity__name colophon__wordmark">{isHome ? SITE_NAME : (
+          <a class="link colophon__home" href={HOME_PATH}>{SITE_NAME}</a>
+        )}</span>
         <span class="identity__discipline">{COLOPHON_BY}<a class="link colophon__link" href={LINKEDIN_URL}>{COLOPHON_NAME}</a></span>
       </footer>
     </div>

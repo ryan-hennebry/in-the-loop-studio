@@ -30,9 +30,9 @@ A static Astro site with two routes: `/` and `/plan/`. The homepage presents the
 lockup, settled proposition, five-part Signal/Skills/Harness/Agents/Newsletter register and one
 `Read the plan ->` action. The five concepts are non-interactive until they have real destinations.
 Signal and Newsletter are not routes. Both pages close on a colophon: `In The Loop` at the left,
-linking home, and `by Ryan Hennebry` at the right, linking to LinkedIn as the site's one outbound
-link. There is no homepage email action and no client JavaScript; the page transition between the
-two routes is CSS the browser runs itself.
+linking home from the Plan and set as plain text on the homepage, and `by Ryan Hennebry` at the
+right, linking to LinkedIn as the site's one outbound link. There is no homepage email action and no
+client JavaScript; the page transition between the two routes is CSS the browser runs itself.
 
 The homepage's final register says `Curate what matters on the frontier.` and `Index agent skills
 for startup work.` The Plan uses Ryan's final supplied copy as a prose-only causal essay: discover
@@ -68,7 +68,7 @@ Measured against the build, the homepage document height equals the viewport hei
 1920x1080, 1728x1117, 1512x982, 1440x1080, 1440x900, 1440x800, 430x780, 412x811, 393x659, 390x664
 and 360x700. A 375x553 runs 94px long and a 320x460 runs 218px long, and both are accepted. No copy
 was cut, no type size shrank, and every link measures 48px: the homepage action, the Plan's home
-link, its closing contact link, and the colophon's wordmark and author link on both pages.
+link, its closing contact link, the Plan colophon's wordmark and the author link on both pages.
 
 `PRODUCT.md` holds product truth, `DESIGN.md` holds the implemented visual system, and
 `src/config.ts` holds shared copy, routes and metadata values. Each page has an explicit title,
@@ -92,8 +92,8 @@ Local `main` is ahead of production. That deployment predates the Plan spacing r
 `Discover what matters` rename, the contact link, the colophon, the elastic homepage rhythm, the
 shortened page endings, the drawn arrow, the `Share what we learn as we go.` register line, the
 replaced Plan introduction and body copy, the desktop composition on 1:2:2:9 shares, the link
-interaction fixes, the colophon wordmark's home link, the cross-document page transition and the
-shared page top, so none of those are live yet. The live Plan description still reads
+interaction fixes, the Plan colophon wordmark's home link, the cross-document page transition and
+the shared page top, so none of those are live yet. The live Plan description still reads
 `In The Loop exists to find out.`
 
 ## Test
@@ -117,7 +117,7 @@ on press.
 
 Four interaction readings are worth carrying forward. `.primary-link` now measures 135.06px rather
 than stretching the whole column, so it no longer puts a pointer over empty paper. The page
-transition fires forward, on Back and from the colophon's home link, and is suppressed under
+transition fires forward, on Back and from the Plan colophon's home link, and is suppressed under
 `prefers-reduced-motion: reduce`; Firefox ignores it entirely and navigates normally. The named
 lockup no longer moves during it: at 1440x900 the identity group's keyframes start and end at
 `matrix(1, 0, 0, 1, 420, 72)` at 233.25 by 36.375px, and every stepped frame of the navigation,

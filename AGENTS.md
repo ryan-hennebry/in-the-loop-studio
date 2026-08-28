@@ -23,11 +23,14 @@ Keep `Projects in development` retired unless Ryan requests it again. The Plan t
 quiet mailto to `ryan@in-the-loop.studio`, written as inline prose set apart by the standard section
 interval and carrying no heading of its own. The homepage keeps no contact action.
 
-Both pages close on the same colophon: `In The Loop` at the left, linking home, and `by Ryan
-Hennebry` at the right, linking to Ryan's LinkedIn. It is a signature that carries two links, not a
-navigation bar: it offers no menu, names no destination the page has not already earned, and never
-competes with the one action above it. LinkedIn stays the site's only outbound link, and the
-colophon carries no mailto; the Plan's closing line remains the only contact on the site.
+Both pages close on the same colophon: `In The Loop` at the left and `by Ryan Hennebry` at the
+right, linking to Ryan's LinkedIn. The wordmark links home from the Plan only; on the homepage it is
+plain text, because a link to the page already open leads nowhere. So the Plan's colophon carries
+two links and the homepage's carries one, and the line reads identically either way. It is a
+signature, not a navigation bar: it offers no menu, names no destination the page has not already
+earned, and never competes with the one action above it. LinkedIn stays the site's only outbound
+link, and the colophon carries no mailto; the Plan's closing line remains the only contact on the
+site.
 
 ## Truth
 

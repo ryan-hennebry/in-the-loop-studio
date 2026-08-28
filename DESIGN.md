@@ -278,20 +278,22 @@ Two screens still scroll, and both are recorded rather than fixed. A 375x553 vie
 long. Closing either would mean cutting a register row, dropping a type size or shrinking a tap
 target, and none of those is for sale. No type size shrinks to reach the fit, no copy is cut, there
 is no horizontal overflow or console error at any of those widths on either route, and every link on
-the site measures 48px: the homepage action, the Plan's home link, its closing contact link, and the
-colophon's wordmark and author link on both pages.
+the site measures 48px: the homepage action, the Plan's home link, its closing contact link, the
+Plan colophon's wordmark and the author link on both pages.
 
 **The One Argument Rule.** Do not add a second homepage action or unavailable-product links. The
 colophon is the only structure allowed below the argument, and it is a signature rather than a
-second action: one line of 13px identity type, two links, and nothing that competes for the reader
-the homepage action has just asked for. The Plan may close with one quiet mailto link set as the
-last line of the page, carrying no heading of its own and separated by a bespoke 144px closing
+second action: one line of 13px identity type, at most two links, and nothing that competes for the
+reader the homepage action has just asked for. The Plan may close with one quiet mailto link set as
+the last line of the page, carrying no heading of its own and separated by a bespoke 144px closing
 interval, with a hairline 60px wide on desktop and 32px at 600px and below set 14px above it. The
 closing turns from describing the company's work to addressing the reader, and with no heading to
 mark that turn the standard section interval was indistinguishable from a normal section break: the
 hairline and the longer interval are the only signal the turn gets. The closing line is still prose,
-not furniture, and gains no container, bracket or box. The Plan's lockup and the colophon wordmark
-are the two return paths, at the top and at the foot of the same page, and there is no third.
+not furniture, and gains no container, bracket or box. The Plan's lockup and its colophon wordmark
+are the two return paths, at the top and at the foot of the same page, and there is no third. The
+homepage has neither: a link home from home points at the page already open, so its wordmark is
+plain text.
 
 ## Elevation & Depth
 
@@ -414,22 +416,28 @@ own box does not change size. It travels on `--ease-arrow` rather than the share
 
 ### Colophon
 
-Both pages close on the same line: the studio wordmark at the left, linking home, and `by Ryan
-Hennebry` at the right, linking to LinkedIn. It borrows the identity's 13px role, so the page ends
-in the voice it opened in, and it carries no rule, box or background; the interval above it is the
-only separation it needs. On the Plan that interval is the fixed 224px footer gap. On the homepage
-it is the closing riser, which starts at 18px and grows, so the colophon adds no margin of its own
-and the page's last interval is whatever the screen has left.
+Both pages close on the same line: the studio wordmark at the left and `by Ryan Hennebry` at the
+right, linking to LinkedIn. The wordmark links home from the Plan and is plain text on the homepage,
+where a link to the page already open is an affordance that leads nowhere. It borrows the identity's
+13px role, so the page ends in the voice it opened in, and it carries no rule, box or background;
+the interval above it is the only separation it needs. On the Plan that interval is the fixed 224px
+footer gap. On the homepage it is the closing riser, which starts at 18px and grows, so the colophon
+adds no margin of its own and the page's last interval is whatever the screen has left.
 
-Both links take every state from the shared `.link` base and add nothing but a 48px target, bought
+Each link takes every state from the shared `.link` base and adds nothing but a 48px target, bought
 with 16px of symmetric vertical padding and an equal negative margin so the line itself does not
 move. Both are inline runs inside their spans rather than direct flex items: as a flex item the
 wordmark measures 50.188px, because a flex item is sized by its line box and an inline by its font
-metrics. The wordmark takes the whole link treatment rather than the lockup's, which hovers by
-bringing its muted second line up to ink; the wordmark is already ink at 600 and has no muted line
-to bring, so that idiom would produce a hover that changed nothing, and inverting it would read as
-the link being disabled. Underlining both halves also ends a real inconsistency: one 13px line used
-to carry a rule under one half of itself and nothing under the other.
+metrics. That padding is on a non-replaced inline box, which adds nothing to the line box, so taking
+the homepage's link away changes nothing else about the line: at 1440x900 it still sits at y=833.81
+and 18.19px tall, and the wordmark is still 73.62px wide, ink at 600 on 13px/1.4, exactly as on the
+Plan. The one declaration that has to outlive the link is `white-space: nowrap`, which is why it
+sits on the span and not on the anchor inside it. Where the wordmark is a link it takes the whole
+link treatment rather than the lockup's, which hovers by bringing its muted second line up to ink;
+the wordmark is already ink at 600 and has no muted line to bring, so that idiom would produce a
+hover that changed nothing, and inverting it would read as the link being disabled. Underlining both
+halves of the Plan's line also ends a real inconsistency: one 13px line used to carry a rule under
+one half of itself and nothing under the other.
 
 LinkedIn remains the site's one outbound link, and the colophon carries no mailto: contact belongs
 to the Plan's closing line, which is prose, and putting the same offer in furniture would say it
@@ -464,7 +472,7 @@ own content box.
 ### Don't
 
 - **Don't** add cards, ordinal numbers or broad navigation.
-- **Don't** grow the colophon: it carries the studio name, the author and their two links.
+- **Don't** grow the colophon: it carries the studio name, the author and at most their two links.
 - **Don't** turn Signal or Newsletter into routes without a new user job.
 - **Don't** add client logos, testimonials, metrics, case studies, pricing or invented maturity.
 - **Don't** use decorative imagery, gradients, shadows or animation for its own sake.

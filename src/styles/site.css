@@ -459,16 +459,24 @@ ul {
   margin-top: var(--footer-gap);
 }
 
-/* The wordmark is the page's own name, so it goes home. It takes the whole .link
-   treatment rather than the lockup's: the lockup hovers by bringing its muted second
-   line up to ink, and the wordmark, already ink at 600, has no muted line to bring,
-   so that idiom would produce a hover that changed nothing. Its 48px target is the
-   colophon link's, below: an inline run padded symmetrically and pulled back by an
-   equal negative margin, so the closing line does not move. */
+/* The wordmark holds the left of the line on both pages and never breaks, link or
+   not, so the nowrap belongs to the span and not to the link inside it. */
+.colophon__wordmark {
+  white-space: nowrap;
+}
+
+/* On the Plan the wordmark is the page's own name, so it goes home. On the homepage
+   it is plain text: a link to the page you are already reading is an affordance that
+   leads nowhere, so there is no underline, no pointer and no tab stop. Where it is a
+   link it takes the whole .link treatment rather than the lockup's: the lockup hovers
+   by bringing its muted second line up to ink, and the wordmark, already ink at 600,
+   has no muted line to bring, so that idiom would produce a hover that changed
+   nothing. Its 48px target is the colophon link's, below: an inline run padded
+   symmetrically and pulled back by an equal negative margin, so the closing line does
+   not move, and neither does it when the link goes away. */
 .colophon__home {
   padding-block: 16px;
   margin-block: -16px;
-  white-space: nowrap;
 }
 
 /* The site's one outbound link takes every state from .link and adds nothing but a
