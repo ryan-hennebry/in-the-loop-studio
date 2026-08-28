@@ -62,11 +62,11 @@ flex column with floors of 46px, 56px, 44px and 18px on desktop and 15px, 15px, 
 mobile. They grow into whatever height the screen leaves over on named share tokens, 1:2:2:9 above
 600px and 3:1:1:5 at 600px and below. Both routes now open at the same height, on one shared
 `clamp(64px, 8vh, 96px)` above 600px and 24px on mobile. The Plan used to open lower, on
-`clamp(96px, 14vh, 144px)`, and because the lockup is named for the page transition that difference
-was animated on every navigation rather than absorbed. The shell is a flex column at least `100svh`
-tall and only `.main` grows, so a short page ends at the foot of the screen with the surplus above
-the colophon. Astro's minifier drops the duplicate `100vh` fallback, so `dist` ships `100svh` alone
-and a pre-2022 engine gets none.
+`clamp(96px, 14vh, 144px)`, and because the lockup is the one element on both routes that difference
+was carried into the page transition rather than absorbed. The shell is a flex column at least
+`100svh` tall and only `.main` grows, so a short page ends at the foot of the screen with the
+surplus above the colophon. Astro's minifier drops the duplicate `100vh` fallback, so `dist` ships
+`100svh` alone and a pre-2022 engine gets none.
 
 Measured against the build, the homepage document height equals the viewport height exactly at
 1920x1080, 1728x1117, 1512x982, 1440x1080, 1440x900, 1440x800, 430x780, 412x811, 393x659, 390x664
@@ -121,16 +121,19 @@ on press.
 
 Four interaction readings are worth carrying forward. `.primary-link` now measures 135.06px rather
 than stretching the whole column, so it no longer puts a pointer over empty paper. The page
-transition fires forward, on Back and from the Plan colophon's home link, and is suppressed under
-`prefers-reduced-motion: reduce`; Firefox ignores it entirely and navigates normally. The named
-lockup no longer moves during it: at 1440x900 the identity group's keyframes start and end at
-`matrix(1, 0, 0, 1, 420, 72)` at 233.25 by 36.375px, and every stepped frame of the navigation,
-forward and back, is pixel-identical over the lockup. The closing contact link takes no focus
-outline at all, because no offset clears the glyph band above it without cutting the word itself;
-focus is drawn instead as a 2px rule above the word and another below, painted at y 551.88 and
-572.88 inside the link's own content box. Measured from the pixels against the ink of the line
-above, which runs 531.63 to 547.38, the marks overlap it by zero at 1440px, 390px and 320px, and
-they still paint under forced colours.
+transition fires forward, on Back, from the Plan's top and from the Plan colophon's home link, and
+is suppressed under `prefers-reduced-motion: reduce` in all four; Firefox ignores it entirely and
+navigates normally. Nothing is named for it any more. A `view-transition-name` tweens from the old
+snapshot's position in the VIEWPORT, so the named lockup flew 1,081px down the screen when the Plan
+was left scrolled to its footer and 1,078px back up on Back, and its named snapshots double-drew
+their own antialiased edges on every navigation. Unnamed, the root cross-fade rebuilds an identical
+lockup in place: the painted lockup measures y=72 in every stepped frame of all four navigations,
+and a frozen mid-transition frame changes 4.07% of its pixels at a maximum delta of 7 of 255, down
+from 11.42% at 216. The closing contact link takes no focus outline at all, because no offset clears
+the glyph band above it without cutting the word itself; focus is drawn instead as a 2px rule above
+the word and another below, painted at y 551.88 and 572.88 inside the link's own content box.
+Measured from the pixels against the ink of the line above, which runs 531.63 to 547.38, the marks
+overlap it by zero at 1440px, 390px and 320px, and they still paint under forced colours.
 
 Browser verification covered the Plan at 1440px, 390px and 320px, then the homepage and both
 navigation directions at 320px. There were no browser warnings, errors or horizontal overflow. The

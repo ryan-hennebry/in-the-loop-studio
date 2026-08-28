@@ -241,10 +241,11 @@ a:focus-visible {
 /* The Plan's return path is a navigational lockup, not prose, so it overrides the
    base underline away and spends its hover on the one muted channel it has. The
    target is 48px and the lockup is 36.38px, so the leftover 11.62px has to go
-   somewhere: all of it below. Centred, it pushed the lockup 0.81px down the page and
-   the named view transition animated that difference on every navigation. Aligned to
-   the start, the lockup rests exactly on the page's top padding, as it does on the
-   homepage, and the target still covers it. */
+   somewhere: all of it below. Centred, it pushed the lockup 0.81px down the page, and
+   the cross-fade between the pages would then blend two copies that do not line up.
+   Aligned to the start, the lockup rests exactly on the page's top padding, as it
+   does on the homepage, the two rest pixel-identical, and the target still covers
+   it. */
 .identity__home {
   display: inline-flex;
   align-items: flex-start;
@@ -583,10 +584,16 @@ ul {
    Safari 18.2 honour it, and Firefox, which has no cross-document implementation
    yet, ignores the whole block and navigates the way it always did.
 
-   Only the lockup is named. It is the one thing that is on both pages and in nearly
-   the same place, so it holds still while the rest of the page changes underneath
-   it. The colophon is deliberately not named: it sits at y=834 on the homepage and
-   y=1959 on the Plan, so naming it would send it flying 1,100px down the screen.
+   Nothing is named, including the lockup. Naming looked like the way to pin it and
+   measurement says the opposite: ::view-transition-group tweens from the geometry
+   the old snapshot had in the VIEWPORT, so leaving the Plan scrolled to its footer
+   sent the lockup 1,081px down the screen and Back sent it 1,078px back up. Only
+   unscrolled navigations had ever been watched. The named old and new snapshots
+   also both painted at full opacity for the whole 220ms, so every navigation drew
+   the same antialiased edges twice: 11.42% of the pixels changed mid-transition,
+   against two resting lockups that are pixel-identical. Unnamed, the lockup holds
+   still anyway, because the root cross-fade rebuilds an identical thing in the same
+   place; the worst pixel now moves by 7 of 255 instead of 216. Do not name it again.
 
    The reduced-motion guard has to be nested here rather than left to the block
    above, which targets *, *::before and *::after. Those selectors do not reach the
@@ -600,22 +607,6 @@ ul {
 ::view-transition-new(root) {
   animation-duration: 220ms;
   animation-timing-function: var(--ease-out);
-}
-
-.identity__lockup {
-  view-transition-name: identity;
-}
-
-::view-transition-group(identity) {
-  animation-duration: 220ms;
-  animation-timing-function: var(--ease-out);
-}
-
-::view-transition-old(identity),
-::view-transition-new(identity) {
-  animation: none;
-  opacity: 1;
-  mix-blend-mode: normal;
 }
 
 @media (prefers-reduced-motion: reduce) {

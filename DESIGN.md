@@ -211,10 +211,9 @@ is one shared `clamp(64px, 8vh, 96px)` above 600px and 24px below it. It is size
 which has to hold one screen; the Plan scrolls and has no fit to keep, so it takes the same value
 and spends the height it gets back on reading. The Plan used to fall further, on
 `clamp(96px, 14vh, 144px)`, and that was a defect rather than a refinement: the lockup is the one
-element on both pages and it is named for the page transition, so the difference in its resting
-height was not absorbed by the navigation but animated by it, as a header sliding down on arrival.
-One token, one resting position, nothing to animate. The visible A6 mark is 26px; the mark-to-copy
-gap is 12px.
+element on both pages, so a lockup resting at a different height on each of them is a lockup the
+page transition has to reconcile, and it read as a header sliding down on arrival. One token, one
+resting position, nothing to reconcile. The visible A6 mark is 26px; the mark-to-copy gap is 12px.
 
 Both pages sit in a `.shell` that is a flex column at least one screen tall, and `.main` is the only
 part of that column allowed to grow. A page shorter than the screen therefore ends at the foot of
@@ -398,17 +397,31 @@ where a `box-shadow` would not be painted at all.
 **Page transition.** Navigation between the two routes cross-fades over 220ms on `--ease-out`,
 declared with `@view-transition { navigation: auto }`. It is CSS the browser runs itself, so the
 zero-JavaScript budget is intact: `dist` still ships exactly two script elements and both are the
-JSON-LD identity graph. Only `.identity__lockup` is named, as `identity`. Its old and new snapshots
-are given `animation: none` and full opacity, so it stays solid while the page changes underneath
-it, and it now rests in precisely the same place on both routes, so its group has nothing to
-animate: at 1440x900 the group's keyframes run from `matrix(1, 0, 0, 1, 420, 72)` at 233.25 by
-36.375px to exactly those values, and every stepped frame of the navigation, forward and on Back, is
-pixel-identical over the lockup. Two corrections bought that. One `--page-top` for both routes, and
+JSON-LD identity graph. Nothing on either page carries a `view-transition-name`, and the absence is
+the finding rather than an omission. The lockup used to carry one, on the reasoning that naming the
+single element common to both routes pins it while the page changes underneath. Measurement says the
+opposite, twice over. `::view-transition-group` tweens from the geometry its old snapshot had in the
+VIEWPORT rather than in the document, so a name pins only a lockup that was already on screen:
+leaving the Plan scrolled to its footer and clicking the colophon ran the group from
+`matrix(1, 0, 0, 1, 420, -1009)` to `matrix(1, 0, 0, 1, 420, 72)`, flying the lockup 1,081px down
+the screen, and Back ran it 1,078px the other way. Only unscrolled navigations had ever been
+watched, which is why it read as pinned. And the named old and new snapshots, held at
+`animation: none` and full opacity so the lockup would stay solid, drew the same antialiased edges
+twice for the whole 220ms: against two resting lockups that are pixel-identical, 0 changed pixels, a
+frozen mid-transition frame measured 11.42% of its pixels changed at a maximum channel delta of 216.
+Every named variant that fixed the flight broke Back, because parking the group at the new geometry
+parks it off the top of the screen and the outgoing lockup vanishes a frame early.
+
+Unnamed, the lockup holds still anyway. It is pixel-identical on both routes and in the same place,
+so the root cross-fade rebuilds it where it already was. The same frozen frame now measures 4.07%
+changed at a maximum delta of 7 of 255, invisible unamplified, and the painted lockup sits at y=72
+in every stepped frame of all four navigations: forward, from the Plan's top, from the Plan scrolled
+to its foot, and on Back. Two corrections earn that. One `--page-top` for both routes, and
 `align-items: flex-start` on the Plan's `.identity__home`, whose 48px target is 11.62px taller than
 the lockup and, centred, held it 0.81px below the padding edge; aligned to the start, the surplus
-falls below the lockup and the target still covers it. The colophon is deliberately not named: it
-sits at y=833.81 on the homepage and y=1904.88 on the Plan at 1440x900, so naming it would send it
-1,071px down the screen on every navigation.
+falls below the lockup and the target still covers it. Identical resting geometry is now what the
+cross-fade depends on rather than what a named group animated, so it matters more, not less. Do not
+name the lockup again.
 
 Support is partial and the degradation is silent. Chrome and Edge 126 and Safari 18.2 run it.
 Firefox has no cross-document view transitions, Bugzilla 1860854 is open, so it ignores the block
@@ -425,10 +438,10 @@ off the document root in a separate tree.
 The 26px A6 mark sits beside a 13px lockup. Both routes carry the identical full lockup: the name at
 600 and the discipline at 400 in muted ink. The Plan makes that lockup a 48px home target with a
 visible focus outline, and it presses by bringing its discipline line up to ink over 140ms, the same
-step its hover makes. Reduced motion removes the transition. That home link centres its flex item
-rather than letting it stretch, so the lockup box measures 36.38px on both routes; stretched it was
-38px on the Plan, and the named view transition would have animated the 1.62px difference on every
-navigation.
+step its hover makes. Reduced motion removes the transition. That home link aligns its flex item to
+the start rather than centring it or letting it stretch, so the lockup box measures 36.38px on both
+routes and rests on the same padding edge; stretched it was 38px on the Plan, centred it sat 0.81px
+low, and either way the page cross-fade would blend two copies that do not line up.
 
 ### Homepage register and action
 
