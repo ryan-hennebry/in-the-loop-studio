@@ -67,16 +67,18 @@ spacing:
   register-row-mobile: "12px 13px"
   riser-open: "46px"
   riser-open-mobile: "15px"
-  riser-register: "38px"
+  riser-register: "56px"
   riser-register-mobile: "15px"
-  riser-register-max: "76px"
+  riser-register-max: "112px"
   riser-register-max-mobile: "32px"
-  riser-action: "29px"
+  riser-action: "44px"
   riser-action-mobile: "15px"
-  riser-action-max: "64px"
+  riser-action-max: "96px"
   riser-action-max-mobile: "32px"
   riser-close: "18px"
   riser-close-mobile: "21px"
+  riser-grow: "1:2:2:9"
+  riser-grow-mobile: "3:1:1:5"
   section: "72px"
   section-mobile: "56px"
   lockup-gap: "88px"
@@ -86,6 +88,7 @@ spacing:
   close-rule: "60px"
   close-rule-mobile: "32px"
   page-top: "clamp(96px, 14vh, 144px)"
+  page-top-home: "clamp(64px, 8vh, 96px)"
   page-mobile-top: "24px"
   page-bottom: "48px"
   page-mobile-bottom: "16px"
@@ -134,7 +137,8 @@ and they live here now.
 - Compact identity instead of broad navigation
 - Hairline structure instead of cards
 - A five-part homepage register and a prose-only Plan
-- A two-part colophon closing both pages, and no client-side JavaScript
+- A two-part colophon closing both pages, and no client-side JavaScript, page transition
+  included
 
 ## Colors
 
@@ -173,9 +177,12 @@ Both routes use a centered 600px shell with 24px gutters. Every layout interval 
 named custom property declared once in `:root` and overridden once in the 600px block; no interval
 is a bare literal inside a rule or a `var()` fallback. Both pages therefore read from one scale
 rather than from two. The scale is built on 4px; the only departure is the register row, whose lower
-padding carries one extra optical pixel. Desktop page padding starts between 96px and 144px and ends
-48px below the colophon on the homepage and 80px below it on the Plan. The visible A6 mark is 26px;
-the mark-to-copy gap is 12px.
+padding carries one extra optical pixel. Desktop page padding starts between 96px and 144px on the
+Plan and between 64px and 96px on the homepage, and ends 48px below the colophon on the homepage and
+80px below it on the Plan. The homepage opens higher because it is one screen rather than an essay:
+its top margin is a share of the screen it has, `clamp(64px, 8vh, 96px)` set on `[data-page="home"]`
+above 600px, where the Plan keeps the shared `clamp(96px, 14vh, 144px)`. The visible A6 mark is
+26px; the mark-to-copy gap is 12px.
 
 Both pages sit in a `.shell` that is a flex column at least one screen tall, and `.main` is the only
 part of that column allowed to grow. A page shorter than the screen therefore ends at the foot of
@@ -189,20 +196,34 @@ on a short page, not a broken layout.
 
 The homepage's macro intervals are not margins on its blocks. They are four empty `.riser` items in
 that column, each holding a floor as its `flex-basis` and taking a share of whatever height the
-screen leaves over: 46px and three shares from the identity to the headline, 38px and one share from
-the headline to the five-part register, 29px and one share from the register to `Read the plan ->`,
-and 18px and five shares from the action to the colophon. The two interior risers are capped, at
-76px and 64px, so the headline, the register and the action keep reading as one block however tall
-the window is. The two terminal risers are uncapped and divide the rest three to five, which holds
-the argument a little above the optical centre. `flex-shrink` is 0 on all four, so a screen too
-short for the page takes a scrollbar rather than an interval below its floor, and nothing on the
-page is measured in script. Register rows use a 92px name column, a flexible description column, a
-24px gap and 19px/20px vertical padding.
+screen leaves over: 46px and one share from the identity to the headline, 56px and two shares from
+the headline to the five-part register, 44px and two shares from the register to `Read the plan ->`,
+and 18px and nine shares from the action to the colophon. The four shares are named tokens,
+`--grow-open`, `--grow-register`, `--grow-action` and `--grow-close`, so the proportion is stated
+once and can differ by width. The two interior risers are capped, at 112px and 96px, so the
+headline, the register and the action keep reading as one block however tall the window is.
+`flex-shrink` is 0 on all four, so a screen too short for the page takes a scrollbar rather than an
+interval below its floor, and nothing on the page is measured in script. Register rows use a 92px
+name column, a flexible description column, a 24px gap and 19px/20px vertical padding.
 
-Those floors replaced fixed intervals of 88px, 52px and 43px, lowered by 42px, 14px and 14px: the
-same three to one to one the risers grow in. That is what keeps a screen which already held the page
-composed exactly as it was, because the height comes back as surplus and the surplus is divided the
-way it was taken.
+The shares are 1:2:2:9 above 600px. They were 3:1:1:5, and that pushed the opening down: at 1440x900
+the headline began 242px from the top, 27 per cent of the screen, while the riser below the register
+measured 39.8px against 39px of padding inside each register row. `--page-top` is fixed padding
+taken before the risers divide what is left, so on a tall screen the whole surplus went to the
+risers and the opening stayed where it was. Tschichold's canon puts the top margin at about half the
+bottom, and dividing the surplus three to five drove that ratio toward one to one, which is the
+proportion the eye reads as sinking. Giving the opening one share instead of three, the two interior
+risers two each instead of one, and the closing riser nine instead of five brings the headline to
+165px, 18 per cent, and leaves the register more air around it than inside it. The register row's
+own padding was not touched: 19px/20px is already generous, and the deficit was outside the rows
+rather than inside them.
+
+Those floors came from fixed intervals of 88px, 52px and 43px, lowered by 42px, 14px and 14px in the
+same three to one to one the risers grew in at the time, so that a screen which already held the
+page stayed composed exactly as it was: the height came back as surplus and the surplus was divided
+the way it was taken. The two interior floors were raised again, to 56px and 44px with their caps at
+112px and 96px, when the shares changed. A riser that takes two shares needs a floor to match, or a
+short window composes on one proportion and a tall one on another.
 
 `<body>` carries `data-page="home"` or `data-page="plan"`, and that attribute is how page-scoped
 spacing such as the Plan's longer ending is applied: CSS custom properties inherit downward only, so
@@ -232,39 +253,42 @@ is void and the air it bought has moved above the signature instead of below it.
 a short tail reads as an ending; 160px of empty paper under a signature reads as a page still
 loading. Prose remains within 600px.
 
-At 600px and below the homepage compresses to hold one screen. Page padding becomes 24px, ending
-16px below the colophon on the homepage and 40px below it on the Plan. The Plan's opening gap
-becomes 32px. The homepage's four riser floors become 15px, 15px, 15px and 21px, with both interior
-caps at 32px; the shares are unchanged, so the page composes on the same proportions it does on a
-desktop. Register rows stack name above description on a 4px gap with 12px/13px vertical padding.
-Plan sections separate by 56px and the closing interval becomes 96px. The opening line gaps stay at
-12px and 32px. Only intervals between whole blocks compress on mobile; intervals inside the prose do
-not, because Plan body type is 16px/1.625 at both widths. At 360px and below, gutters reduce to
-20px.
+At 600px and below the homepage compresses to hold one screen. Page padding becomes 24px on both
+routes, ending 16px below the colophon on the homepage and 40px below it on the Plan; the homepage's
+higher opening is gated above 600px and does not apply here. The Plan's opening gap becomes 32px.
+The homepage's four riser floors become 15px, 15px, 15px and 21px, with both interior caps at 32px,
+and the shares go back to 3:1:1:5. A phone has almost no surplus to divide, so the desktop's 1:2:2:9
+would buy nothing there and would spend the little there is on the wrong intervals; the mobile
+composition is tuned to hold one screen at 390px and is left exactly as it was. Register rows stack
+name above description on a 4px gap with 12px/13px vertical padding. Plan sections separate by 56px
+and the closing interval becomes 96px. The opening line gaps stay at 12px and 32px. Only intervals
+between whole blocks compress on mobile; intervals inside the prose do not, because Plan body type
+is 16px/1.625 at both widths. At 360px and below, gutters reduce to 20px.
 
 Measured against the built output, the homepage document height now equals the viewport height
-exactly at 1440x1080, 1440x900, 1440x800, 430x780, 412x811, 393x659, 390x664 and 360x700. The whole
-argument, register, action and colophon included, is visible there without scrolling: the page ends
-at the foot of the screen on current phones and on a laptop window.
+exactly at 1920x1080, 1728x1117, 1512x982, 1440x1080, 1440x900, 1440x800, 430x780, 412x811, 393x659,
+390x664 and 360x700. The whole argument, register, action and colophon included, is visible there
+without scrolling: the page ends at the foot of the screen on current phones and on a laptop window.
 
 Two screens still scroll, and both are recorded rather than fixed. A 375x553 viewport, an iPhone SE
 2 or 3 under its browser chrome, runs 94px long; a 320x460, the first generation SE, runs 218px
 long. Closing either would mean cutting a register row, dropping a type size or shrinking a tap
 target, and none of those is for sale. No type size shrinks to reach the fit, no copy is cut, there
 is no horizontal overflow or console error at any of those widths on either route, and every link on
-the site measures 48px: the homepage action, the Plan's home link, its closing contact link and the
-colophon link on both pages.
+the site measures 48px: the homepage action, the Plan's home link, its closing contact link, and the
+colophon's wordmark and author link on both pages.
 
 **The One Argument Rule.** Do not add a second homepage action or unavailable-product links. The
 colophon is the only structure allowed below the argument, and it is a signature rather than a
-second action: two spans of 13px identity type, one link, and nothing that competes for the reader
+second action: one line of 13px identity type, two links, and nothing that competes for the reader
 the homepage action has just asked for. The Plan may close with one quiet mailto link set as the
 last line of the page, carrying no heading of its own and separated by a bespoke 144px closing
 interval, with a hairline 60px wide on desktop and 32px at 600px and below set 14px above it. The
 closing turns from describing the company's work to addressing the reader, and with no heading to
 mark that turn the standard section interval was indistinguishable from a normal section break: the
 hairline and the longer interval are the only signal the turn gets. The closing line is still prose,
-not furniture, and gains no container, bracket or box. The Plan identity is the only return path.
+not furniture, and gains no container, bracket or box. The Plan's lockup and the colophon wordmark
+are the two return paths, at the top and at the foot of the same page, and there is no third.
 
 ## Elevation & Depth
 
@@ -282,37 +306,115 @@ The A6 mark is fixed artwork: a white dot and open loop on brand grey, with no b
 shadow. `public/brand/in-the-loop-mark.svg` is the vector master; favicons use optically adjusted
 geometry for small sizes.
 
+## Motion and states
+
+Every interactive element carries `.link` and takes its rest, hover, press and focus states from one
+place. An element may override a declaration where its job genuinely differs; nothing restates a
+link state of its own.
+
+**One animated channel.** The resting underline is `#858a8f` at 0.075em on a 0.17em offset, and
+hover takes it to ink. That colour crossing is the only thing that animates, over `--link-motion`,
+140ms, on `--ease-out`. Hover used to thicken the underline as well. Chromium does not transition
+`text-decoration-thickness`: Web Animations interpolates it, but a CSS transition snaps it at frame
+0, so an eased colour and a stepped weight arrived apart and the mark read as fattening before it
+darkened. Colour is the only part of a real underline that animates reliably, so the thickness
+change and its place in the transition list are both gone. Rebuilding the underline as a separate
+element or a gradient would animate more and would cost `text-decoration-skip-ink`. The
+rest-to-hover colour step is 5.06:1 and carries the hover on its own.
+
+**Two presses, because there are two kinds of link.** `.primary-link` and `.identity__home` are
+padded targets and press with `transform: scale(0.98)`. The three set as inline runs,
+`.plan__contact`, `.colophon__home` and `.colophon__link`, press by taking their underline to ink
+instead. A transform does not apply to a non-replaced inline box at all, so those links used to show
+nothing on tap: hover is behind `(hover: hover) and (pointer: fine)` and the tap
+highlight is suppressed, which left a touch reader with no feedback whatsoever. They deliberately do
+not get a scale either, because `transform-origin: left center` on an 88.6px run would
+draw its right edge 1.77px in while the full stop after it stayed put, opening a gap in the middle
+of a sentence.
+
+**One thing moves.** The homepage arrow travels 3px on hover, on `--ease-arrow`,
+`cubic-bezier(0.4, 0, 0.2, 1)`, over the same 140ms. The shared `--ease-out`,
+`cubic-bezier(0.23, 1, 0.32, 1)`, is front-loaded: 54 per cent of the travel lands in
+the first 20ms and 90 per cent in the first 50ms, so a 3px move on it has a perceived duration of
+around 50ms, below the 100ms floor for immediate feedback, and reads as a twitch rather than as
+motion. Holding that curve and raising the duration to 180ms was measured and rejected: it is still
+88 per cent travelled at 60ms, so the twitch survives, the extra time is a tail with nothing in it,
+and it would slow every underline on the site to fix one arrow. A colour crossing is one event
+whatever its shape, which is why everything else keeps `--ease-out`.
+
+**Forced colours.** In Windows High Contrast the system repaints every decoration in its own colour,
+which collapses rest and hover into the same mark. Thickness survives that override where colour
+does not, so a `forced-colors: active` block gives hover 0.16em there. It is a state, not a
+transition; nothing animates it.
+
+**Focus.** Links take a 2px `#555b60` outline offset 3px, with 2px rounding. `.plan__contact` is the
+one exception, at -1px, because it is padded to a 48px target inside a 19px line and the shared
+outset drew its ring through the glyphs of the line above.
+
+**Page transition.** Navigation between the two routes cross-fades over 220ms on `--ease-out`,
+declared with `@view-transition { navigation: auto }`. It is CSS the browser
+runs itself, so the zero-JavaScript budget is intact: `dist` still ships exactly two script elements
+and both are the JSON-LD identity graph. Only `.identity__lockup` is named, as `identity`. Its group
+animates between positions while its old and new snapshots are given `animation: none` and full
+opacity, so the lockup holds still and stays solid while the page changes underneath it. The
+colophon is deliberately not named: it sits at y=833.81 on the homepage and y=1959.38 on the Plan at
+1440x900, so naming it would send it 1,126px down the screen on every navigation.
+
+Support is partial and the degradation is silent. Chrome and Edge 126 and Safari 18.2 run it.
+Firefox has no cross-document view transitions, Bugzilla 1860854 is open, so it ignores the block
+and navigates as it always did; there is nothing to fall back to and nothing to detect. The
+reduced-motion guard is nested inside the block as a second `@view-transition` with
+`navigation: none`, because the general guard at the foot of the file targets `*`, `*::before`
+and `*::after`, and those selectors do not reach the `::view-transition` pseudo-elements, which hang
+off the document root in a separate tree.
+
 ## Components
 
 ### Identity
 
 The 26px A6 mark sits beside a 13px lockup. Both routes carry the identical full lockup: the name at
 600 and the discipline at 400 in muted ink. The Plan makes that lockup a 48px home target with a
-visible focus outline and a subtle 140ms press scale. Reduced motion removes the transition.
+visible focus outline and a subtle 140ms press scale. Reduced motion removes the transition. That
+home link centres its flex item rather than letting it stretch, so the lockup box measures 36.38px
+on both routes; stretched it was 38px on the Plan, and the named view transition would have animated
+the 1.62px difference on every navigation.
 
 ### Homepage register and action
 
 Signal, Skills, Harness, Agents and Newsletter are plain, non-interactive rows because their
 products do not have live destinations. `Read the plan ->` is the sole homepage link. It has a 48px
-target and a resting underline that clears 3:1; hover strengthens the underline without moving the
-layout. The arrow is an `::after` pseudo-element on the label carrying `content: "\2192" / ""`, so
-the glyph is drawing rather than copy and the empty alternative text keeps it out of the accessible
-name. It is the one thing on either page that moves: hover translates it 3px, into 3px of trailing
-padding the label reserves at rest, so the announced movement happens and the link's own box does
-not change size.
+target and a resting underline that clears 3:1; hover takes that underline to ink without moving the
+layout. The link is declared `inline-flex` but is a flex item of `.main`, so it blockifies, and
+`align-self: flex-start` holds it to its own content at 135.06px. Without that it stretched the
+whole measure, 608px at 1440px and the full column on a phone, and several hundred pixels of empty
+paper carried a pointer. The arrow is an `::after` pseudo-element on the label carrying `content:
+"\2192" / ""`, so the glyph is drawing rather than copy and the empty alternative text keeps it out
+of the accessible name. It is the one thing on either page that moves: hover translates it 3px, into
+3px of trailing padding the label reserves at rest, so the announced movement happens and the link's
+own box does not change size. It travels on `--ease-arrow` rather than the shared `--ease-out`.
 
 ### Colophon
 
-Both pages close on the same line: the studio name at the left, `by Ryan Hennebry` at the right,
-linking to LinkedIn. It borrows the identity's 13px role, so the page ends in the voice it opened
-in, and it carries no rule, box or background; the interval above it is the only separation it
-needs. On the Plan that interval is the fixed 224px footer gap. On the homepage it is the closing
-riser, which starts at 18px and grows, so the colophon adds no margin of its own and the page's last
-interval is whatever the screen has left. The name link takes every state from the shared `.link`
-base and adds nothing but a 48px target, bought with symmetric vertical padding and an equal
-negative margin so the line itself does not move. It is the site's one outbound link, and the
-colophon carries no mailto: contact belongs to the Plan's closing line, which is prose, and putting
-the same offer in furniture would say it twice.
+Both pages close on the same line: the studio wordmark at the left, linking home, and `by Ryan
+Hennebry` at the right, linking to LinkedIn. It borrows the identity's 13px role, so the page ends
+in the voice it opened in, and it carries no rule, box or background; the interval above it is the
+only separation it needs. On the Plan that interval is the fixed 224px footer gap. On the homepage
+it is the closing riser, which starts at 18px and grows, so the colophon adds no margin of its own
+and the page's last interval is whatever the screen has left.
+
+Both links take every state from the shared `.link` base and add nothing but a 48px target, bought
+with 16px of symmetric vertical padding and an equal negative margin so the line itself does not
+move. Both are inline runs inside their spans rather than direct flex items: as a flex item the
+wordmark measures 50.188px, because a flex item is sized by its line box and an inline by its font
+metrics. The wordmark takes the whole link treatment rather than the lockup's, which hovers by
+bringing its muted second line up to ink; the wordmark is already ink at 600 and has no muted line
+to bring, so that idiom would produce a hover that changed nothing, and inverting it would read as
+the link being disabled. Underlining both halves also ends a real inconsistency: one 13px line used
+to carry a rule under one half of itself and nothing under the other.
+
+LinkedIn remains the site's one outbound link, and the colophon carries no mailto: contact belongs
+to the Plan's closing line, which is prose, and putting the same offer in furniture would say it
+twice.
 
 ### Plan essay
 
@@ -326,7 +428,10 @@ carries no heading; a hairline at 15% of the current text colour, flush left wit
 heading would otherwise make. It is drawn as a pseudo-element, so it adds no markup and stays out of
 the accessibility tree. The closing contact link is a plain inline prose link; symmetric vertical
 padding and an equal negative margin give it a 48px tap target without disturbing the 26px paragraph
-interval, and it does not wrap.
+interval, and it does not wrap. Its focus ring is offset -1px rather than the shared 3px, and that
+is recorded as improved rather than solved: the painted top edge moves from y 535.38 to 539.38 while
+the glyph band of the line above runs 531.62 to 547.12, so 7.74px of the ring still crosses it and
+it still reads as a strikethrough. Clearing that band needs about -9px.
 
 ## Do's and Don'ts
 
@@ -340,7 +445,7 @@ interval, and it does not wrap.
 ### Don't
 
 - **Don't** add cards, ordinal numbers or broad navigation.
-- **Don't** grow the colophon: it carries the studio name, the author and one link.
+- **Don't** grow the colophon: it carries the studio name, the author and their two links.
 - **Don't** turn Signal or Newsletter into routes without a new user job.
 - **Don't** add client logos, testimonials, metrics, case studies, pricing or invented maturity.
 - **Don't** use decorative imagery, gradients, shadows or animation for its own sake.
