@@ -43,11 +43,16 @@
      what keeps every screen that already fitted composed exactly as before: the height
      comes back as surplus and the surplus is divided the way it was taken. */
   --riser-open:         46px;  /* identity to the headline */
-  --riser-register:     38px;  /* headline to the register */
-  --riser-register-max: 76px;
-  --riser-action:       29px;  /* register to the one action */
-  --riser-action-max:   64px;
+  --riser-register:     56px;  /* headline to the register */
+  --riser-register-max: 112px;
+  --riser-action:       44px;  /* register to the one action */
+  --riser-action-max:   96px;
   --riser-close:        18px;  /* the action to the colophon */
+  /* The shares the surplus is divided in. Mobile restores its own below. */
+  --grow-open:     1;
+  --grow-register: 2;
+  --grow-action:   2;
+  --grow-close:    9;
   /* Interaction. One timing and one resting underline for every link on the site. */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --link-motion: 140ms;
@@ -155,6 +160,15 @@ a:focus-visible {
   flex: 1 0 auto;
 }
 
+/* The homepage opens higher than the Plan: it is one screen, so its top margin
+   is a share of the screen rather than the essay's fixed fall. Below 600px the
+   phone composition owns the interval, so this is gated above it. */
+@media (min-width: 601px) {
+  [data-page="home"] .shell {
+    --page-top: clamp(64px, 8vh, 96px);
+  }
+}
+
 [data-page="plan"] .shell {
   --page-end: var(--plan-end);
 }
@@ -173,24 +187,24 @@ a:focus-visible {
 }
 
 .riser--open {
-  flex-grow: 3;
+  flex-grow: var(--grow-open);
   flex-basis: var(--riser-open);
 }
 
 .riser--register {
-  flex-grow: 1;
+  flex-grow: var(--grow-register);
   flex-basis: var(--riser-register);
   max-height: var(--riser-register-max);
 }
 
 .riser--action {
-  flex-grow: 1;
+  flex-grow: var(--grow-action);
   flex-basis: var(--riser-action);
   max-height: var(--riser-action-max);
 }
 
 .riser--close {
-  flex-grow: 5;
+  flex-grow: var(--grow-close);
   flex-basis: var(--riser-close);
 }
 
@@ -440,6 +454,10 @@ ul {
     --riser-action: 15px;
     --riser-action-max: 32px;
     --riser-close: 21px;
+    --grow-open: 3;
+    --grow-register: 1;
+    --grow-action: 1;
+    --grow-close: 5;
   }
 
   .headline {
