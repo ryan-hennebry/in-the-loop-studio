@@ -17,12 +17,18 @@ or script budget.
 For visual changes, also inspect `/` and `/plan` at 1440px, 390px and 320px, since no automated
 check covers layout or horizontal overflow.
 
-One side effect to undo every time: `astro build` empties `dist/`, and `dist/viewport.html` is
-Ryan's hand-written phone probe that lives only there (it is gitignored and has no source in
-`public/`). Every `./verify.sh` deletes it. Copy it to the scratchpad before the first build and
-copy it back after the last one. Restore it after the run, never before: it contains a `<script>`,
-and the script-budget assertion counts `<script` across all of `dist`, so a restored probe would
-make the count 3 and fail the gate on the next run. The build's own ordering saves it (build wipes,
-then counts), which is why the gate has never caught this.
+`dist/viewport.html` is Ryan's hand-written phone probe. It is gitignored, has no source in
+`public/`, and every `astro build` wipes it. Do NOT copy it back into `dist/` after a run: it
+contains a `<script>`, and the script-budget assertion counts `<script` across all of `dist`, so a
+restored probe makes the count 3 and fails the gate on any working copy where the probe is present
+and a clean rebuild has not run. Only the build's own ordering (wipe, then count) has been hiding
+that, which is why the gate never caught it. Keep the probe in the session scratchpad and serve it
+from there; as of 2026-08-28 it is removed from `dist/` and nothing in the repo re-creates it.
+
+To prove a commit passes rather than the working tree, add a detached worktree (`git worktree add
+--detach <path> <sha>`) and symlink the repo's `node_modules` into it before running `./verify.sh`
+there; the script runs `npm run build`, and a bare worktree has no dependencies. Building the
+previous commit in the same worktree and diffing `dist/index.html`, `dist/plan/index.html` and
+`dist/_astro` is the cheapest proof that a non-visual change left both pages untouched.
 
 Related: [[project-two-page-studio-constraints]]
