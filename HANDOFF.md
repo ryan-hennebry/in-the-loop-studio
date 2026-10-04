@@ -1,5 +1,15 @@
 # Handoff: in-the-loop.studio
 
+## Cross-repo status (4 Oct 2026)
+
+A pointer, not a plan change: product decisions stay gated until Ryan approves the grill summary.
+
+- Parent grill handoff: `../docs/plans/active/itl-grill-handoff.md`. Ledger:
+  `../docs/plans/active/itl-grill-2026-09-28-progress.md`. Both live in the private parent
+  workspace at `~/Projects/in-the-loop/`.
+- `../PRODUCT-DIRECTION.md` is unchanged and remains the authority until the grill write-back.
+- Pending here: the `/plan` rewrite waits until the Harness position is settled. The Harness row (`src/config.ts:65-66`) is being explored as a personal marketing harness with an MKT1-based context layer.
+
 ## Skills register link, 2026-09-23
 
 Ryan asked for Skills to lead the studio homepage register and link directly to
@@ -50,11 +60,12 @@ or with a purpose-scoped API token: the current wrangler OAuth token carries `zo
 ## Built
 
 A static Astro site with two routes: `/` and `/plan/`. The homepage presents the compact 26px A6
-lockup, settled proposition, five-part Signal/Skills/Harness/Agents/Newsletter register and one
-`Read the plan ->` action. The five concepts are non-interactive until they have real destinations.
+lockup, settled proposition, five-part Skills/Signal/Harness/Agents/Newsletter register and the
+`Read the plan ->` action. Since 2026-09-23 Skills is a full-row link to `https://startupskills.dev/`;
+the other four concepts are non-interactive until they have real destinations.
 Signal and Newsletter are not routes. Both pages close on a colophon: `In The Loop` at the left,
 linking home from the Plan and set as plain text on the homepage, and `by Ryan Hennebry` at the
-right, linking to LinkedIn as the site's one outbound link. There is no homepage email action and no
+right, linking to LinkedIn, the colophon's one outbound link. There is no homepage email action and no
 client JavaScript; the page transition between the two routes is CSS the browser runs itself.
 
 The homepage's final register says `Curate what matters on the frontier.` and
