@@ -1,14 +1,9 @@
 # Handoff: in-the-loop.studio
 
-## Cross-repo status (4 Oct 2026)
+## Status (4 Oct 2026)
 
-A pointer, not a plan change: product decisions stay gated until Ryan approves the grill summary.
-
-- Parent grill handoff: `../docs/plans/active/itl-grill-handoff.md`. Ledger:
-  `../docs/plans/active/itl-grill-2026-09-28-progress.md`. Both live in the private parent
-  workspace at `~/Projects/in-the-loop/`.
-- `../PRODUCT-DIRECTION.md` is unchanged and remains the authority until the grill write-back.
-- Pending here: the `/plan` rewrite waits until the Harness position is settled. The Harness row (`src/config.ts:65-66`) is being explored as a personal marketing harness with an MKT1-based context layer.
+4 Oct 2026: cross-repo planning closed. Next step for this repo: none scheduled; route changes
+wait for this repo's own review.
 
 ## Skills register link, 2026-09-23
 
