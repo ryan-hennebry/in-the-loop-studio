@@ -128,6 +128,14 @@ if [ ! -f package.json ]; then
 fi
 npm run build || fail=1
 
+if [ -f dist/index.html ] \
+  && grep -Eq '<ul class="properties"><li class="property"><a [^>]*href="https://startupskills.dev/"[^>]*><span class="property__name">Skills</span>' dist/index.html; then
+  echo "ok: Skills leads the homepage register and links to Startup Skills"
+else
+  echo "FAIL Skills must be the first homepage row and link to the Startup Skills homepage."
+  fail=1
+fi
+
 if [ ! -f dist/plan/index.html ]; then
   echo "FAIL the Plan route was not built."
   fail=1

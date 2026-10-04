@@ -319,11 +319,13 @@ Two screens still scroll, and both are recorded rather than fixed. A 375x553 vie
 2 or 3 under its browser chrome, runs 94px long; a 320x460, the first generation SE, runs 218px
 long. Closing either would mean cutting a register row, dropping a type size or shrinking a tap
 target, and none of those is for sale. No type size shrinks to reach the fit, no copy is cut, there
-is no horizontal overflow or console error at any of those widths on either route, and every link on
-the site measures 48px: the homepage action, the Plan's home link, its closing contact link, the
-Plan colophon's wordmark and the author link on both pages.
+is no horizontal overflow or console error at any of those widths on either route. The measured
+pre-Skills-link controls were 48px: the homepage action, the Plan's home link, its closing contact
+link, the Plan colophon's wordmark and the author link on both pages. The Skills row is a larger
+full-row target.
 
-**The One Argument Rule.** Do not add a second homepage action or unavailable-product links. The
+**The One Argument Rule.** Skills is the first register row and links to its live product. Do not
+add links to unavailable products or another emphasised homepage action. The
 colophon is the only structure allowed below the argument, and it is a signature rather than a
 second action: one line of 13px identity type, at most two links, and nothing that competes for the
 reader the homepage action has just asked for. The Plan may close with one quiet mailto link set as
@@ -460,8 +462,10 @@ low, and either way the page cross-fade would blend two copies that do not line 
 
 ### Homepage register and action
 
-Signal, Skills, Harness, Agents and Newsletter are plain, non-interactive rows because their
-products do not have live destinations. `Read the plan ->` is the sole homepage link. It has a 48px
+Skills is the first row and a full-row link to `https://startupskills.dev/`. Its name alone carries
+the shared underline; the description stays muted, and the whole row is the target. Signal, Harness,
+Agents and Newsletter remain plain, non-interactive rows without live destinations. `Read the plan ->`
+remains the primary homepage action. It has a 48px
 target and a resting underline that clears 3:1; hover takes that underline to ink without moving the
 layout. The link is declared `inline-flex` but is a flex item of `.main`, so it blockifies, and
 `align-self: flex-start` holds it to its own content at 135.06px. Without that it stretched the
@@ -497,7 +501,7 @@ hover that changed nothing, and inverting it would read as the link being disabl
 halves of the Plan's line also ends a real inconsistency: one 13px line used to carry a rule under
 one half of itself and nothing under the other.
 
-LinkedIn remains the site's one outbound link, and the colophon carries no mailto: contact belongs
+Skills and LinkedIn are the site's outbound links, and the colophon carries no mailto: contact belongs
 to the Plan's closing line, which is prose, and putting the same offer in furniture would say it
 twice.
 

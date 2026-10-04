@@ -15,7 +15,7 @@ plans to learn what an agent-native startup should become.
 ## Product Purpose
 
 In The Loop is the hub for Ryan's work on how startups operate now that agents work. The homepage
-states that position and introduces Signal, Skills, Harness, Agents and Newsletter. The Plan page
+states that position and introduces Skills, Signal, Harness, Agents and Newsletter. The Plan page
 explains the causal sequence from finding what matters to learning from customers.
 
 ## Positioning
@@ -33,9 +33,11 @@ work in one pass; the Plan page rewards a slower read.
 
 ## Capabilities and Constraints
 
-- `/` and `/plan` are the only routes.
-- The homepage's only action is `Read the plan ->`; the Plan identity returns home.
-- Signal, Skills, Harness, Agents and Newsletter are concepts, not links to unavailable products.
+- `/` and `/plan` are the only rendered pages. `/skills` is a 302 to
+  `https://startupskills.dev/skills`, not another studio page.
+- The homepage links its first register row, Skills, to `https://startupskills.dev/` and retains
+  `Read the plan ->`; the Plan identity returns home.
+- Signal, Harness, Agents and Newsletter remain concepts, not links to unavailable products.
 - Signal and Newsletter are not routes.
 - Shared homepage and Plan metadata remain centralised in `src/config.ts`.
 - The Plan uses prose only. Add a visual only when it makes a relationship clearer than the words

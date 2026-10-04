@@ -314,6 +314,19 @@ ul {
   padding-block: var(--register-row);
 }
 
+/* The launched property is a full-row target; only its name takes the site's
+   underline, so the register keeps the same two-column reading rhythm. */
+.property__row--link {
+  text-decoration: none;
+}
+
+.property__row--link .property__name {
+  text-decoration-line: underline;
+  text-decoration-color: var(--link-decoration-color);
+  text-decoration-thickness: inherit;
+  text-underline-offset: 0.17em;
+}
+
 .property__name {
   font-weight: 500;
 }
@@ -322,7 +335,7 @@ ul {
   text-wrap: pretty;
 }
 
-/* The sole homepage action overrides the base only to become a padded 48px target.
+/* The primary homepage action overrides the base only to become a padded 48px target.
    It is a flex item of .main, so inline-flex blockifies: without align-self it
    would stretch the full measure and put a cursor over the empty half of it. */
 .primary-link {
@@ -501,7 +514,7 @@ ul {
   margin-block: -16px;
 }
 
-/* The site's one outbound link takes every state from .link and adds nothing but a
+/* The colophon's outbound link takes every state from .link and adds nothing but a
    48px target: symmetric padding with an equal negative margin, so the line itself
    never moves. */
 .colophon__link {

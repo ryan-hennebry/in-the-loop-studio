@@ -4,6 +4,10 @@ This file overrides `../AGENTS.md` on conflict.
 
 ## Read first
 
+- Product scope, cross-product links, shared infrastructure or build sequence: read
+  `../PRODUCT-DIRECTION.md`. It owns the relationship between the independent products and requires
+  `/grill-me` before a major cross-repository change; this repo owns the Studio implementation and
+  release gates.
 - Product or copy changes: read `PRODUCT.md`.
 - Layout, identity or interaction changes: read `DESIGN.md`.
 - Deployment or external assets: read `HANDOFF.md`.
@@ -16,9 +20,10 @@ background-check and explanation surface, not a sales funnel.
 Shared copy and changeable data live in `src/config.ts`. `Agent-native startup operations` is an
 explicit repository-level exception to the parent vocabulary ban.
 
-The homepage presents Signal, Skills, Harness, Agents and Newsletter, then links to `/plan`. The
-Plan page explains the causal sequence in four prose sections: discover what matters, install the
-context, let use decide and share what we learn. Signal and Newsletter are concepts, not routes.
+The homepage presents Skills, Signal, Harness, Agents and Newsletter, then links to `/plan`. Skills
+is the first register row and links to `https://startupskills.dev/`; the other rows remain concepts,
+not links. The Plan page explains the causal sequence in four prose sections: discover what matters,
+install the context, let use decide and share what we learn. Signal and Newsletter are not routes.
 Keep `Projects in development` retired unless Ryan requests it again. The Plan then closes with one
 quiet mailto to `ryan@in-the-loop.studio`, written as inline prose set apart by the standard section
 interval and carrying no heading of its own. The homepage keeps no contact action.
@@ -28,8 +33,8 @@ right, linking to Ryan's LinkedIn. The wordmark links home from the Plan only; o
 plain text, because a link to the page already open leads nowhere. So the Plan's colophon carries
 two links and the homepage's carries one, and the line reads identically either way. It is a
 signature, not a navigation bar: it offers no menu, names no destination the page has not already
-earned, and never competes with the one action above it. LinkedIn stays the site's only outbound
-link, and the colophon carries no mailto; the Plan's closing line remains the only contact on the
+earned, and never competes with the actions above it. Skills and LinkedIn are the site's outbound
+links; the colophon carries no mailto, and the Plan's closing line remains the only contact on the
 site.
 
 ## Truth

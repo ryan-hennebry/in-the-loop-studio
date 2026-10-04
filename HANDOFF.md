@@ -1,5 +1,28 @@
 # Handoff: in-the-loop.studio
 
+## Skills register link, 2026-09-23
+
+Ryan asked for Skills to lead the studio homepage register and link directly to
+`https://startupskills.dev/`. The Skills row is now a full-row link, with only its name underlined;
+the four other rows remain non-interactive. `./verify.sh` passes, and the local page was visually
+checked at desktop, 390px and 320px; the Skills row was clicked through to the live Startup Skills
+homepage. Ryan reviewed the local preview and explicitly approved publication. Cloudflare Pages
+deployment `0ab9c62c.in-the-loop.pages.dev` is live on `https://in-the-loop.studio/`; the public
+page shows Skills first and its row reaches the Startup Skills homepage. The existing `/skills`
+shortcut still returns 302 to `https://startupskills.dev/skills`. Post-deployment checks found the
+expected `Content-Signal` and sitemap in `robots.txt`, and the Plan still serves its direct
+`mailto:ryan@in-the-loop.studio` link without a `/cdn-cgi/` rewrite.
+
+## Startup Skills link, 2026-09-23
+
+`public/_redirects` now gives `/skills` a one-hop 302 to
+`https://startupskills.dev/skills`. Ryan approved the first public noindex
+Startup Skills deployment, and this same-day link was part of its V17 C4
+handoff. The studio's two rendered pages are unchanged. The studio verifier
+passed; the Pages deployment is `a98e7d3c`, and live requests confirm `/skills`
+returns 302 while `/` and `/plan/` still return 200. Keep this redirect
+temporary so the studio can reclaim `/skills` later without a cached 301.
+
 ## Mail
 
 Cloudflare Email Routing is enabled for `in-the-loop.studio` on zone

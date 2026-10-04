@@ -23,10 +23,17 @@ import {
     <ul class="properties">
       {PROPERTIES.map((property) => (
         <li class="property">
-          <div class="property__row">
-            <span class="property__name">{property.name}</span>
-            <span class="property__description">{property.description}</span>
-          </div>
+          {"href" in property ? (
+            <a class="link property__row property__row--link" href={property.href}>
+              <span class="property__name">{property.name}</span>
+              <span class="property__description">{property.description}</span>
+            </a>
+          ) : (
+            <div class="property__row">
+              <span class="property__name">{property.name}</span>
+              <span class="property__description">{property.description}</span>
+            </div>
+          )}
         </li>
       ))}
     </ul>
