@@ -20,8 +20,9 @@ background-check and explanation surface, not a sales funnel.
 Shared copy and changeable data live in `src/config.ts`. `Agent-native startup operations` is an
 explicit repository-level exception to the parent vocabulary ban.
 
-The homepage presents Skills, Signal, Harness, Agents and Newsletter, then links to `/plan`. Skills
-is the first register row and links to `https://startupskills.dev/`; the other rows remain concepts,
+The homepage presents Skills, Agents, Harness, Signal and Newsletter, then links to `/plan`. Skills
+links to `https://startupskills.dev/` and Agents to
+`https://ryanhennebry.xyz/competitor-intel-agent/`; Harness, Signal and Newsletter remain concepts,
 not links. The Plan page explains the causal sequence in four prose sections: discover what matters,
 install the context, let use decide and share what we learn. Signal and Newsletter are not routes.
 Keep `Projects in development` retired unless Ryan requests it again. The Plan then closes with one
@@ -33,9 +34,9 @@ right, linking to Ryan's LinkedIn. The wordmark links home from the Plan only; o
 plain text, because a link to the page already open leads nowhere. So the Plan's colophon carries
 two links and the homepage's carries one, and the line reads identically either way. It is a
 signature, not a navigation bar: it offers no menu, names no destination the page has not already
-earned, and never competes with the actions above it. Skills and LinkedIn are the site's outbound
-links; the colophon carries no mailto, and the Plan's closing line remains the only contact on the
-site.
+earned, and never competes with the actions above it. Skills, Agents and LinkedIn are the site's
+outbound links; the colophon carries no mailto, and the Plan's closing line remains the only contact
+on the site.
 
 ## Truth
 

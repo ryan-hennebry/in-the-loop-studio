@@ -321,11 +321,11 @@ long. Closing either would mean cutting a register row, dropping a type size or 
 target, and none of those is for sale. No type size shrinks to reach the fit, no copy is cut, there
 is no horizontal overflow or console error at any of those widths on either route. The measured
 pre-Skills-link controls were 48px: the homepage action, the Plan's home link, its closing contact
-link, the Plan colophon's wordmark and the author link on both pages. The Skills row is a larger
-full-row target.
+link, the Plan colophon's wordmark and the author link on both pages. The Skills and Agents rows are
+larger full-row targets.
 
-**The One Argument Rule.** Skills is the first register row and links to its live product. Do not
-add links to unavailable products or another emphasised homepage action. The
+**The One Argument Rule.** A register row may link only to a destination that is live and finished.
+Do not link a row to an unavailable product, and do not add a second emphasised homepage action. The
 colophon is the only structure allowed below the argument, and it is a signature rather than a
 second action: one line of 13px identity type, at most two links, and nothing that competes for the
 reader the homepage action has just asked for. The Plan may close with one quiet mailto link set as
@@ -462,19 +462,20 @@ low, and either way the page cross-fade would blend two copies that do not line 
 
 ### Homepage register and action
 
-Skills is the first row and a full-row link to `https://startupskills.dev/`. Its name alone carries
-the shared underline; the description stays muted, and the whole row is the target. Signal, Harness,
-Agents and Newsletter remain plain, non-interactive rows without live destinations. `Read the plan ->`
-remains the primary homepage action. It has a 48px
-target and a resting underline that clears 3:1; hover takes that underline to ink without moving the
-layout. The link is declared `inline-flex` but is a flex item of `.main`, so it blockifies, and
-`align-self: flex-start` holds it to its own content at 135.06px. Without that it stretched the
-whole measure, 608px at 1440px and the full column on a phone, and several hundred pixels of empty
-paper carried a pointer. The arrow is an `::after` pseudo-element on the label carrying `content:
-"\2192" / ""`, so the glyph is drawing rather than copy and the empty alternative text keeps it out
-of the accessible name. It is the one thing on either page that moves: hover translates it 3px, into
-3px of trailing padding the label reserves at rest, so the announced movement happens and the link's
-own box does not change size. It travels on `--ease-arrow` rather than the shared `--ease-out`.
+Skills is the first row and a full-row link to `https://startupskills.dev/`; Agents is the second
+and a full-row link to `https://ryanhennebry.xyz/competitor-intel-agent/`. In each the name alone
+carries the shared underline; the description stays muted, and the whole row is the target. Harness,
+Signal and Newsletter remain plain, non-interactive rows without live destinations.
+`Read the plan ->` remains the primary homepage action. It has a 48px target and a resting underline
+that clears 3:1; hover takes that underline to ink without moving the layout. The link is declared
+`inline-flex` but is a flex item of `.main`, so it blockifies, and `align-self: flex-start` holds it
+to its own content at 135.06px. Without that it stretched the whole measure, 608px at 1440px and the
+full column on a phone, and several hundred pixels of empty paper carried a pointer. The arrow is an
+`::after` pseudo-element on the label carrying `content: "\2192" / ""`, so the glyph is drawing
+rather than copy and the empty alternative text keeps it out of the accessible name. It is the one
+thing on either page that moves: hover translates it 3px, into 3px of trailing padding the label
+reserves at rest, so the announced movement happens and the link's own box does not change size. It
+travels on `--ease-arrow` rather than the shared `--ease-out`.
 
 ### Colophon
 
@@ -501,9 +502,9 @@ hover that changed nothing, and inverting it would read as the link being disabl
 halves of the Plan's line also ends a real inconsistency: one 13px line used to carry a rule under
 one half of itself and nothing under the other.
 
-Skills and LinkedIn are the site's outbound links, and the colophon carries no mailto: contact belongs
-to the Plan's closing line, which is prose, and putting the same offer in furniture would say it
-twice.
+Skills, Agents and LinkedIn are the site's outbound links, and the colophon carries no mailto:
+contact belongs to the Plan's closing line, which is prose, and putting the same offer in furniture
+would say it twice.
 
 ### Plan essay
 

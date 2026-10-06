@@ -55,13 +55,15 @@ or with a purpose-scoped API token: the current wrangler OAuth token carries `zo
 ## Built
 
 A static Astro site with two routes: `/` and `/plan/`. The homepage presents the compact 26px A6
-lockup, settled proposition, five-part Skills/Signal/Harness/Agents/Newsletter register and the
-`Read the plan ->` action. Since 2026-09-23 Skills is a full-row link to `https://startupskills.dev/`;
-the other four concepts are non-interactive until they have real destinations.
-Signal and Newsletter are not routes. Both pages close on a colophon: `In The Loop` at the left,
-linking home from the Plan and set as plain text on the homepage, and `by Ryan Hennebry` at the
-right, linking to LinkedIn, the colophon's one outbound link. There is no homepage email action and no
-client JavaScript; the page transition between the two routes is CSS the browser runs itself.
+lockup, settled proposition, five-part Skills/Agents/Harness/Signal/Newsletter register and the
+`Read the plan ->` action. Since 2026-09-23 Skills is a full-row link to
+`https://startupskills.dev/`, and since 2026-10-06 Agents is a full-row link to
+`https://ryanhennebry.xyz/competitor-intel-agent/`; the other three concepts are non-interactive
+until they have real destinations. Signal and Newsletter are not routes. Both pages close on a
+colophon: `In The Loop` at the left, linking home from the Plan and set as plain text on the
+homepage, and `by Ryan Hennebry` at the right, linking to LinkedIn, the colophon's one outbound
+link. There is no homepage email action and no client JavaScript; the page transition between the
+two routes is CSS the browser runs itself.
 
 The homepage's final register says `Curate what matters on the frontier.` and
 `Index agent skills for startup work.` The Plan uses Ryan's final supplied copy as a prose-only

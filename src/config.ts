@@ -41,7 +41,7 @@ export const CONTACT_EMAIL = "ryan@in-the-loop.studio";
 /** The href the contact link carries, so no page has to build a mailto of its own. */
 export const CONTACT_HREF = `mailto:${CONTACT_EMAIL}`;
 
-/** The colophon's outbound link, distinct from the Skills register link. */
+/** The colophon's outbound link, distinct from the two register links. */
 export const LINKEDIN_URL = "https://www.linkedin.com/in/ryanhennebry";
 
 /** The person behind the studio, named once at the foot of every page. */
@@ -58,16 +58,17 @@ export const PROPERTIES = [
     href: "https://startupskills.dev/",
   },
   {
-    name: "Signal",
-    description: "Curate what matters on the frontier.",
+    name: "Agents",
+    description: "Solve valuable workflows end-to-end.",
+    href: "https://ryanhennebry.xyz/competitor-intel-agent/",
   },
   {
     name: "Harness",
     description: "Install the startup context agents need.",
   },
   {
-    name: "Agents",
-    description: "Solve valuable workflows end-to-end.",
+    name: "Signal",
+    description: "Curate what matters on the frontier.",
   },
   {
     name: "Newsletter",
